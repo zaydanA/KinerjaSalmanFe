@@ -16,7 +16,6 @@ const ProfileDropdown = (props:any) => {
                                 as="button"
                                 className="transition-transform ring-[--kinerja-gold]"
                                 src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-                                
                                 />
                             {!isDropdownActive? <RiArrowDropDownLine className="h-full text-3xl text-[--kinerja-gold]"/>:<RiArrowDropUpLine className="h-full text-3xl text-[--kinerja-gold]"/>}
                         </div>

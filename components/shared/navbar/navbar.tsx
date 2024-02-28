@@ -9,13 +9,15 @@ const NavbarData = [{
 },{
     title: "Employee",
     path: "/employee"
-},
+},{
+    title:"Payroll",
+    path:"/payroll"
+}
 
 ]
 const Navbar =  (props: any) => {
     const pathname = usePathname();
 
-    console.log(pathname)
 
     return (
         <div className="w-full h-[60px] bg-white shadow-md px-5 font-medium text-gray-500 flex flex-row items-center justify-between">
@@ -41,7 +43,10 @@ const Navbar =  (props: any) => {
                 <div className='flex h-full items-center gap-2 text-sm'>
                     {NavbarData.map((page)=>(
                         <div className='flex flex-col h-full'>
-                            <div className='flex h-full items-center pt-2 px-5'>{page.title}</div>
+                            <div className='flex h-full items-center pt-2 px-5' onClick={(e) => {
+                                e.preventDefault()
+                                props.router.push(page.path)
+                            }}>{page.title}</div>
                             {<div className={pathname === page.path? "h-[5px] bg-[--kinerja-gold] rounded-t-lg":"h-[5px] bg-transparent rounded-t-lg"}></div>}
                         </div>
                     ))}
