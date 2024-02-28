@@ -1,6 +1,10 @@
-import Dashbaord from "./dashboard"
+
 
 const page = ()=>{
-    return (<Dashbaord></Dashbaord>)
+    return (
+        <div className="w-full h-full bg-grey text-black">
+        
+        </div>
+    )
 }
 export default page;

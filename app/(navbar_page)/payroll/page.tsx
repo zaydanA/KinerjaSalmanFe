@@ -1,6 +1,10 @@
-import Payroll from "./payroll"
+
 
 const page = ()=>{
-    return (<Payroll></Payroll>)
+    return (
+        <div className="w-full h-full bg-grey text-black">
+        
+        </div>
+    )
 }
 export default page;
