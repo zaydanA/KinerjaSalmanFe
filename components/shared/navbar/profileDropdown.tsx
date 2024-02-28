@@ -2,6 +2,10 @@
 import React, { useState } from "react";
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Avatar, User} from "@nextui-org/react";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
+import Link from "next/link";
+import { IoSettingsOutline } from "react-icons/io5";
+import { MdOutlineCorporateFare } from "react-icons/md";
+import { GoSignOut } from "react-icons/go";
 
 const ProfileDropdown = (props:any) => {
     const [isDropdownActive,setIsDropdownActive] = useState(false);
@@ -17,28 +21,34 @@ const ProfileDropdown = (props:any) => {
                                 className="transition-transform ring-[--kinerja-gold]"
                                 src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
                                 />
-                            {!isDropdownActive? <RiArrowDropDownLine className="h-full text-3xl text-[--kinerja-gold]"/>:<RiArrowDropUpLine className="h-full text-3xl text-[--kinerja-gold]"/>}
+                            <RiArrowDropDownLine className="h-full text-3xl text-[--kinerja-gold]"/>
                         </div>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Profile Actions" variant="flat">
-                    <DropdownItem key="profile" className="h-14 gap-2 border-b-2 rounded-none ">
-                        <p className="font-semibold">Signed in as</p>
-                        <p className="font-semibold">zoey@example.com</p>
+                    <DropdownItem key="profile" className="h-16 border-b-2 rounded-none">
+                        <div className="">
+                            <p className="font-semibold">Bagas Jawir wir wir</p>
+                            <p className="font-light text-[12px] text-gray-500">13521081@std.stei.itb.ac.id</p>
+                            <p className="font-light text-[12px] text-gray-500">Manager</p>
+                        </div>
                     </DropdownItem>
                     <DropdownItem key="settings">
-                        My Settings
+                        <div className="flex h-full items-center gap-1 align-center gap-1">
+                            <IoSettingsOutline/>
+                            <Link href="/">Account Settings</Link>
+                        </div>
                     </DropdownItem>
-                    <DropdownItem key="team_settings">Team Settings</DropdownItem>
-                    <DropdownItem key="analytics">
-                        Analytics
-                    </DropdownItem>
-                    <DropdownItem key="system">System</DropdownItem>
-                    <DropdownItem key="configurations">Configurations</DropdownItem>
-                    <DropdownItem key="help_and_feedback">
-                        Help & Feedback
+                    <DropdownItem key="team_settings">
+                        <div className="flex h-full items-center gap-1 align-center gap-1">
+                            <MdOutlineCorporateFare />
+                            <Link href="/">Company Settings</Link>
+                        </div>
                     </DropdownItem>
                     <DropdownItem key="logout" color="danger">
-                        Log Out
+                    <div className="flex h-full items-center gap-1 align-center gap-1">
+                            <GoSignOut />
+                            <Link href="/">Log out</Link>
+                        </div>
                     </DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
