@@ -6,10 +6,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-    const router = useRouter()
+    // const router = useRouter()
     return (
       <div className="flex flex-col h-full w-full">
-        <Navbar router={router}></Navbar>
+        <Navbar></Navbar>
         <div className="h-full">
             {children}
         </div>
