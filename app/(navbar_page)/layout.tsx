@@ -8,9 +8,9 @@ export default function RootLayout({
 }) {
     // const router = useRouter()
     return (
-      <div className="flex flex-col h-full w-full">
+      <div className="flex flex-col h-screen w-full">
         <Navbar></Navbar>
-        <div className="h-full">
+        <div className="h-full w-full bg-gray-100">
             {children}
         </div>
       </div>

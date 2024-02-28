@@ -2,7 +2,7 @@
 
 const page = ()=>{
     return (        
-        <div className="w-full h-full bg-grey text-black">
+        <div className="w-full">
         
         </div>
     )
