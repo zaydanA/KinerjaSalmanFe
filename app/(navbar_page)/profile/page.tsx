@@ -1,6 +1,10 @@
-import Profile from "./profile"
+
 
 const page = ()=>{
-    return (<Profile></Profile>)
+    return (
+        <div className="w-full h-full bg-grey text-black">
+        
+        </div>
+    )
 }
 export default page;

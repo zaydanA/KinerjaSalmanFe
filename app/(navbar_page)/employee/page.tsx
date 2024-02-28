@@ -1,6 +1,10 @@
-import Employee from "./employee"
+
 
 const page = ()=>{
-    return (<Employee></Employee>)
+    return (        
+        <div className="w-full h-full bg-grey text-black">
+        
+        </div>
+    )
 }
 export default page;
