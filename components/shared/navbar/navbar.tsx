@@ -1,7 +1,7 @@
 "use client"
 import Image from 'next/image'
 import { usePathname } from "next/navigation";
-import ProfileDropdown from './profileDropdown';
+import ProfileDropdown from './ProfileDropdown';
 import Link from 'next/link';
 const NavbarData = [{
     title:"Dashboard",
