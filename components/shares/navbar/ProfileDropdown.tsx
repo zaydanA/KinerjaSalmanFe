@@ -33,19 +33,19 @@ const ProfileDropdown = (props:any) => {
                         </div>
                     </DropdownItem>
                     <DropdownItem key="settings">
-                        <div className="flex h-full items-center gap-1 align-center gap-1">
+                        <div className="flex h-full items-center align-center gap-2">
                             <IoSettingsOutline/>
-                            <Link href="/">Account Settings</Link>
+                            <Link href="/account">Account Settings</Link>
                         </div>
                     </DropdownItem>
                     <DropdownItem key="team_settings">
-                        <div className="flex h-full items-center gap-1 align-center gap-1">
+                        <div className="flex h-full items-center align-center gap-2">
                             <MdOutlineCorporateFare />
-                            <Link href="/">Company Settings</Link>
+                            <Link href="/company">Company Settings</Link>
                         </div>
                     </DropdownItem>
                     <DropdownItem key="logout" color="danger">
-                    <div className="flex h-full items-center gap-1 align-center gap-1">
+                        <div className="flex h-full items-center align-center gap-2">
                             <GoSignOut />
                             <Link href="/">Log out</Link>
                         </div>

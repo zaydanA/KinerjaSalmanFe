@@ -6,6 +6,7 @@ import {NextUIProvider} from "@nextui-org/react";
 import APIProvider from '@/providers/ApiProvider';
 import AuthProvider from '@/providers/AuthProvider';
 
+// import { Toaster } from "react-hot-toast";
 const inter = Inter({ subsets: ['latin'] })
 
 // export const metadata: Metadata = {
