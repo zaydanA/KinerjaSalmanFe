@@ -3,6 +3,8 @@ import './globals.css'
 // import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import {NextUIProvider} from "@nextui-org/react";
+import APIProvider from '@/providers/ApiProvider';
+import AuthProvider from '@/providers/AuthProvider';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,10 +21,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-white fixed h-screen w-screen`}>
-      <NextUIProvider>
-          {children}
-      </NextUIProvider>
+        <APIProvider>
+          <AuthProvider>
+            <NextUIProvider>{children}</NextUIProvider>
+          </AuthProvider>
+        </APIProvider>
       </body>
     </html>
-  )
+  );
 }
