@@ -70,3 +70,16 @@ body {
     rgb(var(--background-start-rgb)); */
     font-family: "CooperHewitt-Book";
 }
+
+th,
+td {
+  text-align: start;
+  white-space: nowrap;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eeeeee;
+}
+
+th {
+  background: #fbfbfb;
+}
