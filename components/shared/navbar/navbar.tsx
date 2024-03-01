@@ -19,11 +19,11 @@ const NavbarData = [{
 const Navbar =  (props: any) => {
     const pathname = usePathname();
 
-
+    
     return (
         <div className="w-full h-[60px] bg-white shadow-md sm:px-5 font-medium text-gray-500 flex flex-row items-center justify-between border-b-1">
             <div className='flex items-center h-full sm:gap-6 font-mono'>
-                <div className='h-full flex'>
+                <Link className='h-full flex' href="/">
                     <Image
                     src="/LogoSalman.svg"
                     alt="Salman Logo"
@@ -40,11 +40,11 @@ const Navbar =  (props: any) => {
                     height={48}
                     priority
                     />
-                </div>
-                <div className='flex h-full items-center gap-2 text-sm pl-2 sm:pl-0'>
+                </Link>
+                <div className='flex h-full w-1/3 items-center gap-2 text-sm sm:pl-0 pt-2'>
                     {NavbarData.map((page,index)=>(
-                        <div key={index} className='flex flex-col h-full'>
-                            <Link className='flex h-full items-center pt-2 px-5' href={`${page.path}`}>{page.title}</Link>
+                        <div key={index} className='flex flex-col h-full hover:bg-gray-100 rounded-t-[25px]'>
+                            <Link className='flex h-full items-center pt-1 px-5' href={`${page.path}`}>{page.title}</Link>
                             {<div className={pathname === page.path? "h-[5px] bg-[--kinerja-gold] rounded-t-lg":"h-[5px] bg-transparent rounded-t-lg"}></div>}
                         </div>
                     ))}
