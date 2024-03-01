@@ -1,4 +1,4 @@
-import Navbar from "@/components/shared/navbar/Navbar";
+import Navbar from "@/components/shares/navbar/Navbar";
 import { useRouter } from "next/router";
 
 export default function RootLayout({
