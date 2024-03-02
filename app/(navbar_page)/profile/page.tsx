@@ -94,7 +94,7 @@ const page = ()=>{
                         {activeComponent}
                     </h1>
                 </div>
-                <div className="h-full flex flex-col">
+                <div className="h-full flex flex-col ">
                     {
                        activeComponent == SidebarData[0].subNav[0].title? <Personal activeComponentNavbar={activeComponentNavbar} NavbarComponentData={NavbarComponentData} setActiveComponentNavbar={setActiveComponentNavbar}></Personal>: null
                     }
