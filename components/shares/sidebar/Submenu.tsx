@@ -9,7 +9,7 @@ const SubMenu = (props:any) => {
     };
     return (
       <>
-        <div className='flex flex-row justify-between items-center hover:bg-gray-100 text-black w-full px-[12px] py-[8px] rounded-lg' onClick={props.item.subNav && showSubnav}>
+        <div className='flex flex-row justify-between items-center hover:bg-gray-100 text-black w-full px-[12px] py-[8px] ease-in-out rounded-lg' onClick={props.item.subNav && showSubnav}>
           <div className='flex gap-2'>
             
             <div className='text-xl'>

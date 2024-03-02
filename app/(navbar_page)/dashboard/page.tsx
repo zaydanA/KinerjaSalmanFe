@@ -1,4 +1,4 @@
-import Dashboard from "@/components/private/dashboard/Dashboard";
+import Dashboard from "@/components/privates/dashboard/Dashboard";
 
 
 const page = ()=>{
