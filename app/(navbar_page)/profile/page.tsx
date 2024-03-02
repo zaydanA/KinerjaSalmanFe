@@ -9,6 +9,7 @@ import React from "react";
 import {Breadcrumbs, BreadcrumbItem} from "@nextui-org/react";
 import { IoMenuOutline,IoCloseOutline } from "react-icons/io5";
 import Personal from "@/components/shares/sidebar/Personal";
+import Employment from "@/components/shares/sidebar/Employment";
 const SidebarData = [
     {
         title:"General",
@@ -62,7 +63,7 @@ const page = ()=>{
     const [activeComponentNavbar, setActiveComponentNavbar] = useState(NavbarComponentData[0].title)
     const [isSidebarOpen,setIsSidebarOpen] = useState(false)
     return (
-        <div className="w-full min-h-full h-fit bg-white shadow-md rounded-lg flex border-1 mt-[-1px] md:m-0">
+        <div className="md:w-full h-fit bg-white shadow-md rounded-lg flex border-1 mt-[-1px] md:m-0">
             <div className={`max-w-[240px] rounded-l-lg z-10 h-fit w-fit pt-3 bg-white flex flex-col ${isSidebarOpen?"absolute min-w-[240px] h-full md:border-r-0 border-r-1 md:relative" : "h-full"}`}>
                 <div className="flex flex-row w-full px-1 bg-white">
                     {isSidebarOpen ? <IoCloseOutline className="text-3xl" onClick={()=>{setIsSidebarOpen(false)}}></IoCloseOutline> : <IoMenuOutline className="text-3xl" onClick={()=>{setIsSidebarOpen(true)}}></IoMenuOutline>}
@@ -82,21 +83,21 @@ const page = ()=>{
                     </div>
                 </div>
             </div>
-            <div className={`py-[14px] pr-2 pl-2 md:px-[24px] flex flex-col w-full border-l-1 ${isSidebarOpen?"pl-[46px]":""}`}>
-                <div className="flex flex-col h-[52px] mb-[14px] z-[1]">
+            <div className={`py-[14px] pr-2 pl-2 md:px-[24px] flex flex-col w-5/6 md:w-full border-l-1 ${isSidebarOpen?"ml-[38px]":""}`}>
+                <div className="flex flex-col min-h-[52px] mb-[14px] z-[1]">
                     <Breadcrumbs isDisabled>
                         <BreadcrumbItem>Profile</BreadcrumbItem>
                         <BreadcrumbItem>Muhammad Zaydan Athallah</BreadcrumbItem>
                         <BreadcrumbItem>{activeComponent}</BreadcrumbItem>
                         <BreadcrumbItem>{activeComponentNavbar}</BreadcrumbItem>
                     </Breadcrumbs>
-                    <h1 className="font-semibold text-2xl h-full w-full">
+                    <h1 className="font-semibold sm:text-sm md:text-2xl h-full w-full">
                         {activeComponent}
                     </h1>
                 </div>
                 <div className="h-full flex flex-col ">
                     {
-                       activeComponent == SidebarData[0].subNav[0].title? <Personal activeComponentNavbar={activeComponentNavbar} NavbarComponentData={NavbarComponentData} setActiveComponentNavbar={setActiveComponentNavbar}></Personal>: null
+                       activeComponent == SidebarData[0].subNav[0].title? <Personal activeComponentNavbar={activeComponentNavbar} NavbarComponentData={NavbarComponentData} setActiveComponentNavbar={setActiveComponentNavbar}></Personal>: (activeComponent == SidebarData[0].subNav[1].title? <Employment></Employment> : null)
                     }
                 </div>
             </div>

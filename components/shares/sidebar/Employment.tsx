@@ -1,42 +1,52 @@
-const PersonalData = (props:any)=>{
+const Employment = (props:any) => {
     return(
-        <div className="h-full flex flex-col items md:items-start md:flex-row w-full pt-5">
+        <>
+        <div className="flex min-h-fit pb-10 border-b-1">
+                    <div className="h-full flex flex-col items md:items-start md:flex-row w-full pt-5">
             <div className="flex flex-col md:w-1/6 border-b-1 pb-2 md:border-b-0">
                 <h1 className="font-semibold ">
-                    Personal Data
+                    Employment Data
                 </h1>
                 <p className="text-xs 4/5 text-gray-500">
-                    Your email address is your identity on Talenta is used to log in.
+                    Your data information related to company.
                 </p>
             </div>
             <div className="md:w-4/6 md:px-4 flex flex-col pt-1 gap-4">
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
                     <h3 className="font-semibold text-sm w-2/6">
-                        Full Name
+                        Company ID
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        Muhammad Zaydan Athallah
+                        ITB
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
                     <h3 className="font-semibold text-sm w-2/6">
-                        Mobile Phone
+                        Emplotee ID
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        0878 kapan kapan kita ke dufan
+                        T001
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
                     <h3 className="font-semibold text-sm w-2/6">
-                        Email
+                        Organization Name
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        zaydanathallah@gmail.com
+                        BOD
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
                     <h3 className="font-semibold text-sm w-2/6">
-                        Phone
+                        Job Position
+                    </h3>
+                    <p className="text-xs w-4/6 items-center">
+                        CEO
+                    </p>
+                </div>
+                <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
+                    <h3 className="font-semibold text-sm w-2/6">
+                        Employment Status
                     </h3>
                     <p className="text-xs w-4/6 items-center">
                         -
@@ -44,58 +54,70 @@ const PersonalData = (props:any)=>{
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
                     <h3 className="font-semibold text-sm w-2/6">
-                        Place of Birth
+                        Branch
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        Jakarta
+                        Pusat
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
                     <h3 className="font-semibold text-sm w-2/6">
-                        Birthdate
+                        Join Date
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        17 Agustus 2003
+                        01 Jan 2010
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
                     <h3 className="font-semibold text-sm w-2/6">
-                        Gender
+                        Grade
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        Male
+                        -
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
                     <h3 className="font-semibold text-sm w-2/6">
-                        Marital Status
+                        Class
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        Coming Soon
+                        -
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
                     <h3 className="font-semibold text-sm w-2/6">
-                        Blood Type
+                        Approval Line
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        AB
+                        -
                     </p>
                 </div>
-                <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
-                    <h3 className="font-semibold text-sm w-2/6">
-                        Religion
-                    </h3>
-                    <p className="text-xs w-4/6 items-center">
-                        Islam
-                    </p>
-                </div>
+            </div>
+            <div className="md:w-1/6">
+                
+            </div>
+        </div>
+        </div>
+        <div className="h-full flex flex-col items md:items-start md:flex-row w-full pt-5">
+            <div className="flex flex-col md:w-1/6 border-b-1 pb-2 md:border-b-0">
+                <h1 className="font-semibold ">
+                    Direct Reports
+                </h1>
+                <p className="text-xs 4/5 text-gray-500">
+                    Employees who need your approval.
+                </p>
+            </div>
+            <div className="md:w-4/6 md:px-4 flex flex-col pt-1 gap-4">
+                <p className="text-sm text-gray-500">
+                    Employee doesn't have direct reports
+                </p>
             </div>
             <div className="md:w-1/6">
         
             </div>
         </div>
+        </>
     )
 }
 
-export default PersonalData;
+export default Employment;
