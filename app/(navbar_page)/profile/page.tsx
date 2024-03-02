@@ -1,5 +1,5 @@
 "use client"
-import Sidebar from "@/components/shared/sidebar/Sidebar";
+import Sidebar from "@/components/shares/sidebar/Sidebar";
 import { Avatar } from "@nextui-org/react";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
 import { CiUser } from "react-icons/ci";
@@ -8,7 +8,7 @@ import { PiCalculatorThin } from "react-icons/pi";
 import React from "react";
 import {Breadcrumbs, BreadcrumbItem} from "@nextui-org/react";
 import { IoMenuOutline,IoCloseOutline } from "react-icons/io5";
-import Personal from "@/components/shared/sidebar/Personal";
+import Personal from "@/components/shares/sidebar/Personal";
 const SidebarData = [
     {
         title:"General",
