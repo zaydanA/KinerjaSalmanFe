@@ -55,7 +55,7 @@ const EmployeeList = () => {
         />
         {/* <p>Search</p> */}
       </div>
-      <div className=" overflow-x-scroll">
+      <div className=" border-1 rounded-lg overflow-x-scroll">
         <table className=" w-full">
           <TableHeader headers={header} action={true} />
           <tbody>

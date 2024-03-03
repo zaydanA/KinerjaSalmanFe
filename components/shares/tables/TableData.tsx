@@ -15,8 +15,8 @@ const TableData = ({
   isProfile: boolean;
 }) => {
   const profileColumn = (
-    <td className="sticky left-0 bg-white flex">
-      <div className="flex items-center">
+    <td className="sticky left-0 flex">
+      <div className="flex items-center pr-3.5">
         <div className="w-10 h-10">
           {/* Change to <Image /> from NextJS */}
           <img alt="profile picture" src={dataContent[0]} />
@@ -33,7 +33,7 @@ const TableData = ({
       {profileColumn}
       {dataContent.slice(isProfile ? 3 : 0).map((data, index) =>
         index == 0 && !isProfile ? (
-          <td key={index} className="sticky left-0 bg-white">
+          <td key={index} className="sticky left-0">
             {data}
           </td>
         ) : (
@@ -43,7 +43,7 @@ const TableData = ({
         )
       )}
       {onClickAction ? (
-        <td className="sticky right-0 bg-white text-center">
+        <td className="sticky right-0 text-center px-5">
           <button>
             <BsThreeDots />
           </button>
