@@ -3,7 +3,13 @@
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 
-export default function Search({ placeholder }: { placeholder: string }) {
+export default function Search({
+  placeholder,
+  setSearchValue,
+}: {
+  placeholder: string;
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+}) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -11,12 +17,13 @@ export default function Search({ placeholder }: { placeholder: string }) {
   const handleSearch = useDebouncedCallback((term: string) => {
     const params = new URLSearchParams(searchParams);
     if (term) {
-      params.set("query", term);
+      params.set("search", term);
     } else {
-      params.delete("query");
+      params.delete("search");
     }
     replace(`${pathname}?${params.toString()}`);
-  }, 300);
+    setSearchValue(term);
+  }, 1000);
 
   return (
     <div className="flex">
