@@ -10,7 +10,7 @@ import { GoSignOut } from "react-icons/go";
 const ProfileDropdown = (props:any) => {
     const [isDropdownActive,setIsDropdownActive] = useState(false);
     return(
-        <div className="flex items-center gap-4 bg-white">
+        <div className="flex items-center gap-4 bg-white h-full justify-end">
                  <Dropdown placement="bottom-end">
                     <DropdownTrigger>
                         <div className="flex items-center" onClick={()=>{setIsDropdownActive(!isDropdownActive)}}>
@@ -25,12 +25,12 @@ const ProfileDropdown = (props:any) => {
                         </div>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Profile Actions" variant="flat">
-                    <DropdownItem key="profile" className="h-16 border-b-2 rounded-none">
-                        <div className="">
+                    <DropdownItem key="profile" className="h-16 border-b-2 rounded-b-none">
+                        <Link className="h-full w-full" href="/profile">
                             <p className="font-semibold">Bagas Jawir wir wir</p>
                             <p className="font-light text-[12px] text-gray-500">13521081@std.stei.itb.ac.id</p>
                             <p className="font-light text-[12px] text-gray-500">Manager</p>
-                        </div>
+                        </Link>
                     </DropdownItem>
                     <DropdownItem key="settings">
                         <div className="flex h-full items-center align-center gap-2">
