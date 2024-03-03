@@ -21,12 +21,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-white fixed h-screen w-screen`}>
-        <APIProvider>
-          <AuthProvider>
-            <NextUIProvider>{children}</NextUIProvider>
-          </AuthProvider>
-        </APIProvider>
+      <body className={`${inter.className} bg-gray-100 fixed h-screen w-screen`}>
+        {/* <APIProvider>
+          <AuthProvider> */}
+            <NextUIProvider>
+              <div className='h-screen w-screen'>
+                {children}
+              </div>
+            </NextUIProvider>
+          {/* </AuthProvider>
+        </APIProvider> */}
       </body>
     </html>
   );
