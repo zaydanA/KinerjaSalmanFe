@@ -6,7 +6,7 @@ const PersonalData = (props:any)=>{
                     Personal Data
                 </h1>
                 <p className="text-xs 4/5 text-gray-500">
-                    Your email address is your identity on Talenta is used to log in.
+                    Your email address is your identity on Kinerja is used to log in.
                 </p>
             </div>
             <div className="md:w-4/6 md:px-4 flex flex-col pt-1 gap-4">
@@ -15,7 +15,7 @@ const PersonalData = (props:any)=>{
                         Full Name
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        Muhammad Zaydan Athallah
+                        {props.employee.full_name?props.employee.full_name:"-"}
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
@@ -23,7 +23,7 @@ const PersonalData = (props:any)=>{
                         Mobile Phone
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        0878 kapan kapan kita ke dufan
+                        {props.employee.phone_number? props.employee.phone_number:"-"}
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
@@ -31,15 +31,15 @@ const PersonalData = (props:any)=>{
                         Email
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        zaydanathallah@gmail.com
+                        {props.employee.email?props.employee.email:"-"}
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
                     <h3 className="font-semibold text-sm w-2/6">
-                        Phone
+                        NPWP
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        -
+                        {props.employee.npwp_number?props.employee.npwp_number:"-"}
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
@@ -47,7 +47,7 @@ const PersonalData = (props:any)=>{
                         Place of Birth
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        Jakarta
+                        {props.employee.place_of_birth?props.employee.place_of_birth:"-"}
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
@@ -55,7 +55,7 @@ const PersonalData = (props:any)=>{
                         Birthdate
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        17 Agustus 2003
+                        {props.employee.date_of_birth}
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
@@ -63,7 +63,7 @@ const PersonalData = (props:any)=>{
                         Gender
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        Male
+                        {props.employee.gender?props.employee.gender:"-"}
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
@@ -71,15 +71,15 @@ const PersonalData = (props:any)=>{
                         Marital Status
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        Coming Soon
+                        {props.employee.marital_status}
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
                     <h3 className="font-semibold text-sm w-2/6">
-                        Blood Type
+                        Last Education
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        AB
+                        {props.employee.last_education}
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">

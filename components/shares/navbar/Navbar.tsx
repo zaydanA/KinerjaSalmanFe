@@ -41,7 +41,7 @@ const Navbar =  (props: any) => {
                     priority
                     />
                 </Link>
-                <div id="horizontal2" className='flex flex-row h-full w-full items-center gap-0 text-sm md:pl-0 pt-2 overflow-x-scroll'>
+                <div id="horizontal2" className='flex flex-row h-full w-full items-center md:ml-5 gap-0 text-sm md:pl-0 pt-2 overflow-x-scroll'>
                     {NavbarData.map((page,index)=>(
                         <div key={index} className='flex flex-col h-full hover:bg-gray-100 rounded-t-[25px] cursor-pointer'>
                             <Link className='flex h-full items-center pt-1 px-5' href={`${page.path}`}>{page.title}</Link>

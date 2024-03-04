@@ -13,6 +13,7 @@ export const support = () => {
     logout: '/logout',
 
     self: '/self',
+    employee:'/employee'
   };
 
   return { apiUrl };

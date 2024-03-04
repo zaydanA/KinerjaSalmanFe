@@ -16,7 +16,7 @@ const Personal = (props:any)=>{
                     ))}
             </div>
             <div className="h-full w-full">
-                {props.activeComponentNavbar == "Basic Info"? <BasicInfo/> : (props.activeComponentNavbar == "Family"? <Family/>:null)}
+                {props.activeComponentNavbar == "Basic Info"? <BasicInfo employee={props.employee}/> : (props.activeComponentNavbar == "Family"? <Family/>:null)}
             </div>
         </>
     )
