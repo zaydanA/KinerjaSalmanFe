@@ -15,7 +15,9 @@ export const support = () => {
     user: {
       self: 'user/self',
       personalData: 'user/personal-data'
-    }
+    },
+
+    getEmployees: '/employee'
   };
 
   return { apiUrl };
