@@ -36,10 +36,7 @@ const Employee = () => {
     }
 
     const indexOfLastItem = currentPage * itemsPerPage;
-    console.log(currentPage);
-    console.log("index last" + indexOfLastItem); 
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    console.log("index first" + indexOfFirstItem); 
     const currentItems = dummyData.slice(indexOfFirstItem, indexOfLastItem);
 
     return (
@@ -55,7 +52,6 @@ const Employee = () => {
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={onPageChange}>
-
             </Pagination>
         </div>
     )

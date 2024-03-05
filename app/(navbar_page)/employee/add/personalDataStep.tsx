@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Gender, BloodType, MaritalStatus, LastEducation } from '@/enums/enums';
+import { useInput } from "@/hooks/useInput";
+import BaseInputText from '@/components/shares/inputs/BaseInputText';
 
 const PersonalDataForm = ({ formData, handleChange }) => {
 
@@ -24,7 +26,7 @@ const PersonalDataForm = ({ formData, handleChange }) => {
     return (
         <div>
             <div>
-                <label>
+                {/* <label>
                     First Name:
                     <input 
                     type="text"
@@ -32,10 +34,18 @@ const PersonalDataForm = ({ formData, handleChange }) => {
                     onChange={(e) => handleChange('firstName', e.target.value)}
                     required>
                     </input>
-                </label>
+                </label> */}
+                <BaseInputText
+                    id="firstName"
+                    label="First Name"
+                    placeholder="First Name"
+                    type="text"
+                    value={formData.firstName}
+                    setValue={(value) => handleChange('firstName', value)}
+                />
             </div>
             <div>
-                <label>
+                {/* <label>
                     Last Name:
                     <input 
                     type="text"
@@ -43,21 +53,37 @@ const PersonalDataForm = ({ formData, handleChange }) => {
                     onChange={(e) => handleChange('lastName', e.target.value)}
                     required>
                     </input>
-                </label>
+                </label> */}
+                <BaseInputText
+                    id="lastName"
+                    label="Last Name :"
+                    placeholder="Last Name"
+                    type="text"
+                    value={formData.lastName}
+                    setValue={(value) => handleChange('lastName', value)}
+                />
             </div>
             <div>
-                <label htmlFor="email">Email:</label>
-                <input
+                {/* <label htmlFor="email">Email:</label> */}
+                {/* <input
                     type="email"
                     id="email"
                     name="email"
                     value={formData.email}
                     onChange={(e) => handleChange('email', e.target.value)}
+                /> */}
+                <BaseInputText
+                    id="email"
+                    label="Email :"
+                    placeholder="Email"
+                    type="text"
+                    value={formData.email}
+                    setValue={(value) => handleChange('email', value)}
                 />
                 {emailError && <p>{emailError}</p>}
             </div>
             <div>
-                <label>
+                {/* <label>
                     Phone Number:
                     <input 
                     type="text"
@@ -65,10 +91,18 @@ const PersonalDataForm = ({ formData, handleChange }) => {
                     onChange={(e) => handleChange('phoneNumber', e.target.value)}
                     required>
                     </input>
-                </label>
+                </label> */}
+                <BaseInputText
+                    id="phoneNumber"
+                    label="Phone Number :"
+                    placeholder="Phone Number"
+                    type="text"
+                    value={formData.phoneNumber}
+                    setValue={(value) => handleChange('phoneNumber', value)}
+                />
             </div>
             <div>
-                <label>
+                {/* <label>
                     Emergency Number:
                     <input 
                     type="text"
@@ -76,10 +110,18 @@ const PersonalDataForm = ({ formData, handleChange }) => {
                     onChange={(e) => handleChange('emergencyNumber', e.target.value)}
                     required>
                     </input>
-                </label>
+                </label> */}
+                <BaseInputText
+                    id="emergencyNumber"
+                    label="Emergency Number :"
+                    placeholder="Emergency Number"
+                    type="text"
+                    value={formData.emergencyNumber}
+                    setValue={(value) => handleChange('emergencyNumber', value)}
+                />
             </div>
             <div>
-                <label>
+                {/* <label>
                     Address:
                     <input 
                     type="text"
@@ -87,10 +129,18 @@ const PersonalDataForm = ({ formData, handleChange }) => {
                     onChange={(e) => handleChange('address', e.target.value)}
                     required>
                     </input>
-                </label>
+                </label> */}
+                <BaseInputText
+                    id="address"
+                    label="Address :"
+                    placeholder="Address"
+                    type="text"
+                    value={formData.address}
+                    setValue={(value) => handleChange('address', value)}
+                />
             </div>
             <div>
-                <label>
+                {/* <label>
                     Place Of Birth:
                     <input 
                     type="text"
@@ -98,10 +148,18 @@ const PersonalDataForm = ({ formData, handleChange }) => {
                     onChange={(e) => handleChange('placeOfBirth', e.target.value)}
                     required>
                     </input>
-                </label>
+                </label> */}
+                <BaseInputText
+                    id="placeOfBirth"
+                    label="Place of Birth :"
+                    placeholder="Place of Birth"
+                    type="text"
+                    value={formData.phoneNumber}
+                    setValue={(value) => handleChange('phoneNumber', value)}
+                />
             </div>
             <div>
-                <label>
+                {/* <label>
                     Date Of Birth:
                     <input 
                     type="date"
@@ -109,7 +167,15 @@ const PersonalDataForm = ({ formData, handleChange }) => {
                     onChange={(e) => handleChange('dateOfBirth', e.target.value)}
                     required>
                     </input>
-                </label>
+                </label> */}
+                <BaseInputText
+                    id="dateOfBirth"
+                    label="Date of Birth :"
+                    placeholder="Date of Birth"
+                    type="text"
+                    value={formData.dateOfBirth}
+                    setValue={(value) => handleChange('dateOfBirth', value)}
+                />
             </div>
             <div>
                 <label>
@@ -142,7 +208,7 @@ const PersonalDataForm = ({ formData, handleChange }) => {
                 </label>
             </div>
             <div>
-                <label>
+                {/* <label>
                     Identity Number:
                     <input 
                     type="text"
@@ -150,7 +216,15 @@ const PersonalDataForm = ({ formData, handleChange }) => {
                     onChange={(e) => handleChange('identityNumber', e.target.value)}
                     required>
                     </input>
-                </label>
+                </label> */}
+                <BaseInputText
+                    id="identityNumber"
+                    label="Identity Number :"
+                    placeholder="Identity Number"
+                    type="text"
+                    value={formData.identityNumber}
+                    setValue={(value) => handleChange('identityNumber', value)}
+                />
             </div>
             <div>
                 <label>
