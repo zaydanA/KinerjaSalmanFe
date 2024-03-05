@@ -13,7 +13,10 @@ export const support = () => {
     logout: '/logout',
 
     self: '/self',
-    getEmployees: '/employee'
+    getEmployees: '/employee',
+    addEmployee: '/employee',
+    getPosition: '/position',
+    getDepartment: '/department',
   };
 
   return { apiUrl };

@@ -7,6 +7,7 @@ const employee = () => {
 
   const url = {
     getEmployee: apiUrl.getEmployees,
+    addEmployee: apiUrl.addEmployee,
   };
 
   const getEmployee = async (q?: string) => {
@@ -22,8 +23,28 @@ const employee = () => {
     return response.data;
   };
 
+  const addEmployee = async (data: any) => {
+    try {
+      const response = await api.post<IApiBaseResponse<IApiBaseEmployee>>(
+        url.addEmployee,
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+      
+      console.log("success co")
+      return response.data;
+    } catch (error){
+      throw error;
+    }
+  }
+
   return {
     getEmployee,
+    addEmployee
   };
 };
 
