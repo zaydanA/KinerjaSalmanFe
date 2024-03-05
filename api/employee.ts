@@ -12,6 +12,7 @@ const employee = () => {
     refreshToken: apiUrl.refreshToken,
     logout: apiUrl.logout,
     employee: apiUrl.employee,
+    addEmployee: apiUrl.addEmployee,
   }
 
   const getEmployeeById = async (
@@ -29,9 +30,6 @@ const employee = () => {
     
     return response.data;
   }
-    getEmployee: apiUrl.getEmployees,
-    addEmployee: apiUrl.addEmployee,
-  };
 
   const getEmployee = async (q?: string) => {
     const response = await api.get<IApiBaseResponse<IApiBaseEmployee[]>>(
@@ -57,8 +55,7 @@ const employee = () => {
           }
         }
       );
-      
-      console.log("success co")
+
       return response.data;
     } catch (error){
       throw error;
@@ -67,9 +64,6 @@ const employee = () => {
 
   return {
     getEmployeeById,
-    getEmployee
-  }
-}
     getEmployee,
     addEmployee
   };
