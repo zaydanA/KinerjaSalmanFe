@@ -1,8 +1,23 @@
 import { parseISO, format } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz';
+import {useState,useEffect} from "react"
+import BaseInputText from '../../inputs/BaseInputText';
+import { useInput } from '@/hooks/useInput';
 const PersonalData = (props:any)=>{
 
-    const parsedTime = format(utcToZonedTime(parseISO(props.employee.date_of_birth),0),'MMMM d, yyyy');
+    const [isEditPersonal,setIsEditPersonal] = useState<boolean>(false)
+    const [fullName,setFullName] = useInput("-");
+    const [mobielPhone,setMobilePohne] = useInput("-");
+
+    useEffect(()=>{
+        props.employee.full_name && setFullName(props.employee.full_name)
+    },[props.employee])
+
+    const CancelChange = ()=>{
+        setFullName(props.employee.full_name);
+
+    }
+
     return(
         <div className="h-full flex flex-col items md:items-start md:flex-row w-full pt-5">
             <div className="flex flex-col md:w-1/6 border-b-1 pb-2 md:border-b-0">
@@ -18,9 +33,9 @@ const PersonalData = (props:any)=>{
                     <h3 className="font-semibold text-sm w-2/6">
                         Full Name
                     </h3>
-                    <p className="text-xs w-4/6 items-center">
-                        {props.employee.full_name?props.employee.full_name:"-"}
-                    </p>
+                    <div className='w-4/6'>
+                        {<BaseInputText value={fullName} id={"fullname"} label="" disabled={!isEditPersonal} setValue={setFullName}></BaseInputText>}
+                    </div>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
                     <h3 className="font-semibold text-sm w-2/6">
@@ -59,7 +74,7 @@ const PersonalData = (props:any)=>{
                         Birthdate
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        {parsedTime}
+                        {/* {parsedTime} */}
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
@@ -94,9 +109,22 @@ const PersonalData = (props:any)=>{
                         Islam
                     </p>
                 </div>
+
+                {isEditPersonal && 
+                    <div className='flex gap-1 justify-end'>
+                        <button className="text-gray-500 border-2 rounded-lg font-mono px-2 hover:bg-gray-100 py-1 px-3" onClick={()=>{
+                            setIsEditPersonal(false);
+                            CancelChange();
+                            }}>
+                            Cancel
+                        </button>
+                        <button className="text-gray-500 border-2 rounded-lg font-mono px-2 bg-[--kinerja-gold] hover:bg-[--kinerja-gold-hover] text-white px-0 md:px-3">
+                            Save Changes
+                        </button>
+                    </div>}
             </div>
-            <div className="md:w-1/6">
-        
+            <div className="md:w-1/6 py-5 md:p-0">
+                {!isEditPersonal?<button onClick={()=>{setIsEditPersonal(true)}} className="text-gray-500 border-2 rounded-lg font-mono hover:border-[--kinerja-gold-hover-border] px-2">Edit</button>:<></>}
             </div>
         </div>
     )

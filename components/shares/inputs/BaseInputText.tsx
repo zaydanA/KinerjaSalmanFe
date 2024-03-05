@@ -34,13 +34,8 @@ export default function BaseInputText({
   };
 
   return (
-    <div className="flex flex-col gap-2">
-      <label
-        htmlFor={id}
-        className="text-base block w-fit text-clr-text-primary"
-      >
-        {label}
-      </label>
+    <div className="flex flex-col">
+
 
       <div className="relative">
         <input
@@ -56,12 +51,12 @@ export default function BaseInputText({
           value={value}
           onChange={setValue}
           disabled={disabled}
-          className={`rounded shadow-input outline-none w-full box-border px-3 py-3.5 transition-all ease-in-out bg-clr-background-base-two text-sm placeholder-clr-text-primary-darken ${
+          className={`text-xs rounded shadow-input outline-none w-full py-1 px-2 box-border transition-all ease-in-out bg-clr-background-base-two text-sm placeholder-clr-text-primary-darken ${
             error
               ? "shadow-input-error focus:shadow-input-focus-error"
               : "hover:shadow-input-hover focus:shadow-input-focus"
           }
-          ${disabled ? "bg-clr-background-base-one" : ""}`}
+          ${disabled ? "bg-clr-background-base-one" : "border-1"}`}
         />
 
         {needEye && (

@@ -1,6 +1,11 @@
 const IdentityAddress = (props:any)=>{
     return(
         <div className="h-full flex flex-col items md:items-start md:flex-row w-full pt-5">
+            <div className="flex flex-col md:w-1/6 border-b-1 pb-2 md:border-b-0">
+                <h1 className="font-semibold ">
+                    Identity & Address
+                </h1>
+            </div>
             <div className="md:w-4/6 md:px-4 flex flex-col pt-1 gap-4">
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
                     <h3 className="font-semibold text-sm w-2/6">

@@ -9,9 +9,9 @@ const auth = () => {
     self: apiUrl.user.self
   }
 
-  const self = async () => {
-    const response = await api.get<IApiBaseResponse<IApiBaseUserSelf>>(
-      url.self, { }
+  const self = async (userid:number) => {
+    const response = await api.get<IApiBaseResponse<any>>(
+     `${apiUrl.user.personalData}/${userid}`, { }
     )
 
     return response.data;
