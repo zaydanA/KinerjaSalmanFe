@@ -5,6 +5,8 @@ import { Inter } from 'next/font/google'
 import {NextUIProvider} from "@nextui-org/react";
 import APIProvider from '@/providers/ApiProvider';
 import AuthProvider from '@/providers/AuthProvider';
+import { useAPI, useAuth } from '@/contexts';
+import { useEffect } from 'react';
 
 // import { Toaster } from "react-hot-toast";
 const inter = Inter({ subsets: ['latin'] })
@@ -19,18 +21,27 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  // const { user } = useAuth();
+  // const { navigateToSSO } = useAPI();
+
+  // useEffect(() => {
+  //   if (!user) {
+  //     navigateToSSO();
+  //   }
+  // }, []);
+
   return (
     <html lang="en">
       <body className={`${inter.className} bg-gray-100 fixed h-screen w-screen`}>
-        {/* <APIProvider>
-          <AuthProvider> */}
+        <APIProvider>
+          <AuthProvider>
             <NextUIProvider>
               <div className='h-screen w-screen'>
                 {children}
               </div>
             </NextUIProvider>
-          {/* </AuthProvider>
-        </APIProvider> */}
+          </AuthProvider>
+        </APIProvider>
       </body>
     </html>
   );

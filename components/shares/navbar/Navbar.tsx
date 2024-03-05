@@ -22,7 +22,7 @@ const Navbar =  (props: any) => {
     
     return (
         <div className="w-full h-[60px] bg-white shadow-md md:px-5 font-medium text-gray-500 flex flex-row items-center justify-between border-b-1">
-            <div className='flex items-center h-full md:gap-6 font-mono'>
+            <div className='flex items-center w-3/4 h-full md:gap-6 font-mono'>
                 <Link className='h-full flex' href="/">
                     <Image
                     src="/LogoSalman.svg"
@@ -41,7 +41,7 @@ const Navbar =  (props: any) => {
                     priority
                     />
                 </Link>
-                <div className='flex h-full w-1/3 items-center gap-0 text-sm md:pl-0 pt-2'>
+                <div id="horizontal2" className='flex flex-row h-full w-full items-center md:ml-5 gap-0 text-sm md:pl-0 pt-2 overflow-x-scroll'>
                     {NavbarData.map((page,index)=>(
                         <div key={index} className='flex flex-col h-full hover:bg-gray-100 rounded-t-[25px] cursor-pointer'>
                             <Link className='flex h-full items-center pt-1 px-5' href={`${page.path}`}>{page.title}</Link>
@@ -50,7 +50,9 @@ const Navbar =  (props: any) => {
                     ))}
                 </div>
             </div>
+            <div className='pl-2 w-1/4 h-full w-full'>
                 <ProfileDropdown></ProfileDropdown>
+            </div>
             
         </div>
     )

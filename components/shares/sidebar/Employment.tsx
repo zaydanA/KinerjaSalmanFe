@@ -1,105 +1,123 @@
-import { parseISO, format } from 'date-fns';
-import { utcToZonedTime } from 'date-fns-tz';
-const PersonalData = (props:any)=>{
-
-    const parsedTime = format(utcToZonedTime(parseISO(props.employee.date_of_birth),0),'MMMM d, yyyy');
+const Employment = (props:any) => {
     return(
-        <div className="h-full flex flex-col items md:items-start md:flex-row w-full pt-5">
+        <>
+        <div className="flex min-h-fit pb-10 border-b-1">
+                    <div className="h-full flex flex-col items md:items-start md:flex-row w-full pt-5">
             <div className="flex flex-col md:w-1/6 border-b-1 pb-2 md:border-b-0">
                 <h1 className="font-semibold ">
-                    Personal Data
+                    Employment Data
                 </h1>
                 <p className="text-xs 4/5 text-gray-500">
-                    Your email address is your identity on Kinerja is used to log in.
+                    Your data information related to company.
                 </p>
             </div>
             <div className="md:w-4/6 md:px-4 flex flex-col pt-1 gap-4">
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
                     <h3 className="font-semibold text-sm w-2/6">
-                        Full Name
+                        Company ID
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        {props.employee.full_name?props.employee.full_name:"-"}
+                        ITB
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
                     <h3 className="font-semibold text-sm w-2/6">
-                        Mobile Phone
+                        Emplotee ID
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        {props.employee.phone_number? props.employee.phone_number:"-"}
+                        T001
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
                     <h3 className="font-semibold text-sm w-2/6">
-                        Email
+                        Organization Name
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        {props.employee.email?props.employee.email:"-"}
+                        BOD
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
                     <h3 className="font-semibold text-sm w-2/6">
-                        NPWP
+                        Job Position
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        {props.employee.npwp_number?props.employee.npwp_number:"-"}
+                        CEO
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
                     <h3 className="font-semibold text-sm w-2/6">
-                        Place of Birth
+                        Employment Status
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        {props.employee.place_of_birth?props.employee.place_of_birth:"-"}
+                        -
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
                     <h3 className="font-semibold text-sm w-2/6">
-                        Birthdate
+                        Branch
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        {parsedTime}
+                        Pusat
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
                     <h3 className="font-semibold text-sm w-2/6">
-                        Gender
+                        Join Date
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        {props.employee.gender?props.employee.gender:"-"}
+                        01 Jan 2010
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
                     <h3 className="font-semibold text-sm w-2/6">
-                        Marital Status
+                        Grade
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        {props.employee.marital_status}
+                        -
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
                     <h3 className="font-semibold text-sm w-2/6">
-                        Last Education
+                        Class
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        {props.employee.last_education}
+                        -
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
                     <h3 className="font-semibold text-sm w-2/6">
-                        Religion
+                        Approval Line
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        Islam
+                        -
                     </p>
                 </div>
+            </div>
+            <div className="md:w-1/6">
+                
+            </div>
+        </div>
+        </div>
+        <div className="h-full flex flex-col items md:items-start md:flex-row w-full pt-5">
+            <div className="flex flex-col md:w-1/6 border-b-1 pb-2 md:border-b-0">
+                <h1 className="font-semibold ">
+                    Direct Reports
+                </h1>
+                <p className="text-xs 4/5 text-gray-500">
+                    Employees who need your approval.
+                </p>
+            </div>
+            <div className="md:w-4/6 md:px-4 flex flex-col pt-1 gap-4">
+                <p className="text-sm text-gray-500">
+                    Employee doesn't have direct reports
+                </p>
             </div>
             <div className="md:w-1/6">
         
             </div>
         </div>
+        </>
     )
 }
 
-export default PersonalData;
+export default Employment;

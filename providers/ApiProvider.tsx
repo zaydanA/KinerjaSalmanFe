@@ -71,11 +71,16 @@ export default function APIProvider({ children }: APIProviderProps) {
     }
   };
 
+  const navigateToSSO = () => {
+    navigate.push(process.env.SSO_URL as string)
+  }
+
   return (
     <APIContext.Provider
       value={{
         token: api.defaults.headers.common["Authorization"]?.toString() || null,
         setToken,
+        navigateToSSO
       }}
     >
       {children}

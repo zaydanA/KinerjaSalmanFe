@@ -6,10 +6,10 @@ const BasicInfo = (props:any)=>{
     return(
         <>
                 <div className="flex min-h-fit pb-10 border-b-1">
-                        <PersonalData></PersonalData>
+                        <PersonalData employee={props.employee}></PersonalData>
                 </div>
                 <div className="flex min-h-fit pb-10 border-b-1">
-                        <IdentityAddress></IdentityAddress>
+                        <IdentityAddress employee={props.employee}></IdentityAddress>
                 </div>
         </>
     )
