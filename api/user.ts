@@ -6,7 +6,7 @@ const auth = () => {
   const { apiUrl } = support();
 
   const url = {
-    self: apiUrl.self
+    self: apiUrl.user.self
   }
 
   const self = async () => {

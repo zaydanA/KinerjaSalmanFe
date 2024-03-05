@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = "http://localhost:8000/api/v1/";
+const url = process.env.API_BASE_URL;
 export const api = axios.create({
   baseURL: url,
   withCredentials: true,
@@ -9,11 +9,15 @@ export const api = axios.create({
 export const support = () => {
   const apiUrl = {
     login: '/login',
-    refreshToken: '/refresh_token',
+    refreshToken: '/refresh-token',
     logout: '/logout',
-
     self: '/self',
-    getEmployees: '/employee'
+    employee:'/employee/',
+    user: {
+      self: 'user/self',
+      personalData: 'user/personal-data'
+    },
+
   };
 
   return { apiUrl };

@@ -1,17 +1,38 @@
-import { IApiBaseResponse } from "@/types/http";
-import { api, support } from "./support";
-import { IApiBaseEmployee } from "@/types/employee";
+import { IApiBaseAuthLogin } from '@/types/auth';
+import { api, support } from './support';
+import { IApiBaseResponse } from '@/types/http';
+import { IApiBaseEmployee } from '@/types/employee';
+
 
 const employee = () => {
   const { apiUrl } = support();
 
   const url = {
-    getEmployee: apiUrl.getEmployees,
-  };
+    login: apiUrl.login,
+    refreshToken: apiUrl.refreshToken,
+    logout: apiUrl.logout,
+    employee: apiUrl.employee,
+  }
+
+  const getEmployeeById = async (
+    employeeID :number
+  ) => {
+
+    const response = await api.get<any>(
+      `${url.employee}/${employeeID}`,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+    
+    return response.data;
+  }
 
   const getEmployee = async (q?: string) => {
     const response = await api.get<IApiBaseResponse<IApiBaseEmployee[]>>(
-      url.getEmployee,
+      url.employee,
       {
         params: {
           search: q
@@ -23,8 +44,9 @@ const employee = () => {
   };
 
   return {
-    getEmployee,
-  };
-};
-
+    getEmployeeById,
+    getEmployee
+  }
+}
 export default employee;
+

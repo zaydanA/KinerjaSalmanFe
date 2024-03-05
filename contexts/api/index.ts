@@ -6,6 +6,9 @@ const context = createContext<IApiBaseAPIContext>({
   setToken: () => {
     return undefined;
   },
+  navigateToSSO: () => {
+    return undefined;
+  }
 });
 
 export default context;
