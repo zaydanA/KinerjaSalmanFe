@@ -2,28 +2,30 @@
 import React, { useState, useEffect } from "react";
 import PersonalDataForm from "./personalDataStep";
 import EmployeeDataForm from "./EmployeeDataStep";
+import { IApiBaseEmployee } from "@/types/employee";
+import { apiBase } from '@/api';
 
 interface FormData {
     personalData: {
         firstName: string;
         lastName: string;
         email: string;
-        phoneNumber: number | null;
-        emergencyNumber: number | null;
+        phoneNumber: string | null;
+        emergencyNumber: string | null;
         address: string;
         placeOfBirth: string;
         dateOfBirth: Date | null;
         gender: string;
         maritalStatus: string;
         bloodType: string;
-        identityNumber: number | null;
+        identityNumber: string | null;
         lastEducation: string;
     };
     employeeData: {
         employeeID: string;
         npwpNumber: string | null;
-        deptID: string | null;
-        positionID: string | null,
+        department: string | null;
+        position: string | null,
         joinDate: string | null,
     };
 }
@@ -54,8 +56,8 @@ const AddEmployee = () => {
         employeeData: {
             employeeID: '',
             npwpNumber: null,
-            deptID: null,
-            positionID: null,
+            department: null,
+            position: null,
             joinDate: null,
         },
     });
@@ -63,10 +65,9 @@ const AddEmployee = () => {
     const [isFormValid, setIsFormValid] = useState(false);
 
     const handleNextStep = () => {
-        // if (isFormValid) {
-        //     setStep(step + 1);
-        // }
-        setStep(step + 1);
+        if (isFormValid) {
+            setStep(step + 1);
+        }
     };
 
     const handlePreviousStep = () => {
@@ -84,30 +85,67 @@ const AddEmployee = () => {
         });
     };
 
-    // const isRequiredField = (category, field) => {
-    //     const requiredField = {
-    //         personalData: [ 'firstName', 'lastName', 'email', 'phoneNumber', 'emergencyNumber', 'address', 'placeOfBirth', 'dateOfBirth', 'gender', 'maritalSTatus', 'bloodType', 'identotyNumber', 'lastEducation' ],
-    //         employeeData: [ 'employeeID', 'npwpNumber', 'deptID', 'positionID', 'joinDate' ]
-    //     }
-    //     return requiredField[category]?.includes(field);
-    // }
+    const isRequiredField = (category, field) => {
+        const requiredField = {
+            personalData: [ 'firstName', 'lastName', 'email', 'phoneNumber', 'emergencyNumber', 'address', 'placeOfBirth', 'dateOfBirth', 'gender', 'maritalSTatus', 'bloodType', 'identityNumber', 'lastEducation' ],
+            employeeData: [ 'employeeID', 'npwpNumber', 'deptID', 'positionID', 'joinDate' ]
+        }
+        return requiredField[category]?.includes(field);
+    }
 
-    // const validateForm = () => {
-    //     for (const category in formData){
-    //         for (const field in formData[category]){
-    //             if (isRequiredField(category, field) && formData[category][field] === '') {
-    //                 console.log("selamat4");
-    //                 console.log(category, field);
-    //                 return false;
-    //             }
-    //         }
-    //     }
-    //     return true;
-    // }
+    const validateForm = () => {
+        if (step == 1){
+            for (const field in formData['personalData']){
+                if (isRequiredField('personalData', field) && formData['personalData'][field] === '') {
+                    return false;
+                }
+            }
+        } 
+        if (step == 2){
+            for (const field in formData['employeeData']){
+                if (isRequiredField('employeeData', field) && formData['employeeData'][field] === '') {
+                    return false;
+                }
+            }
+        }
 
-    // useEffect(() => {
-    //     setIsFormValid(validateForm());
-    //   }, [formData]);
+        return true;
+    }
+
+    useEffect(() => {
+        setIsFormValid(validateForm());
+    }, [formData]);
+
+    const handleSubmit = async() => {
+        try {
+            const mappedFormData = {
+                full_name: formData.personalData.firstName + ' ' + formData.personalData.lastName,
+                email: formData.personalData.email,
+                phone_number: formData.personalData.phoneNumber,
+                emergency_number: formData.personalData.emergencyNumber,
+                place_of_birth: formData.personalData.placeOfBirth,
+                date_of_birth: formData.personalData.dateOfBirth,
+                gender: formData.personalData.gender,
+                marital_status: formData.personalData.maritalStatus,
+                blood_type: formData.personalData.bloodType,
+                identity_number: formData.personalData.identityNumber,
+                address: formData.personalData.address,
+                last_education: formData.personalData.lastEducation,
+                employee_id: formData.employeeData.employeeID,
+                npwp_number: formData.employeeData.npwpNumber,
+                dept_id: parseInt(formData.employeeData.department ?? '0'),
+                position_id: parseInt(formData.employeeData.position ?? '0'), 
+                join_date: formData.employeeData.joinDate,
+                password: "abcdef",
+            };
+    
+            console.log("Mapped Form Data", mappedFormData);
+
+            await apiBase().employee().addEmployee(mappedFormData);
+        } catch (error) {
+            throw error;
+        }
+    }
 
 
     return (
@@ -127,8 +165,16 @@ const AddEmployee = () => {
             )}
 
             <div>
-                {step > 1 && <button onClick={handlePreviousStep}>Previous</button>}
-                {step < 2 && <button onClick={handleNextStep}>Next</button>}
+                {step > 1 && 
+                    <button onClick={handlePreviousStep}>Previous</button>}
+                {step < 2 && (
+                    <button onClick={handleNextStep}>Next</button>
+                )} 
+                {step === 2 && (
+                    <button onClick={handleSubmit} >
+                        Submit
+                    </button>
+                )}
             </div>
         </div>
     )

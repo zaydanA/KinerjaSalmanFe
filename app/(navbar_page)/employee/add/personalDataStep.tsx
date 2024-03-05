@@ -1,7 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Gender, BloodType, MaritalStatus, LastEducation } from '@/enums/enums';
 
 const PersonalDataForm = ({ formData, handleChange }) => {
+
+    const [emailError, setEmailError] = useState('');
+
+    const handleEmailChange = (event) => {
+        const { name, value } = event.target;
+        handleChange(name, value);
+
+        if (!isValidEmail(value)) {
+            setEmailError('Please enter a valid email address');
+        } else {
+            setEmailError('');
+        }
+    };
+
+    const isValidEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
     return (
         <div>
             <div>
@@ -27,21 +46,21 @@ const PersonalDataForm = ({ formData, handleChange }) => {
                 </label>
             </div>
             <div>
-                <label>
-                    Email:
-                    <input 
-                    type="text"
+                <label htmlFor="email">Email:</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
                     value={formData.email}
                     onChange={(e) => handleChange('email', e.target.value)}
-                    required>
-                    </input>
-                </label>
+                />
+                {emailError && <p>{emailError}</p>}
             </div>
             <div>
                 <label>
                     Phone Number:
                     <input 
-                    type="number"
+                    type="text"
                     value={formData.phoneNumber}
                     onChange={(e) => handleChange('phoneNumber', e.target.value)}
                     required>
@@ -52,7 +71,7 @@ const PersonalDataForm = ({ formData, handleChange }) => {
                 <label>
                     Emergency Number:
                     <input 
-                    type="number"
+                    type="text"
                     value={formData.emergencyNumber}
                     onChange={(e) => handleChange('emergencyNumber', e.target.value)}
                     required>
@@ -126,7 +145,7 @@ const PersonalDataForm = ({ formData, handleChange }) => {
                 <label>
                     Identity Number:
                     <input 
-                    type="number"
+                    type="text"
                     value={formData.identityNumber}
                     onChange={(e) => handleChange('identityNumber', e.target.value)}
                     required>
