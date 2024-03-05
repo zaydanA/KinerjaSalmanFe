@@ -1,6 +1,8 @@
 import { IApiBaseAuthLogin } from '@/types/auth';
 import { api, support } from './support';
 import { IApiBaseResponse } from '@/types/http';
+import { IApiBaseEmployee } from '@/types/employee';
+
 
 const employee = () => {
   const { apiUrl } = support();
@@ -16,7 +18,7 @@ const employee = () => {
     employeeID :number
   ) => {
 
-    const response = await api.get<IApiBaseResponse<IApiBaseAuthLogin>>(
+    const response = await api.get<any>(
       `${url.employee}/${employeeID}`,
       {
         headers: {
@@ -28,11 +30,23 @@ const employee = () => {
     return response.data;
   }
 
+  const getEmployee = async (q?: string) => {
+    const response = await api.get<IApiBaseResponse<IApiBaseEmployee[]>>(
+      url.employee,
+      {
+        params: {
+          search: q
+        },
+      }
+    );
 
+    return response.data;
+  };
 
   return {
-    getEmployeeById
+    getEmployeeById,
+    getEmployee
   }
 }
-
 export default employee;
+

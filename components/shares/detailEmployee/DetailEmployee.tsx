@@ -69,7 +69,6 @@ const DetailEmployee = (props:any)=>{
     const [activeComponentNavbar, setActiveComponentNavbar] = useState(NavbarComponentData[0].title)
     const [isSidebarOpen,setIsSidebarOpen] = useState(false)
 
-    console.log(props.employee)
 
     return (
         <div className="md:w-full h-fit min-h-[95%] bg-white shadow-md rounded-lg flex border-1 mt-[-1px] md:m-0">

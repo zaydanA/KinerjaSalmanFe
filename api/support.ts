@@ -11,9 +11,8 @@ export const support = () => {
     login: '/login',
     refreshToken: '/refresh_token',
     logout: '/logout',
-
     self: '/self',
-    employee:'/employee'
+    employee:'/employee/'
   };
 
   return { apiUrl };

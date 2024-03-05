@@ -1,4 +1,8 @@
+import { parseISO, format } from 'date-fns';
+import { utcToZonedTime } from 'date-fns-tz';
 const PersonalData = (props:any)=>{
+
+    const parsedTime = format(utcToZonedTime(parseISO(props.employee.date_of_birth),0),'MMMM d, yyyy');
     return(
         <div className="h-full flex flex-col items md:items-start md:flex-row w-full pt-5">
             <div className="flex flex-col md:w-1/6 border-b-1 pb-2 md:border-b-0">
@@ -55,7 +59,7 @@ const PersonalData = (props:any)=>{
                         Birthdate
                     </h3>
                     <p className="text-xs w-4/6 items-center">
-                        {props.employee.date_of_birth}
+                        {parsedTime}
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
