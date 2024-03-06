@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { apiBase } from '@/api';
 import { IApiBasePosition } from '@/types/position';
 import { IApiBaseDepartment } from '@/types/department';
-
+import BaseInputText from '@/components/shares/inputs/BaseInputText';
+import BaseInputDate from '@/components/shares/inputs/BaseInputDate';
+import DropdownInput from '@/components/shares/inputs/DropdownInput';
 
 const EmployeeDataForm = ({ formData, handleChange }) => {
 
@@ -33,63 +35,62 @@ const EmployeeDataForm = ({ formData, handleChange }) => {
     }, []);
 
     return (
-        <div>
-            <div>
-                <label>
-                    Employee ID:
-                    <input 
+        <div className="w-1/2 mx-auto mt-5">
+            <h3 className="text-lg mb-1 font-bold"> Employment Data </h3>
+            <p className="text-gray-500"> Fill all employee data information related to company </p>
+            <div className="mb-2 mt-8">
+                <BaseInputText
+                    id="employeeID"
+                    label="Employee ID :"
+                    placeholder="Employee ID"
                     type="text"
                     value={formData.employeeID}
-                    onChange={(e) => handleChange('employeeID', e.target.value)}
-                    required>
-                    </input>
-                </label>
+                    setValue={(e) => handleChange('employeeID', e.target.value)}
+                />
             </div>
-            <div>
-                <label>
-                    NPWP Number:
-                    <input 
+            <div className="mb-2">
+                 <BaseInputText
+                    id="npwpNumber"
+                    label="NPWP Number :"
+                    placeholder="NPWP Number"
                     type="text"
                     value={formData.npwpNumber}
-                    onChange={(e) => handleChange('npwpNumber', e.target.value)}
-                    required>
-                    </input>
-                </label>
+                    setValue={(e) => handleChange('npwpNumber', e.target.value)}
+                />
             </div>
-            <div>
-                <label>
-                    Department:
-                    <select value={formData.department} onChange={(e) => handleChange('department', e.target.value)}>
-                        <option value=''>Select Department</option>
-                        {departments.map((department) => 
-                        <option key={department.dept_id} value={department.dept_id}>
-                            {department.dept_name}
-                        </option>)}
-                    </select>
-                </label>
+            <div className="mb-2">
+                <DropdownInput
+                    id="department"
+                    label="Department :"
+                    options= {departments.map(department => ({ value: String(department.dept_id), label: department.dept_name }))}
+                    selectedValue={formData.department}
+                    onChange={(e) => handleChange('department', e.target.value)}
+                />
             </div>
-            <div>
-                <label>
-                    Position:
-                    <select value={formData.position} onChange={(e) => handleChange('position', e.target.value)}>
-                        <option value=''>Select Position</option>
-                        {positions.map((position) => 
-                        <option key={position.position_id} value={position.position_id}>
-                            {position.title}
-                        </option>)}
-                    </select>
-                </label>
+            <div className="mb-2">
+                <DropdownInput
+                    id="position"
+                    label="Position :"
+                    options= {positions.map(position => ({ value: String(position.position_id), label: position.title }))}
+                    selectedValue={formData.position}
+                    onChange={(e) => handleChange('department', e.target.value)}
+                />
             </div>
-            <div>
-                <label>
-                    Join Date:
-                    <input 
-                    type="date"
+            <div className="mb-2">
+                <BaseInputDate
+                    id="joinDate"
+                    label="Join Date :"
                     value={formData.joinDate}
-                    onChange={(e) => handleChange('joinDate', e.target.value)}
-                    required>
-                    </input>
-                </label>
+                    setValue={(e) => handleChange('joinDate', e.target.value)}
+                />
+            </div>
+            <div className="mb-2">
+                <BaseInputDate
+                    id="resignDate"
+                    label="Resign Date :"
+                    value={formData.resignDate}
+                    setValue={(e) => handleChange('resignDate', e.target.value)}
+                />
             </div>
         </div>
     )
