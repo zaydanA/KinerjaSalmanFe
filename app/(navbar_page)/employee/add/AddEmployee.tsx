@@ -25,8 +25,9 @@ interface FormData {
         employeeID: string;
         npwpNumber: string | null;
         department: string | null;
-        position: string | null,
-        joinDate: string | null,
+        position: string | null;
+        joinDate: string | null;
+        resignDate: string |null;
     };
 }
 
@@ -59,13 +60,18 @@ const AddEmployee = () => {
             department: null,
             position: null,
             joinDate: null,
+            resignDate: null,
         },
     });
+
+    console.log("data: ", formData)
 
     const [isFormValid, setIsFormValid] = useState(false);
 
     const handleNextStep = () => {
+        console.log("hai")
         if (isFormValid) {
+            console.log("hai2")
             setStep(step + 1);
         }
     };
@@ -149,29 +155,54 @@ const AddEmployee = () => {
 
 
     return (
-        <div>
-            { step == 1 && (
+        <div className="container mx-auto my-8">
+            <h2 className="text-lg mb-1 text-gray-500"> Employee </h2>
+            <h1 className="text-2xl font-bold mb-4"> Add Employee </h1>
+
+            <ul className="flex justify-between w-1/2 mx-auto">
+                <li className={`flex flex-col items-center step ${step >= 1 ? 'checked' : ''}`}>
+                    <div>
+                        <span className={`${step >= 1 ? 'circle-lg' : 'circle'}`}>1</span>
+                    </div>
+                    <div>Personal data</div>
+                </li>
+                <li className={`flex flex-col items-center step ${step >= 2 ? 'checked' : ''}`}>
+                    <div>
+                        <span className={`${step >= 2 ? 'circle-lg' : 'circle'}`}>2</span>
+                    </div>
+                    <div>Employment data</div>
+                </li>
+                <li className={`flex flex-col items-center step ${step >= 3? 'checked' : ''}`}>
+                    <div>
+                        <span className={`${step === 3 ? 'circle-lg' : 'circle'}`}>3</span>
+                    </div>
+                    <div>Payroll data</div>
+                </li>
+            </ul>
+
+
+            { step === 1 && (
                 <PersonalDataForm
-                formData={formData.personalData}
-                handleChange={(name, value) => handleChange({category: 'personalData', name, value})}
-            />
+                    formData={formData.personalData}
+                    handleChange={(name, value) => handleChange({category: 'personalData', name, value})}
+                />
             )}
 
-            { step == 2 && (
+            { step === 2 && (
                 <EmployeeDataForm
-                formData={formData.employeeData}
-                handleChange={(name, value) => handleChange({category: 'employeeData', name, value})}
-            />
+                    formData={formData.employeeData}
+                    handleChange={(name, value) => handleChange({category: 'employeeData', name, value})}
+                />
             )}
 
-            <div>
+            <div className="flex justify-end mt-8 w-1/2 mx-auto">
                 {step > 1 && 
-                    <button onClick={handlePreviousStep}>Previous</button>}
-                {step < 2 && (
-                    <button onClick={handleNextStep}>Next</button>
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4" onClick={handlePreviousStep}>Previous</button>}
+                {step < 3 && (
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleNextStep}>Next</button>
                 )} 
-                {step === 2 && (
-                    <button onClick={handleSubmit} >
+                {step === 3 && (
+                    <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onClick={handleSubmit} >
                         Submit
                     </button>
                 )}
