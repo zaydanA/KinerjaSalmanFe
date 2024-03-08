@@ -8,7 +8,7 @@ export type BaseInputType = {
   label: string;
   placeholder?: string;
   disabled?: boolean;
-  type?: "number" | "text" | "password" | "password-no-eye";
+  type?: "number" | "text" | "password" | "password-no-eye" | "date";
   value: string;
   error?: string;
   setValue: (event: ChangeEvent<HTMLInputElement>) => void;
