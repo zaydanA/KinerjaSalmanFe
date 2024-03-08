@@ -1,9 +1,9 @@
 import auth from "./auth"
 import user from "./user"
 import error from './error';
-
-import employee from './employee';
-
+import employee from "./employee";
+import position from "./position";
+import department from "./department";
 
 export const apiBase = () => {
   return {
@@ -11,5 +11,7 @@ export const apiBase = () => {
     user,
     error,
     employee,
+    position,
+    department,
   }
 }

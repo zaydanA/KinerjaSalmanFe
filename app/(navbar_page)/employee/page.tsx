@@ -1,7 +1,15 @@
 import EmployeeList from "@/components/privates/employees/EmployeeList";
 
-const page = () => {
+import React from "react";
+import Employee from "./Employee";
 
+const page = ()=>{
+
+    return (        
+        <div className="w-full">
+          <Employee>
+
+          </Employee>
   return (
     <div className="flex h-full m-10 p-4 flex-col gap-5 border bg-white rounded-lg">
       <div className="flex justify-between">

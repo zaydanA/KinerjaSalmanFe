@@ -12,6 +12,7 @@ const employee = () => {
     refreshToken: apiUrl.refreshToken,
     logout: apiUrl.logout,
     employee: apiUrl.employee,
+    addEmployee: apiUrl.addEmployee,
   }
 
   const getEmployeeById = async (
@@ -43,10 +44,30 @@ const employee = () => {
     return response.data;
   };
 
+  const addEmployee = async (data: any) => {
+    try {
+      const response = await api.post<IApiBaseResponse<IApiBaseEmployee>>(
+        url.addEmployee,
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      return response.data;
+    } catch (error){
+      throw error;
+    }
+  }
+
   return {
     getEmployeeById,
-    getEmployee
-  }
-}
+    getEmployee,
+    addEmployee
+  };
+};
+
 export default employee;
 
