@@ -1,39 +1,21 @@
 import { apiBase } from "@/api";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { AuthContext, useAPI } from "@/contexts";
-import { IApiBaseUserSelf } from "@/types/user";
+import { IUserSelfData } from "@/types/user";
 
 interface AuthProviderProps {
   children: React.ReactNode;
 }
 
 export default function AuthProvider({ children }: AuthProviderProps) {
-  const navigate = useRouter();
-
-  const { setToken } = useAPI();
-  const [user, setUser] = useState<IApiBaseUserSelf | null>(null);
-
-  const login = async (username: string, password: string) => {
-    const res = await apiBase().auth().login(username, password);
-    if (res.status === "success") {
-      
-      // Set token to header
-      setToken(res.data.token);
-      setUser(res.data.user);
-      navigate.push("/");
-    }
-
-    return res;
-  };
+  const { setToken, navigateToSSO } = useAPI();
+  const [user, setUser] = useState<IUserSelfData | null>(null);
 
   const refreshToken = async () => {
     const res = await apiBase().auth().refreshToken();
 
     if (res.status === "success") {
       setToken(res.data.token);
-      // setIsLoading(false);
-
       try {
         await self();
       } catch (error) {
@@ -56,25 +38,16 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     if (res.status === "success") {
       setToken(null);
       setUser(null);
-      navigate.push("/login");
+      navigateToSSO();
     }
   };
 
   useEffect(() => {
     const fetchRefreshToken = async () => {
-      if (location.pathname === "/login" || location.pathname === "/register") {
-        // setIsLoading(false);
-
-        if (user) {
-          navigate.push("/");
-        }
-      } else {
-        try {
-          await refreshToken();
-        } catch (error) {
-          // setIsLoading(false);
-          navigate.push("/login");
-        }
+      try {
+        await refreshToken();
+      } catch (error) {
+        navigateToSSO();
       }
     };
 
@@ -85,7 +58,6 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     <AuthContext.Provider
       value={{
         user,
-        login,
         refreshToken,
         self,
         logout,
