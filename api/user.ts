@@ -11,7 +11,7 @@ const auth = () => {
 
   const self = async (userid:number) => {
     const response = await api.get<IApiBaseResponse<any>>(
-     `${apiUrl.user.self}/${userid}`, { }
+     `${apiUrl.user.self}`, { }
     )
 
     return response.data;
