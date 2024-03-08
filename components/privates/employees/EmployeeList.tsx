@@ -5,55 +5,88 @@ import { apiBase } from "@/api";
 import React, { useEffect, useState } from "react";
 import { IApiBaseEmployee } from "@/types/employee";
 import Search from "@/components/shares/search/Search";
+import { IApiBaseDepartment } from "@/types/department";
+import { IApiBasePosition } from "@/types/position";
+import { lib } from "@/lib";
+import Filter from "./Filter";
+import Pagination from "@/components/shares/pagination/Pagination";
+import { useRouter } from "next/navigation";
 
 const EmployeeList = () => {
+  const api = apiBase()
+  const customLib = lib();
+  const router = useRouter();
+
   const [currentEmployees, setCurrentEmployees] = useState<IApiBaseEmployee[]>(
     []
   );
+  const [currentDepartments, setCurrentDepartments] = useState<IApiBaseDepartment[]>([])
+  const [currentPositions, setCurrentPositions] = useState<IApiBasePosition[]>([])
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPage, setTotalPage] = useState<number>(0);
+
+  const [selectDepartment, setSelectDepartment] = useState([""])
+  const [selectPosition, setSelectPosition] = useState([""])
+  const [selectStatus, setSelectStatus] = useState([""])
 
   const [searchValue, setSearchValue] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(searchValue);
-        const employees = await apiBase().employee().getEmployee(searchValue);
-        console.log(employees.data.data);
+        console.log(selectDepartment)
+        console.log(selectPosition)
+        console.log(selectStatus)
+        const employees = await api.employee().getEmployee(searchValue);
+        const departments = await api.department().getDepartment();
+        const positions = await api.position().getPosition();
+
         setCurrentEmployees(employees.data.data);
+        setCurrentDepartments(departments.data);
+        setCurrentPositions(positions.data);
+        setTotalPage(employees.data.total);
       } catch (error) {
         console.error(error);
       }
     };
 
     fetchData();
-  }, [searchValue]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchValue, selectDepartment, selectPosition, selectStatus]);
 
-  const getSearchValue = (q: string) => {
-    console.log(q);
-  };
+  const onPageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  }
 
   const header = [
     "Employee",
-    "Divisi",
+    "Department",
+    "Position",
     "Employment Status",
     "Join Date",
-    "End Date",
+    "Resign Date",
     "Birth Date",
-    "Address",
     "Phone",
     "Gender",
-    "Marital Status",
   ];
 
   return (
     <>
+      <div className="flex justify-between">
+        <h1 className=" text-xl font-bold">Employees</h1>
+        <button onClick={() => router.push('employee/add')} >Add Employee</button>
+      </div>
       <div className="flex w-full justify-between">
-        <p>Filter</p>
+        <div className="flex gap-5">
+        <Filter label="Employment Status" filterContent={["Active", "Unactive"]} handler={setSelectStatus}/>
+        <Filter label="Department" filterContent={currentDepartments.map((d) => {return d.dept_name})} handler={setSelectDepartment}/>
+        <Filter label="Position" filterContent={currentPositions.map((p) => {return p.title})} handler={setSelectPosition}/>
+        </div>
         <Search
           placeholder="Search employees.."
           setSearchValue={setSearchValue}
         />
-        {/* <p>Search</p> */}
       </div>
       <div className=" border-1 rounded-lg overflow-x-scroll">
         <table className=" w-full">
@@ -64,15 +97,14 @@ const EmployeeList = () => {
                 "https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png",
                 e.full_name,
                 e.email,
-                e.dept.dept_name,
-                "Active" ,
-                String(e.join_date),
-                String(e.resign_date),
-                String(e.date_of_birth),
-                "Kavling AL",
+                currentDepartments.find((d) => d.dept_id == e.dept_id)?.dept_name,
+                currentPositions.find((p) => p.position_id == e.position_id)?.title,
+                e.status == 1 ? "Active" : "Inactive",
+                customLib.formatDate(String(e.join_date)),
+                e.resign_date ? customLib.formatDate(String(e.resign_date)) : "-",
+                customLib.formatDate(String(e.date_of_birth)),
                 e.phone_number,
                 e.gender,
-                "Married",
               ];
               return (
                 <TableData
@@ -85,6 +117,12 @@ const EmployeeList = () => {
             })}
           </tbody>
         </table>
+      </div>
+      <div>
+        <Pagination 
+          currentPage={currentPage}
+          totalPage={totalPage}
+          onPageChange={onPageChange} />
       </div>
     </>
   );

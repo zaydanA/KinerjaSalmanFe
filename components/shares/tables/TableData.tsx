@@ -10,7 +10,7 @@ const TableData = ({
   onClickAction,
   isProfile,
 }: {
-  dataContent: string[];
+  dataContent: (string | number | undefined)[];
   onClickAction?: () => void;
   isProfile: boolean;
 }) => {
@@ -19,7 +19,7 @@ const TableData = ({
       <div className="flex items-center pr-3.5">
         <div className="w-10 h-10">
           {/* Change to <Image /> from NextJS */}
-          <img alt="profile picture" src={dataContent[0]} />
+          <img alt="profile picture" src={dataContent[0]?.toString()} />
         </div>
         <div className="flex flex-col">
           <p>{dataContent[1]}</p>
