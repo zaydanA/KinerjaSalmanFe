@@ -51,7 +51,7 @@ export default function BaseInputText({
           value={value}
           onChange={setValue}
           disabled={disabled}
-          className={`text-xs rounded shadow-input outline-none w-full py-1 px-2 box-border transition-all ease-in-out bg-clr-background-base-two text-sm placeholder-clr-text-primary-darken ${
+          className={`bg-white text-xs rounded shadow-input outline-none w-full py-1 px-2 border-gray-400 transition-all ease-in-out bg-clr-background-base-two text-sm placeholder-clr-text-primary-darken ${
             error
               ? "shadow-input-error focus:shadow-input-focus-error"
               : "hover:shadow-input-hover focus:shadow-input-focus"

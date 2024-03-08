@@ -13,7 +13,7 @@ const TableHeader = ({
       <tr>
         {headers.map((h, index) =>
           index == 0 ? (
-            <th key={index} className=" sticky left-0 shadow-slate-500">
+            <th key={index} className=" sticky left-0 px-3.5">
               {h}
             </th>
           ) : (

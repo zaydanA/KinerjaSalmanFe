@@ -8,9 +8,10 @@ const BasicInfo = (props:any)=>{
 
         useEffect(()=>{
             async function getEmployeeById(){
-                const employee = await apiBase().user().self(1);
+                const res = await apiBase().user().personalData(1);
                 
-                setEmployee(employee.data);
+                setEmployee(res.data);
+                console.log(res.data);
             }   
             getEmployeeById()
         },[])
