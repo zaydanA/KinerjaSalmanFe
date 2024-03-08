@@ -21,27 +21,18 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  // const { user } = useAuth();
-  // const { navigateToSSO } = useAPI();
-
-  // useEffect(() => {
-  //   if (!user) {
-  //     navigateToSSO();
-  //   }
-  // }, []);
-
   return (
     <html lang="en">
       <body className={`${inter.className} bg-gray-100 fixed h-screen w-screen`}>
-        {/* <APIProvider>
-          <AuthProvider> */}
+        <APIProvider>
+          <AuthProvider>
             <NextUIProvider>
               <div className='h-screen w-screen'>
                 {children}
               </div>
             </NextUIProvider>
-          {/* </AuthProvider>
-        </APIProvider> */}
+          </AuthProvider>
+        </APIProvider>
       </body>
     </html>
   );

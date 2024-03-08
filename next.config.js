@@ -2,6 +2,7 @@
 const nextConfig = { }
 
 module.exports = {
+  reactStrictMode: false,
   env: {
     API_BASE_URL: "http://localhost:8000/api/v1",
 

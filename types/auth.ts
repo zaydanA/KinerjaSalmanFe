@@ -1,18 +1,13 @@
 import { IApiBaseResponse } from "./http"
-import { IApiBaseUserSelf } from "./user"
+import { IUserSelfData } from "./user"
 
 export type IApiBaseAuthLogin = {
-  user: IApiBaseUserSelf
+  user: IUserSelfData
   token: string
 }
 
 export type IApiBaseAuthContext = {
-  user: IApiBaseUserSelf | null
-
-  login: (
-    username: string, 
-    password: string
-  ) => Promise<IApiBaseResponse<IApiBaseAuthLogin>>
+  user: IUserSelfData | null
 
   refreshToken: () => Promise<void>
 
