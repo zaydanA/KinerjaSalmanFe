@@ -16,14 +16,14 @@ import { apiBase } from "@/api";
 const page = ()=>{
     const [employee,setEmployee] = useState<any>({})
 
-    useEffect(()=>{
-        async function getEmployeeById(){
-            const employee = await apiBase().employee().getEmployeeById(1);
+    // useEffect(()=>{
+    //     async function getEmployeeById(){
+    //         const employee = await apiBase().employee().getEmployeeById(1);
             
-            setEmployee(employee.data);
-        }   
-        getEmployeeById()
-    },[])
+    //         setEmployee(employee.data);
+    //     }   
+    //     getEmployeeById()
+    // },[])
     return (
         <DetailEmployee employee={employee}></DetailEmployee>
     )

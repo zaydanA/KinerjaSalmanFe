@@ -1,4 +1,11 @@
+import { useEffect } from "react";
+
 const Employment = (props:any) => {
+
+    useEffect(()=>{
+        
+    },[])
+
     return(
         <>
         <div className="flex min-h-fit pb-10 border-b-1">
