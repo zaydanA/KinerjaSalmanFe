@@ -1,4 +1,4 @@
-import { IApiBaseUserSelf } from "@/types/user";
+// import { IApiBaseUserSelf } from "@/types/user";
 import { api, support } from "./support";
 import { IApiBaseResponse } from "@/types/http";
 
@@ -11,7 +11,15 @@ const auth = () => {
 
   const self = async (userid:number) => {
     const response = await api.get<IApiBaseResponse<any>>(
-     `${apiUrl.user.personalData}/${userid}`, { }
+     `${apiUrl.user.self}/${userid}`, { }
+    )
+
+    return response.data;
+  }
+
+  const personalData = async (userid:number) => {
+    const response = await api.get<IApiBaseResponse<any>>(
+      `${apiUrl.user.personalData}/${userid}`,{}
     )
 
     return response.data;
@@ -19,6 +27,7 @@ const auth = () => {
 
   return {
     self,
+    personalData,
   }
 }
 
