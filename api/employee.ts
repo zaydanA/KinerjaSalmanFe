@@ -2,6 +2,7 @@ import { IApiBaseAuthLogin } from '@/types/auth';
 import { api, support } from './support';
 import { IApiBaseResponse } from '@/types/http';
 import { IApiBaseEmployee } from '@/types/employee';
+import { IApiEmployeeResponse } from '@/types/employee'
 
 
 const employee = () => {
@@ -32,7 +33,7 @@ const employee = () => {
   }
 
   const getEmployee = async (q?: string) => {
-    const response = await api.get<IApiBaseResponse<IApiBaseEmployee[]>>(
+    const response = await api.get<IApiBaseResponse<IApiEmployeeResponse>>(
       url.employee,
       {
         params: {

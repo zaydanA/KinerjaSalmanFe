@@ -1,6 +1,6 @@
 import React from "react";
 
-const Pagination = ({currentPage, totalPages, onPageChange}) => {
+const Pagination = ({currentPage, totalPage, onPageChange} : {currentPage: number, totalPage: number, onPageChange: (page: number) => void}) => {
     const handlePrevious = () => {
         if (currentPage > 1) {
             onPageChange(currentPage - 1);
@@ -8,7 +8,7 @@ const Pagination = ({currentPage, totalPages, onPageChange}) => {
     }
 
     const handleNext = () => {
-        if (currentPage < totalPages) {
+        if (currentPage < totalPage) {
             onPageChange(currentPage + 1);
         }
     }
@@ -19,14 +19,14 @@ const Pagination = ({currentPage, totalPages, onPageChange}) => {
                 <button onClick={handlePrevious} disabled={currentPage === 1}>
                     Previous
                 </button>
-                {[...Array(totalPages).keys()].map((pageNumber) => (
+                {[...Array(totalPage).keys()].map((pageNumber) => (
                     <li key={pageNumber + 1}>
                         <button onClick={() => onPageChange(pageNumber + 1)}>
                             {pageNumber + 1}
                         </button>
                     </li>
                 ))}
-                <button onClick={handleNext} disabled={currentPage === totalPages}>
+                <button onClick={handleNext} disabled={currentPage === totalPage}>
                     Next
                 </button>
             </ul>
