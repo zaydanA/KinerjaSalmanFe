@@ -160,25 +160,26 @@ const AddEmployee = () => {
             <h1 className="text-2xl font-bold mb-4"> Add Employee </h1>
 
             <ul className="flex justify-between w-1/2 mx-auto">
-                <li className={`flex flex-col items-center step ${step >= 1 ? 'checked' : ''}`}>
-                    <div>
-                        <span className={`${step >= 1 ? 'circle-lg' : 'circle'}`}>1</span>
-                    </div>
-                    <div>Personal data</div>
-                </li>
-                <li className={`flex flex-col items-center step ${step >= 2 ? 'checked' : ''}`}>
-                    <div>
-                        <span className={`${step >= 2 ? 'circle-lg' : 'circle'}`}>2</span>
-                    </div>
-                    <div>Employment data</div>
-                </li>
-                <li className={`flex flex-col items-center step ${step >= 3? 'checked' : ''}`}>
-                    <div>
-                        <span className={`${step === 3 ? 'circle-lg' : 'circle'}`}>3</span>
-                    </div>
-                    <div>Payroll data</div>
-                </li>
-            </ul>
+  <li className={`flex flex-col items-center justify-center step ${step >= 1 ? 'checked' : ''}`}>
+    <div className={`relative rounded-full h-8 w-8 flex items-center justify-center ${step === 1 ? 'bg-black text-white' : 'bg-transparent border-3 border-black'}`}>
+      <span className={`${step >= 1 ? 'circle-lg' : 'circle'}`}>1</span>
+    </div>
+    <div>Personal data</div>
+  </li>
+  <li className={`flex flex-col items-center justify-center step ${step >= 2 ? 'checked' : ''}`}>
+    <div className={`relative rounded-full h-8 w-8 flex items-center justify-center ${step === 2 ? 'bg-black text-white' : 'bg-transparent border-3 border-black'}`}>
+      <span className={`${step >= 2 ? 'circle-lg' : 'circle'}`}>2</span>
+    </div>
+    <div>Employment data</div>
+  </li>
+  <li className={`flex flex-col items-center justify-center step ${step >= 3 ? 'checked' : ''}`}>
+    <div className={`relative rounded-full h-8 w-8 flex items-center justify-center ${step === 3 ? 'bg-black text-white' : 'bg-transparent border-3 border-black'}`}>
+      <span className={`${step === 3 ? 'circle-lg' : 'circle'}`}>3</span>
+    </div>
+    <div>Payroll data</div>
+  </li>
+</ul>
+
 
 
             { step === 1 && (
