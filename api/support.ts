@@ -12,6 +12,9 @@ export const support = () => {
     refreshToken: '/refresh-token',
     logout: '/logout',
     self: '/self',
+    addEmployee: '/employee',
+    getPosition: '/position',
+    getDepartment: '/department',
     employee:'/employee/',
     user: {
       self: 'user/self',
