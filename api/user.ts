@@ -8,6 +8,7 @@ const auth = () => {
 
   const url = {
     self: apiUrl.user.self,
+    personalData: apiUrl.user.personalData,
     delete: apiUrl.user.delete
   }
 
@@ -21,7 +22,7 @@ const auth = () => {
 
   const personalData = async (user_id:number) => {
     const response = await api.get<IApiBaseResponse<any>>(
-      `${apiUrl.user.personalData}/${user_id}`,{}
+      `${url.personalData}/${user_id}`,{}
     )
 
     return response.data;

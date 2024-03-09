@@ -1,34 +1,60 @@
 import { apiBase } from "@/api";
-import { api, support } from "@/api/support";
+import { api, support, url } from "@/api/support";
 import { APIContext } from "@/contexts";
-import { AxiosRequestHeaders } from "axios";
-import { useRouter } from "next/navigation";
+import axios, { AxiosRequestHeaders } from "axios";
 import { JwtPayload, jwtDecode } from "jwt-decode";
 import dayjs from "dayjs";
+import { IApiBaseResponse } from "@/types/http";
+import { IApiBaseAuthRefreshToken } from "@/types/auth";
 
 interface APIProviderProps {
   children: React.ReactNode;
 }
 
-export default function APIProvider({ children }: APIProviderProps) {
+export default function APIProvider({ children }: APIProviderProps) {  
   api.interceptors.request.use(
-    async (config) => {
-      const accessToken = api.defaults.headers.common["Authorization"]?.toString() || "";
-      
+    async (config) => {      
+      const accessToken = api.defaults.headers.common["Authorization"]?.toString();
+
       if (!accessToken) {
+        const res = await axios.post<IApiBaseResponse<IApiBaseAuthRefreshToken>>(
+          `${url}/refresh-token`,
+          {},
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            withCredentials: true
+          }
+        );
+        if (res.data.status === 'success') {
+          config.headers.Authorization = `Bearer ${res.data.data.token}`;
+          setToken(res.data.data.token);
+        }
+
         return config;
       }
       
       const decoded = jwtDecode<JwtPayload>(accessToken);
 
       const expirationTime = decoded.exp ? dayjs.unix(decoded.exp) : undefined;
-      const isExpired = expirationTime ? expirationTime.diff(dayjs(), 'second') < 0 : false;
+      const isExpired = expirationTime ? expirationTime.diff(dayjs(), 'second') < 0 : true;
 
       if (!isExpired) return config;
 
-      const res = await apiBase().auth().refreshToken();
-      if (res.status === "success") {
-        setToken(accessToken);
+      const res = await axios.post<IApiBaseResponse<IApiBaseAuthRefreshToken>>(
+        `${url}/refresh-token`,
+        {},
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          withCredentials: true
+        }
+      );
+      if (res.data.status === 'success') {
+        config.headers.Authorization = `Bearer ${res.data.data.token}`;
+        setToken(`Bearer ${res.data.data.token}`);
       }
 
       return config;
@@ -39,7 +65,6 @@ export default function APIProvider({ children }: APIProviderProps) {
   );
 
   const { apiUrl } = support();
-  const navigate = useRouter();
 
   // api.interceptors.response.use(
   //   (response) => {
@@ -85,7 +110,7 @@ export default function APIProvider({ children }: APIProviderProps) {
   };
 
   const navigateToSSO = () => {
-    navigate.push(process.env.SSO_URL as string)
+    window.location.href = process.env.SSO_URL as string
   }
 
   return (

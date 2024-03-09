@@ -3,7 +3,7 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { PiWarningCircle } from "react-icons/pi";
 
-export type BaseInputType = {
+type BaseInputType = {
   id: string;
   label: string;
   placeholder?: string;
