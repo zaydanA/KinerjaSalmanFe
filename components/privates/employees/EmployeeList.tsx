@@ -74,6 +74,15 @@ const EmployeeList = () => {
     setCurrentPage(pageNumber);
   }
 
+  const handleDelete = async (id: string) => {
+    try {
+      await api.user().deleteUser(parseInt(id))
+      setCurrentEmployees(prevEmployee => prevEmployee.filter(employee => employee.employee_id !== id))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   const header = [
     "Employee",
     "Department",
@@ -125,7 +134,8 @@ const EmployeeList = () => {
                 <TableData
                   key={index}
                   dataContent={dataContent}
-                  onClickAction={() => console.log()}
+                  onClickEdit={() => router.push('employee/' + e.user_id)}
+                  onClickDelete={() => handleDelete('3')}
                   isProfile={true}
                 />
               );

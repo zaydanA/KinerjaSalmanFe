@@ -1,6 +1,5 @@
 "use client";
 import React, {useState} from "react";
-import { BsThreeDots } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
 import { AiFillDelete } from "react-icons/ai";
 
@@ -50,13 +49,15 @@ const TableData = ({
         )
       )}
       {onClickEdit && onClickDelete ? (
-      <td className="sticky right-0 bg-white text-center flex justify-center items-center gap-2">
-        <button onClick={onClickEdit} aria-label="Edit">
-          <FiEdit />
-        </button>
-        <button onClick={onClickDelete} aria-label="Delete">
-          <AiFillDelete />
-        </button>
+      <td className="sticky right-0 px-3.5">
+        <div className=" flex gap-5">
+          <button onClick={onClickEdit} aria-label="Edit">
+            <FiEdit />
+          </button>
+          <button onClick={onClickDelete} aria-label="Delete">
+            <AiFillDelete />
+          </button>
+        </div>
       </td>
       ) : (
         ''
