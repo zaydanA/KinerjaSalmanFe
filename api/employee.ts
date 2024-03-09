@@ -32,12 +32,17 @@ const employee = () => {
     return response.data;
   }
 
-  const getEmployee = async (q?: string) => {
+  const getEmployee = async (page: number, limit: number, q?: string | null, status?: string[] | undefined, department?: number[] | undefined, position?: number[] | undefined) => {
     const response = await api.get<IApiBaseResponse<IApiEmployeeResponse>>(
       url.employee,
       {
         params: {
-          search: q
+          page: page,
+          limit: limit,
+          search: q,
+          status: status,
+          department: department,
+          position: position,
         },
       }
     );
