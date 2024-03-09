@@ -1,5 +1,5 @@
 'use client'
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
 
 const Filter = (
@@ -23,7 +23,7 @@ const Filter = (
     }
   };
 
-  useMemo(
+  useEffect(
     () => handler(checkedValues),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [checkedValues]
