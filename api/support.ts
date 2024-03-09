@@ -18,7 +18,8 @@ export const support = () => {
     employee:'/employee/',
     user: {
       self: 'user/self',
-      personalData: 'user/personal-data'
+      personalData: 'user/personal-data',
+      delete: 'user/delete'
     },
 
   };
