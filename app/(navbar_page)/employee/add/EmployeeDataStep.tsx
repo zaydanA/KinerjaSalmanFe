@@ -49,16 +49,6 @@ const EmployeeDataForm = ({ formData, handleChange }) => {
                 />
             </div>
             <div className="mb-2">
-                 <BaseInputText
-                    id="npwpNumber"
-                    label="NPWP Number :"
-                    placeholder="NPWP Number"
-                    type="text"
-                    value={formData.npwpNumber}
-                    setValue={(e) => handleChange('npwpNumber', e.target.value)}
-                />
-            </div>
-            <div className="mb-2">
                 <DropdownInput
                     id="department"
                     label="Department :"
@@ -73,7 +63,7 @@ const EmployeeDataForm = ({ formData, handleChange }) => {
                     label="Position :"
                     options= {positions.map(position => ({ value: String(position.position_id), label: position.title }))}
                     selectedValue={formData.position}
-                    onChange={(e) => handleChange('department', e.target.value)}
+                    onChange={(e) => handleChange('position', e.target.value)}
                 />
             </div>
             <div className="mb-2">
