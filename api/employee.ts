@@ -1,7 +1,7 @@
 import { IApiBaseAuthLogin } from '@/types/auth';
 import { api, support } from './support';
 import { IApiBaseResponse } from '@/types/http';
-import { IApiBaseEmployee } from '@/types/employee';
+import { IApiAddEmployee, IApiBaseEmployee } from '@/types/employee';
 import { IApiEmployeeResponse } from '@/types/employee'
 
 
@@ -47,7 +47,7 @@ const employee = () => {
 
   const addEmployee = async (data: any) => {
     try {
-      const response = await api.post<IApiBaseResponse<IApiBaseEmployee>>(
+      const response = await api.post<IApiBaseResponse<IApiAddEmployee>>(
         url.addEmployee,
         data,
         {
