@@ -1,6 +1,6 @@
 import { api, support } from './support';
 import { IApiBaseResponse } from '@/types/http';
-import { IApiBaseEmployee, IApiGenderData } from '@/types/employee';
+import { IApiAddEmployee, IApiBaseEmployee } from '@/types/employee';
 import { IApiEmployeeResponse } from '@/types/employee'
 
 
@@ -47,17 +47,19 @@ const employee = () => {
   };
 
   const addEmployee = async (data: any) => {
-    const response = await api.post<IApiBaseResponse<IApiBaseEmployee>>(
-      url.addEmployee,
-      data,
-      {
-        headers: {
-          'Content-Type': 'application/json'
+    try {
+      const response = await api.post<IApiBaseResponse<IApiAddEmployee>>(
+        url.addEmployee,
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
         }
-      }
-    );
+      );
 
     return response.data;
+    }
   }
 
   return {
