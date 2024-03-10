@@ -47,19 +47,17 @@ const employee = () => {
   };
 
   const addEmployee = async (data: any) => {
-    try {
-      const response = await api.post<IApiBaseResponse<IApiAddEmployee>>(
-        url.addEmployee,
-        data,
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          }
+    const response = await api.post<IApiBaseResponse<IApiAddEmployee>>(
+      url.addEmployee,
+      data,
+      {
+        headers: {
+          'Content-Type': 'application/json'
         }
-      );
+      }
+    );
 
     return response.data;
-    }
   }
 
   return {
