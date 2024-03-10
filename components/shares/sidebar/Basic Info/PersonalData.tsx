@@ -1,5 +1,5 @@
 import {useState,useEffect,useMemo} from "react"
-import BaseInputText from '../../inputs/BaseInputText';
+import BaseInputText from '../../inputs/BaseInputTextProfile';
 import { useInput } from '@/hooks/useInput';
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Spinner } from '@nextui-org/react';
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";

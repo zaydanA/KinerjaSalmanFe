@@ -9,11 +9,10 @@ const employee = () => {
   const { apiUrl } = support();
 
   const url = {
-    login: apiUrl.login,
-    refreshToken: apiUrl.refreshToken,
-    logout: apiUrl.logout,
-    employee: apiUrl.employee,
-    addEmployee: apiUrl.addEmployee,
+    employee: apiUrl.employee.employee,
+    addEmployee: apiUrl.employee.employee,
+
+    gender: apiUrl.employee.gender
   }
 
   const getEmployeeById = async (
@@ -32,12 +31,17 @@ const employee = () => {
     return response.data;
   }
 
-  const getEmployee = async (q?: string) => {
+  const getEmployee = async (page: number, limit: number, q?: string | null, status?: string[] | undefined, department?: number[] | undefined, position?: number[] | undefined) => {
     const response = await api.get<IApiBaseResponse<IApiEmployeeResponse>>(
       url.employee,
       {
         params: {
-          search: q
+          page: page,
+          limit: limit,
+          search: q,
+          status: status,
+          department: department,
+          position: position,
         },
       }
     );
@@ -57,16 +61,25 @@ const employee = () => {
         }
       );
 
-      return response.data;
-    } catch (error){
-      throw error;
+    return response.data;
     }
+  }
+
+  const getGenders = async () => {
+    const response = await api.get<IApiBaseResponse<IApiGenderData[]>>(
+      url.gender,
+      {}
+    )
+
+    return response.data;
   }
 
   return {
     getEmployeeById,
     getEmployee,
-    addEmployee
+    addEmployee,
+
+    getGenders
   };
 };
 

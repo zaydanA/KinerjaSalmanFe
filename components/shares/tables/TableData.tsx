@@ -1,19 +1,24 @@
 "use client";
-import React from "react";
-import { BsThreeDots } from "react-icons/bs";
-// import Image from "next/image";
+import React, {useState} from "react";
+import { FiEdit } from "react-icons/fi";
+import { AiFillDelete } from "react-icons/ai";
 
-// Normal : [Data1, ..., DataN]
-// isProfile : [Image, Name, Subname, Data1, ..., DataN]
+
 const TableData = ({
   dataContent,
-  onClickAction,
+  onClickEdit, 
+  onClickDelete,
   isProfile,
-}: {
+}: 
+
+{
   dataContent: (string | number | undefined)[];
-  onClickAction?: () => void;
+  onClickEdit?: () => void;
+  onClickDelete?: () => void;
   isProfile: boolean;
-}) => {
+}) => 
+
+{
   const profileColumn = (
     <td className="sticky left-0 flex">
       <div className="flex items-center pr-3.5">
@@ -28,9 +33,10 @@ const TableData = ({
       </div>
     </td>
   );
+
   return (
     <tr>
-      {profileColumn}
+      {isProfile ? profileColumn : null}
       {dataContent.slice(isProfile ? 3 : 0).map((data, index) =>
         index == 0 && !isProfile ? (
           <td key={index} className="sticky left-0">
@@ -42,14 +48,19 @@ const TableData = ({
           </td>
         )
       )}
-      {onClickAction ? (
-        <td className="sticky right-0 text-center px-5">
-          <button>
-            <BsThreeDots />
+      {onClickEdit && onClickDelete ? (
+      <td className="sticky right-0 px-3.5">
+        <div className=" flex gap-5">
+          <button onClick={onClickEdit} aria-label="Edit">
+            <FiEdit />
           </button>
-        </td>
+          <button onClick={onClickDelete} aria-label="Delete">
+            <AiFillDelete />
+          </button>
+        </div>
+      </td>
       ) : (
-        ""
+        ''
       )}
     </tr>
   );

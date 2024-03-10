@@ -5,27 +5,9 @@ import { createContext, useContext } from "react";
 const context = createContext<IApiBaseAuthContext>({
   user: null,
 
-  login: async () => {
-    const loginResponse: IApiBaseResponse<IApiBaseAuthLogin> = {
-      data: {
-        user: {
-          user_id: -1,
-          full_name: "",
-          email: "",
-          position_id: -1
-        },
-        token: ""
-      },
-      status: "success",
-      message: 'Login successful',
-    };
-
-    return Promise.resolve(loginResponse);
-  },
-
-  refreshToken: async () => {
-    return undefined;
-  },
+  // refreshToken: async () => {
+  //   return undefined;
+  // },
 
   self: async () => {
     return undefined;

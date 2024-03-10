@@ -4,6 +4,15 @@
 //   payroll_data: IUserPayrollData
 // }
 
+export interface IUserSelfData {
+  user_id: number
+  email: string
+  full_name: string
+  position: {
+    title: string
+  }
+}
+
 export interface IUserPersonalData {
   email: string
   full_name: string

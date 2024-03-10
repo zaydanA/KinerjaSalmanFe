@@ -3,7 +3,7 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { PiWarningCircle } from "react-icons/pi";
 
-type BaseInputType = {
+export type BaseInputType = {
   id: string;
   label: string;
   placeholder?: string;
@@ -56,12 +56,12 @@ export default function BaseInputText({
           value={value}
           onChange={setValue}
           disabled={disabled}
-          className={`rounded shadow-input outline-none w-full box-border px-3 py-3.5 transition-all ease-in-out bg-clr-background-base-two text-sm placeholder-clr-text-primary-darken ${
+          className={`rounded shadow-input outline-none w-full box-border px-2 py-1 transition-all ease-in-out bg-clr-background-base-two text-sm placeholder-clr-text-primary-darken ${
             error
               ? "shadow-input-error focus:shadow-input-focus-error"
               : "hover:shadow-input-hover focus:shadow-input-focus"
           }
-          ${disabled ? "bg-clr-background-base-one" : ""}`}
+          ${disabled ? "bg-clr-background-base-one bg-white" : " bg-gray-50"}`}
         />
 
         {needEye && (
