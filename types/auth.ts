@@ -6,10 +6,14 @@ export type IApiBaseAuthLogin = {
   token: string
 }
 
+export type IApiBaseAuthRefreshToken = {
+  token: string
+}
+
 export type IApiBaseAuthContext = {
   user: IUserSelfData | null
 
-  refreshToken: () => Promise<void>
+  // refreshToken: () => Promise<void>
 
   self: () => Promise<void>
 

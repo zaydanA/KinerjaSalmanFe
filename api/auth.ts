@@ -1,4 +1,4 @@
-import { IApiBaseAuthLogin } from '@/types/auth';
+import { IApiBaseAuthLogin, IApiBaseAuthRefreshToken } from '@/types/auth';
 import { api, support } from './support';
 import { IApiBaseResponse } from '@/types/http';
 
@@ -33,7 +33,7 @@ const auth = () => {
   }
 
   const refreshToken = async () => {
-    const res = await api.post<IApiBaseResponse<IApiBaseAuthLogin>>(
+    const res = await api.post<IApiBaseResponse<IApiBaseAuthRefreshToken>>(
       url.refreshToken,
       {},
       {
