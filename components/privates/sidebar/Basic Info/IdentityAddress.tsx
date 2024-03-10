@@ -1,6 +1,6 @@
 import { useInput } from "@/hooks/useInput";
 import { useEffect, useState } from "react"
-import BaseInputText from "../../inputs/BaseInputText";
+import BaseInputText from "../../../shares/inputs/BaseInputTextProfile";
 
 const IdentityAddress = (props:any)=>{
     

@@ -1,5 +1,5 @@
 "use client"
-import Sidebar from "@/components/shares/sidebar/Sidebar";
+import Sidebar from "@/components/privates/sidebar/Sidebar";
 import { Avatar } from "@nextui-org/react";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
 import { CiUser } from "react-icons/ci";
@@ -8,10 +8,8 @@ import { PiCalculatorThin } from "react-icons/pi";
 import React from "react";
 import {Breadcrumbs, BreadcrumbItem} from "@nextui-org/react";
 import { IoMenuOutline,IoCloseOutline } from "react-icons/io5";
-import Personal from "@/components/shares/sidebar/Personal";
-import Employment from "@/components/shares/sidebar/Employment";
-import { apiBase } from "@/api";
-import { usePathname } from "next/navigation";
+import Personal from "@/components/privates/sidebar/Personal";
+import Employment from "@/components/privates/sidebar/Employment";
 const SidebarData = [
     {
         title:"General",
@@ -57,10 +55,6 @@ const NavbarComponentData = [
         title:"Emergency Contact",
     }
     ]
-
-const Role = (role_id:number)=>{
-    role_id === 1? "CEO" : role_id === 2? "Role 2" : ""
-}
 
 
 const DetailEmployee = (props:any)=>{

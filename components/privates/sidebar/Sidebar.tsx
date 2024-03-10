@@ -15,9 +15,9 @@ const Sidebar =  (props: any) => {
     const [user,setUser] = useState("-");
     useEffect(()=>{
         async function getUser(){
-            const res = await apiBase().user().self(1);
+            // const res = await apiBase().user().self(1);
             
-            setUser(res.data);
+            // setUser(res.data);
             // console.log(res.data);
         }   
         getUser()

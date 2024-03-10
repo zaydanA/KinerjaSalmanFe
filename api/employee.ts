@@ -16,22 +16,6 @@ const employee = () => {
     addEmployee: apiUrl.addEmployee,
   }
 
-  const getEmployeeById = async (
-    employeeID :number
-  ) => {
-
-    const response = await api.get<any>(
-      `${url.employee}/${employeeID}`,
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    )
-    
-    return response.data;
-  }
-
   const getEmployee = async (q?: string) => {
     const response = await api.get<IApiBaseResponse<IApiEmployeeResponse>>(
       url.employee,
@@ -64,7 +48,6 @@ const employee = () => {
   }
 
   return {
-    getEmployeeById,
     getEmployee,
     addEmployee
   };
