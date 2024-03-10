@@ -1,4 +1,3 @@
-import { IApiBaseAuthLogin } from '@/types/auth';
 import { api, support } from './support';
 import { IApiBaseResponse } from '@/types/http';
 import { IApiBaseEmployee, IApiGenderData } from '@/types/employee';
@@ -9,10 +8,8 @@ const employee = () => {
   const { apiUrl } = support();
 
   const url = {
-    employee: apiUrl.employee.employee,
-    addEmployee: apiUrl.employee.employee,
-
-    gender: apiUrl.employee.gender
+    employee: apiUrl.employee,
+    addEmployee: apiUrl.employee,
   }
 
   const getEmployeeById = async (
@@ -63,21 +60,10 @@ const employee = () => {
     return response.data;
   }
 
-  const getGenders = async () => {
-    const response = await api.get<IApiBaseResponse<IApiGenderData[]>>(
-      url.gender,
-      {}
-    )
-
-    return response.data;
-  }
-
   return {
     getEmployeeById,
     getEmployee,
     addEmployee,
-
-    getGenders
   };
 };
 
