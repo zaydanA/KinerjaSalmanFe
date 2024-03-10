@@ -13,7 +13,11 @@ interface Props {
 }
 
 const GenderDiversityChart: React.FC<Props> = ({ genderData }) => {
-  const colorData = ["#009BDE", "EE8CA5"];
+  const colorDataReal = ["#009BDE", "#EE8CA5"]
+  const colorData = [
+    "bg-graph01",
+    "bg-graph02",
+  ]
 
   return(
     <>
@@ -25,7 +29,7 @@ const GenderDiversityChart: React.FC<Props> = ({ genderData }) => {
               {
                 label: "Count",
                 data: genderData.map((data) => data.value),
-                backgroundColor: colorData.map((data) => data),
+                backgroundColor: colorDataReal.map((data) => data),
               }
             ]
           }}
@@ -33,14 +37,14 @@ const GenderDiversityChart: React.FC<Props> = ({ genderData }) => {
       </div>
       <div className='flex flex-col gap-4 px-10 text-xs mt-2'>
         {genderData.map((data, index) => (
-          <div key={index} className='flex justify-between items-center'>
+          <div key={index} className='grid grid-cols-2 items-center'>
             <div className='flex gap-2 items-center'>
-              <span className={`round-lg bg-[${colorData[index]}] w-2 h-2 rounded-sm`}>&nbsp;</span>
+              <span className={`round-lg ${colorData[index]} w-2 h-2 rounded-sm`}>&nbsp;</span>
               <p className='font-semibold'>{data.label}</p>
             </div>
-            <div className='flex gap-4 items-center text-gray-500 font-normal'>
-              <p>{data.value}</p>
-              <p>{data.percentage}%</p>
+            <div className='flex justify-end items-center text-gray-500 font-normal'>
+              <p className='text-end mr-6'>{data.value}</p>
+              <p className='w-10 text-start'>{data.percentage}%</p>
             </div>
           </div>
         ))}
