@@ -1,14 +1,36 @@
 "use client"
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Avatar, User} from "@nextui-org/react";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import Link from "next/link";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdOutlineCorporateFare } from "react-icons/md";
 import { GoSignOut } from "react-icons/go";
+import { useAuth } from "@/contexts";
+import { IUserSelfData } from "@/types/user";
 
-const ProfileDropdown = (props:any) => {
+
+const ProfileDropdown = () => {
     const [isDropdownActive,setIsDropdownActive] = useState(false);
+    const { user, logout } = useAuth();
+
+    const handleLogout = async (e: FormEvent) => {
+        e.preventDefault();
+
+        try {
+            await logout();
+        } catch (error) {
+            // apiBaseError.set(error);
+
+            // dispatch(
+            //     addNotification({
+            //     message: apiBaseError.getMessage(),
+            //     type: 'danger',
+            //     }),
+            // );
+        }
+    };
+
     return(
         <div className="flex items-center gap-4 bg-white h-full justify-end">
                  <Dropdown placement="bottom-end">
@@ -27,9 +49,9 @@ const ProfileDropdown = (props:any) => {
                     <DropdownMenu aria-label="Profile Actions" variant="flat">
                     <DropdownItem key="profile" className="h-16 border-b-2 rounded-b-none">
                         <Link className="h-full w-full" href="/profile">
-                            <p className="font-semibold">Bagas Jawir wir wir</p>
-                            <p className="font-light text-[12px] text-gray-500">13521081@std.stei.itb.ac.id</p>
-                            <p className="font-light text-[12px] text-gray-500">Manager</p>
+                            <p className="font-semibold">{user?.full_name}</p>
+                            <p className="font-light text-[12px] text-gray-500">{user?.email}</p>
+                            <p className="font-light text-[12px] text-gray-500">{user?.position.title}</p>
                         </Link>
                     </DropdownItem>
                     <DropdownItem key="settings">
@@ -44,10 +66,10 @@ const ProfileDropdown = (props:any) => {
                             <Link href="/company">Company Settings</Link>
                         </div>
                     </DropdownItem>
-                    <DropdownItem key="logout" color="danger">
+                    <DropdownItem key="logout" color="danger" onClick={handleLogout}>
                         <div className="flex h-full items-center align-center gap-2">
                             <GoSignOut />
-                            <Link href="/">Log out</Link>
+                            <div>Log out</div>
                         </div>
                     </DropdownItem>
                     </DropdownMenu>

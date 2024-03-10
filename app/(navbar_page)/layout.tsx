@@ -14,6 +14,7 @@ export default function RootLayout({
             {children}
           <footer className="z-20 bg-gray-100 text-xs font-extralight flex justify-center p-5 relative">© 2024 Talenta.co - Advanced Payroll Automation & HR Solution</footer>
         </div>
+        <footer className="z-20 bg-gray-100 text-xs font-extralight flex justify-center p-5 relative">© 2024 Talenta.co - Advanced Payroll Automation & HR Solution</footer>
       </div>
     );
   }

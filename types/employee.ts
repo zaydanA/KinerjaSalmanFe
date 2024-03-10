@@ -19,3 +19,9 @@ export type IApiEmployeeResponse = {
   last_page: number,
   data: IApiBaseEmployee[]
 }
+
+export interface IApiGenderData {
+  label: string,
+  value: number,
+  percentage: number
+}

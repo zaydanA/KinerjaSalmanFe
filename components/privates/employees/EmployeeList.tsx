@@ -2,7 +2,7 @@
 import TableData from "@/components/shares/tables/TableData";
 import TableHeader from "@/components/shares/tables/TableHeader";
 import { apiBase } from "@/api";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { IApiBaseEmployee } from "@/types/employee";
 import Search from "@/components/shares/search/Search";
 import { IApiBaseDepartment } from "@/types/department";
@@ -26,9 +26,9 @@ const EmployeeList = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState<number>(0);
 
-  const [selectDepartment, setSelectDepartment] = useState([""])
-  const [selectPosition, setSelectPosition] = useState([""])
-  const [selectStatus, setSelectStatus] = useState([""])
+  const [selectDepartment, setSelectDepartment] = useState<string[] | undefined>()
+  const [selectPosition, setSelectPosition] = useState<string[] | undefined>()
+  const [selectStatus, setSelectStatus] = useState<string[] | undefined>()
 
   const [searchValue, setSearchValue] = useState<string>("");
 
@@ -38,7 +38,8 @@ const EmployeeList = () => {
         console.log(selectDepartment)
         console.log(selectPosition)
         console.log(selectStatus)
-        const employees = await api.employee().getEmployee(searchValue);
+        
+        const employees = await api.employee().getEmployee(currentPage, 10);
         const departments = await api.department().getDepartment();
         const positions = await api.position().getPosition();
 
@@ -53,10 +54,33 @@ const EmployeeList = () => {
 
     fetchData();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchValue, selectDepartment, selectPosition, selectStatus]);
+  }, []);
+
+  useMemo( async () => {
+    const deptIds = selectDepartment && currentDepartments.filter(d => selectDepartment.includes(d.dept_name)).map(d => d.dept_id)
+    const posIds = selectPosition && currentPositions.filter(p => selectPosition.includes(p.title)).map(p => p.position_id)
+
+    try {
+      const employees = await api.employee().getEmployee(currentPage, 10 ,searchValue, selectStatus, deptIds, posIds);
+      setCurrentEmployees(employees.data.data);
+      setTotalPage(employees.data.total);
+    } catch (error) {
+      console.error(error)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchValue, selectDepartment, selectPosition, selectStatus, currentPage])
 
   const onPageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
+  }
+
+  const handleDelete = async (id: string) => {
+    try {
+      await api.user().deleteUser(parseInt(id))
+      setCurrentEmployees(prevEmployee => prevEmployee.filter(employee => employee.employee_id !== id))
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   const header = [
@@ -110,7 +134,8 @@ const EmployeeList = () => {
                 <TableData
                   key={index}
                   dataContent={dataContent}
-                  onClickAction={() => console.log()}
+                  onClickEdit={() => router.push('employee/' + e.user_id)}
+                  onClickDelete={() => handleDelete('3')}
                   isProfile={true}
                 />
               );

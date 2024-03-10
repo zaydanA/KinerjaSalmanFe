@@ -21,12 +21,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  // const { user } = useAuth();
-  // const { navigateToSSO } = useAPI();
-
+  const { user } = useAuth();
+  const { navigateToSSO } = useAPI();
+  
   // useEffect(() => {
   //   if (!user) {
-  //     navigateToSSO();
+  //     console.log("navigate")
+  //     window.location.href = 'http://localhost:8080'
   //   }
   // }, []);
 

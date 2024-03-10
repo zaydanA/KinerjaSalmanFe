@@ -1,46 +1,30 @@
 import { apiBase } from "@/api";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { AuthContext, useAPI } from "@/contexts";
-import { IApiBaseUserSelf } from "@/types/user";
+import { IUserSelfData } from "@/types/user";
+import { Spinner } from "@nextui-org/react";
 
 interface AuthProviderProps {
   children: React.ReactNode;
 }
 
 export default function AuthProvider({ children }: AuthProviderProps) {
-  const navigate = useRouter();
+  const { setToken, navigateToSSO } = useAPI();
+  const [user, setUser] = useState<IUserSelfData | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const { setToken } = useAPI();
-  const [user, setUser] = useState<IApiBaseUserSelf | null>(null);
+  // const refreshToken = async () => {
+  //   const res = await apiBase().auth().refreshToken();
 
-  const login = async (username: string, password: string) => {
-    const res = await apiBase().auth().login(username, password);
-    if (res.status === "success") {
-      
-      // Set token to header
-      setToken(res.data.token);
-      setUser(res.data.user);
-      navigate.push("/");
-    }
-
-    return res;
-  };
-
-  const refreshToken = async () => {
-    const res = await apiBase().auth().refreshToken();
-
-    if (res.status === "success") {
-      setToken(res.data.token);
-      // setIsLoading(false);
-
-      try {
-        await self();
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
+  //   if (res.status === "success") {
+  //     setToken(res.data.token);
+  //     try {
+  //       await self();
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
 
   const self = async () => {
     const res = await apiBase().user().self();
@@ -56,42 +40,39 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     if (res.status === "success") {
       setToken(null);
       setUser(null);
-      navigate.push("/login");
+      navigateToSSO();
     }
   };
 
   useEffect(() => {
-    const fetchRefreshToken = async () => {
-      if (location.pathname === "/login" || location.pathname === "/register") {
-        // setIsLoading(false);
-
-        if (user) {
-          navigate.push("/");
-        }
-      } else {
-        try {
-          await refreshToken();
-        } catch (error) {
-          // setIsLoading(false);
-          navigate.push("/login");
-        }
+    const fetchSelf = async () => {
+      try {
+        await self();
+        setIsLoading(false);
+      } catch (error) {
+        navigateToSSO();
       }
     };
 
-    fetchRefreshToken();
+    fetchSelf();
   }, []);
 
   return (
     <AuthContext.Provider
       value={{
         user,
-        login,
-        refreshToken,
+        // refreshToken,
         self,
         logout,
       }}
     >
-      {children}
+      {isLoading ? (
+        <div className='flex w-full h-full justify-center items-center'>
+          <Spinner color="default" size="lg"/>
+        </div>
+      ) : (
+        children
+      )}
     </AuthContext.Provider>
   );
 }

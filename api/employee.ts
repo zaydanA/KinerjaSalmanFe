@@ -1,7 +1,7 @@
 import { IApiBaseAuthLogin } from '@/types/auth';
 import { api, support } from './support';
 import { IApiBaseResponse } from '@/types/http';
-import { IApiBaseEmployee } from '@/types/employee';
+import { IApiBaseEmployee, IApiGenderData } from '@/types/employee';
 import { IApiEmployeeResponse } from '@/types/employee'
 
 
@@ -9,11 +9,10 @@ const employee = () => {
   const { apiUrl } = support();
 
   const url = {
-    login: apiUrl.login,
-    refreshToken: apiUrl.refreshToken,
-    logout: apiUrl.logout,
-    employee: apiUrl.employee,
-    addEmployee: apiUrl.addEmployee,
+    employee: apiUrl.employee.employee,
+    addEmployee: apiUrl.employee.employee,
+
+    gender: apiUrl.employee.gender
   }
 
   const getEmployee = async (q?: string) => {
@@ -21,7 +20,12 @@ const employee = () => {
       url.employee,
       {
         params: {
-          search: q
+          page: 1,
+          limit: 1,
+          search: q,
+          status: status,
+          // department: department,
+          // position: position,
         },
       }
     );
@@ -30,26 +34,33 @@ const employee = () => {
   };
 
   const addEmployee = async (data: any) => {
-    try {
-      const response = await api.post<IApiBaseResponse<IApiBaseEmployee>>(
-        url.addEmployee,
-        data,
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          }
+    const response = await api.post<IApiBaseResponse<IApiBaseEmployee>>(
+      url.addEmployee,
+      data,
+      {
+        headers: {
+          'Content-Type': 'application/json'
         }
-      );
+      }
+    );
 
-      return response.data;
-    } catch (error){
-      throw error;
-    }
+    return response.data;
+  }
+
+  const getGenders = async () => {
+    const response = await api.get<IApiBaseResponse<IApiGenderData[]>>(
+      url.gender,
+      {}
+    )
+
+    return response.data;
   }
 
   return {
     getEmployee,
-    addEmployee
+    addEmployee,
+
+    getGenders
   };
 };
 
