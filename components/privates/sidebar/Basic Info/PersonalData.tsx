@@ -1,5 +1,5 @@
 import {useState,useEffect,useMemo} from "react"
-import BaseInputText from '../../inputs/BaseInputTextProfile';
+import BaseInputText from '../../../shares/inputs/BaseInputTextProfile';
 import { useInput } from '@/hooks/useInput';
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Spinner } from '@nextui-org/react';
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -7,54 +7,57 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { apiBase } from "@/api";
+import { IUserPersonalData } from "@/types/user";
+import { IApiBaseError } from "@/types/http";
 
 const gender = ["M","F"];
 const MaritalStatus = ["SINGLE","MARRIED","WIDOW","WIDOWER"]
 const LastEducation = ["TIDAK_SEKOLAH","SD","SMP","SMA_SMK","D3","S1","S2","S3"]
-const newTheme = (theme:any) => createTheme({
-    ...theme,
-    components: {
-      MuiDateCalendar: {
-        styleOverrides: {
-          root: {
-            color: '#957c54',
-            borderRadius: 8,
-            borderWidth: 0,
-            borderColor: '#FFFFFF',
-            // border: '1px solid',
-            backgroundColor: '#FFFFFF',
-          }
-        }
-      },
-      MuiPickersDay: {
-        styleOverrides: {
-          today: {
-            color: '#1565c0',
-            borderRadius: 20,
-            borderWidth: 1,
-            // borderColor: '#2196f3',
-            border: '1px solid',
-            backgroundColor: '#000000',
-          }
-        }
-        }
-    }
-  })
+const BloodType = ["A","B","O","AB"]
+// const newTheme = (theme:any) => createTheme({
+//     ...theme,
+//     components: {
+//       MuiDateCalendar: {
+//         styleOverrides: {
+//           root: {
+//             color: '#957c54',
+//             borderRadius: 8,
+//             borderWidth: 0,
+//             borderColor: '#FFFFFF',
+//             // border: '1px solid',
+//             backgroundColor: '#FFFFFF',
+//           }
+//         }
+//       },
+//     //   MuiPickersDay: {
+//     //     styleOverrides: {
+//     //       today: {
+//     //         color: '#1565c0',
+//     //         borderRadius: 20,
+//     //         borderWidth: 1,
+//     //         // borderColor: '#2196f3',
+//     //         border: '1px solid',
+//     //         backgroundColor: '#000000',
+//     //       }
+//     //     }
+//     //     }
+//     }
+//   })
 const PersonalData = (props:any)=>{
 
-    const tempBirthdate = props.employee.date_of_birth &&  props.employee.date_of_birth.split('T')[0];
-    console.log(tempBirthdate);
     const [isEditPersonal,setIsEditPersonal] = useState<boolean>(false)
     const [fullName,setFullName] = useInput("-");
     const [mobilePhone,setMobilePhone] = useInput("-");
     const [email,setEmail] = useInput("-");
     const [npwp,setNPWP] = useInput("-");
     const [placeOfBirth,setPlaceOfBirth] = useInput("-");
-    const [birthdate,setBirthdate] = useState('-')
+    const [birthdate,setBirthdate] = useState<string>('-')
 
     const [selectedKeysGender, setSelectedKeysGender] = useState<any>(new Set(["-"]));
     const [selectedKeysMarital, setSelectedKeysMarital] = useState<any>(new Set(["-"]));
     const [selectedKeysEducation, setSelectedKeysEducation] = useState<any>(new Set(["-"]));
+    const [selectedKeysBloodType, setSelectedKeysBloodType] = useState<any>(new Set(["-"]));
 
     const selectedValueGender = useMemo(
       () => Array.from(selectedKeysGender).join(", ").replaceAll("_", " "),
@@ -69,10 +72,43 @@ const PersonalData = (props:any)=>{
       () => Array.from(selectedKeysEducation).join(", ").replaceAll("_", " "),
       [selectedKeysEducation]
     );
+    const selectedValueBloodType = useMemo(
+      () => Array.from(selectedKeysBloodType).join(", ").replaceAll("_", " "),
+      [selectedKeysBloodType]
+    );
 
+    const apiBaseError = apiBase().error<IApiBaseError>();
 
+    const updatePersonalData = async () => {
+
+        const personalData : IUserPersonalData = {
+            email: email,
+            full_name: fullName,
+            phone_number: mobilePhone,
+            emergency_number: props.employee.emergency_number,
+            place_of_birth: placeOfBirth,
+            date_of_birth: new Date(birthdate),
+            gender: selectedValueGender,
+            marital_status: selectedValueMarital,
+            blood_type: selectedValueBloodType !== "-"? selectedValueBloodType : "",
+            identity_number: props.employee.identity_number,
+            address: props.employee.address,
+            last_education: props.employee.last_education,
+            status:props.employee.status
+        }
+        try {
+            const response = await apiBase().user().updatePersonalData(1,personalData)
+            // console.log(response)
+            // setIsEditPersonal(false);
+        } catch (error) {
+            apiBaseError.set(error)
+        }
+    }
+    // console.log(apiBase().error().getMessage());
+
+    const tempBirthdate = props.employee.date_of_birth &&  props.employee.date_of_birth.split('T')[0];
     useEffect(()=>{
-        props.employee.date_of_birth && setBirthdate(tempBirthdate);
+        // props.employee.date_of_birth && setBirthdate(tempBirthdate);
         props.employee.full_name && setFullName(props.employee.full_name)
         props.employee.phone_number && setMobilePhone(props.employee.phone_number)
         props.employee.email && setEmail(props.employee.email)
@@ -81,7 +117,9 @@ const PersonalData = (props:any)=>{
         props.employee.gender && setSelectedKeysGender(new Set([props.employee.gender]))
         props.employee.marital_status && setSelectedKeysMarital(new Set([props.employee.marital_status]));
         props.employee.last_education && setSelectedKeysEducation(new Set([props.employee.last_education]));
-        
+        props.employee.blood_type && setSelectedKeysBloodType(new Set([props.employee.blood_type]));
+        props.employee.date_of_birth && setBirthdate(tempBirthdate)
+        // console.log(tempBirthdate);
     },[props.employee])
 
     const CancelChange = ()=>{
@@ -93,14 +131,9 @@ const PersonalData = (props:any)=>{
         props.employee.gender && setSelectedKeysGender(new Set([props.employee.gender]))
         props.employee.marital_status && setSelectedKeysMarital(new Set([props.employee.marital_status]));
         props.employee.last_education && setSelectedKeysEducation(new Set([props.employee.last_education]));
-        tempBirthdate && setBirthdate(tempBirthdate);
+        props.employee.blood_type && setSelectedKeysBloodType(new Set([props.employee.blood_type]));
+        props.employee.date_of_birth && setBirthdate(tempBirthdate);
     }
-
-    const datePickerStyle = {
-        width: '200px',
-        height: '50px', // Adjust the height as needed
-        margin: '10px',
-      };
 
     return(
         <>
@@ -127,7 +160,15 @@ const PersonalData = (props:any)=>{
                         Mobile Phone
                     </h3>
                     <div className='w-4/6'>
-                        {<BaseInputText value={mobilePhone} id={"fullname"} label="" disabled={!isEditPersonal} setValue={setMobilePhone}></BaseInputText>}
+                        <BaseInputText 
+                            value={mobilePhone} 
+                            id={"fullname"} 
+                            label="" 
+                            disabled={!isEditPersonal} 
+                            setValue={setMobilePhone}
+                            error={apiBaseError.getErrors('phone_number')?.[0].toString()}
+                        />
+                        {/* {<BaseInputText value={mobilePhone} id={"fullname"} label="" disabled={!isEditPersonal} setValue={setMobilePhone} error={apiBase().error().getErrors(`phone_number`)?.[0].toString()}></BaseInputText>} */}
                     </div>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
@@ -135,7 +176,14 @@ const PersonalData = (props:any)=>{
                         Email
                     </h3>
                     <div className='w-4/6'>
-                        {<BaseInputText value={email} id={"fullname"} label="" disabled={!isEditPersonal} setValue={setEmail}></BaseInputText>}
+                        <BaseInputText 
+                            value={email} 
+                            id={"fullname"} 
+                            label="" 
+                            disabled={true} 
+                            setValue={setEmail}
+                            
+                        />
                     </div>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
@@ -159,19 +207,23 @@ const PersonalData = (props:any)=>{
                         Birthdate
                     </h3>
                     <div className='w-4/6'>
-                    <ThemeProvider theme={newTheme}>
+                    {/* <ThemeProvider theme={newTheme}> */}
                     {isEditPersonal ? <LocalizationProvider dateAdapter={AdapterDayjs}>
                         {<DatePicker
-                            defaultValue={dayjs(tempBirthdate)}
-                            onChange={(newValue:any) => {setBirthdate(newValue)
-                            console.log(newValue.$d)}}
+                            defaultValue={dayjs(birthdate)}
+                            onChange={(newValue:any) => {
+                            const middlewareBirthdate = `${newValue.$d.getFullYear()}-${newValue.$d.getMonth()+1 < 10? "0"+(newValue.$d.getMonth()+1):newValue.$d.getMonth()+1}-${newValue.$d.getDate()}`
+                            setBirthdate(middlewareBirthdate)
+                            console.log(middlewareBirthdate)
+                        
+                        }}
                             slotProps={{ textField: { size: 'small' } }}
                             />}
                     </LocalizationProvider>
                     :<p className="px-2 text-xs w-4/6 items-center">
-                        {tempBirthdate?tempBirthdate:"-"}
+                        {props.employee.date_of_birth?birthdate:"-"}
                     </p> }
-                    </ThemeProvider>
+                    {/* </ThemeProvider> */}
                     </div>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
@@ -204,7 +256,7 @@ const PersonalData = (props:any)=>{
                     </Dropdown>
                     </div>
                     : <p className="px-2 text-xs w-4/6 items-center">
-                        {props.employee.gender?props.employee.gender:"-"}
+                        {props.employee.gender?selectedValueGender:"-"}
                     </p> }
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
@@ -237,7 +289,7 @@ const PersonalData = (props:any)=>{
                     </Dropdown>
                     </div>
                     : <p className="px-2 text-xs w-4/6 items-center">
-                        {props.employee.marital_status?props.employee.marital_status:"-"}
+                        {props.employee.marital_status?selectedValueMarital:"-"}
                     </p> }
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
@@ -270,16 +322,42 @@ const PersonalData = (props:any)=>{
                     </Dropdown>
                     </div>
                     : <p className="px-2 text-xs w-4/6 items-center">
-                        {props.employee.last_education?props.employee.last_education:"-"}
+                        {props.employee.last_education?selectedValueEducation:"-"}
                     </p> }
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
                     <h3 className="font-semibold text-sm w-2/6">
-                        Religion
+                        Blood Type
                     </h3>
-                    <p className="px-2 text-xs w-4/6 items-center">
-                        Islam
-                    </p>
+                    {isEditPersonal?     
+                    <div  className='w-4/6'>
+                    <Dropdown>
+                        <DropdownTrigger className='h-[25px] text-[12px] w-[3px] border-[--kinerja-gold-hover-border] border-1'>
+                            <Button 
+                            variant="bordered" 
+                            className="capitalize"
+                            >
+                            {selectedValueBloodType}
+                            </Button>
+                        </DropdownTrigger>
+                        <DropdownMenu 
+                            aria-label="Single selection example"
+                            variant="flat"
+                            disallowEmptySelection
+                            selectionMode="single"
+                            selectedKeys={selectedKeysBloodType}
+                            onSelectionChange={setSelectedKeysBloodType}
+                            >
+                            {BloodType.map((blood)=>(
+                                <DropdownItem key={blood}>{blood}</DropdownItem>
+                            ))}
+                    </DropdownMenu>
+                    </Dropdown>
+                    </div>
+                    : <p className="px-2 text-xs w-4/6 items-center">
+                        {props.employee.blood_type?selectedValueBloodType:"-"}
+                    </p> }
+                
                 </div>
 
                 {isEditPersonal && 
@@ -290,7 +368,10 @@ const PersonalData = (props:any)=>{
                             }}>
                             Cancel
                         </button>
-                        <button className="text-gray-500 border-2 rounded-lg font-mono px-2 bg-[--kinerja-gold] hover:bg-[--kinerja-gold-hover] text-white px-0 md:px-3">
+                        <button onClick={()=>{
+                            updatePersonalData();
+                            
+                        }} className="text-gray-500 border-2 rounded-lg font-mono px-2 bg-[--kinerja-gold] hover:bg-[--kinerja-gold-hover] text-white px-0 md:px-3">
                             Save Changes
                         </button>
                     </div>}

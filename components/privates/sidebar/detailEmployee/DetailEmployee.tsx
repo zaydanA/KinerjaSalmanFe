@@ -1,5 +1,5 @@
 "use client"
-import Sidebar from "@/components/shares/sidebar/Sidebar";
+import Sidebar from "@/components/privates/sidebar/Sidebar";
 import { Avatar } from "@nextui-org/react";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
 import { CiUser } from "react-icons/ci";
@@ -8,10 +8,9 @@ import { PiCalculatorThin } from "react-icons/pi";
 import React from "react";
 import {Breadcrumbs, BreadcrumbItem} from "@nextui-org/react";
 import { IoMenuOutline,IoCloseOutline } from "react-icons/io5";
-import Personal from "@/components/shares/sidebar/Personal";
-import Employment from "@/components/shares/sidebar/Employment";
-import { apiBase } from "@/api";
-import { usePathname } from "next/navigation";
+import Personal from "@/components/privates/sidebar/Personal";
+import Employment from "@/components/privates/sidebar/Employment";
+import { useAuth } from "@/contexts";
 const SidebarData = [
     {
         title:"General",
@@ -58,13 +57,11 @@ const NavbarComponentData = [
     }
     ]
 
-const Role = (role_id:number)=>{
-    role_id === 1? "CEO" : role_id === 2? "Role 2" : ""
-}
-
 
 const DetailEmployee = (props:any)=>{
     
+    const {user} = useAuth()
+    console.log(user);
     const [activeComponent, setActiveComponent] = useState(SidebarData[0].subNav[0].title)
     const [activeComponentNavbar, setActiveComponentNavbar] = useState(NavbarComponentData[0].title)
     const [isSidebarOpen,setIsSidebarOpen] = useState(false)
@@ -80,10 +77,10 @@ const DetailEmployee = (props:any)=>{
                     <div className={`flex flex-col items-center h-[197px] m-3 border-b-1 pb-4 `}>
                         <Avatar src="https://i.pravatar.cc/150?u=a04258114e29026708c" className="w-[80px] h-[80px] mb-2"/>
                         <h1 className="text-center font-semibold my-2 text-lg">
-                            {props.employee.full_name}
+                            {user?.full_name}
                         </h1>
                         <p className="text-center text-xs font-extralight">
-                            {props.employee.position_id === 1? "CEO" : props.employee.position_id === 2? "Role 2" : ""}
+                            {user?.position_id === 1? "CEO" : user?.position_id === 2? "Role 2" : ""}
                         </p>
                     </div>
                     <div className="flex flex-col h-fit w-full">

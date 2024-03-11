@@ -1,8 +1,9 @@
+import BaseInputText from "@/components/shares/inputs/BaseInputText";
+import DropdownInput from "@/components/shares/inputs/DropdownInput";
+import TableData from "@/components/shares/tables/TableData";
+import TableHeader from "@/components/shares/tables/TableHeader";
 import React, {ChangeEvent, useState} from "react";
-import TableHeader from "../../tables/TableHeader";
-import TableData from "../../tables/TableData";
-import BaseInputText from "../../inputs/BaseInputText";
-import DropdownInput from "../../inputs/DropdownInput";
+
 
 const tableHeaders = [
     "Name",
@@ -90,7 +91,7 @@ const Family = (props:any)=>{
         };
     
         return (
-            <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" id="my-modal">
+            <div className="z-30 fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" id="my-modal">
                 <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
                     <form onSubmit={handleSubmit}>
                         <div className="mt-3 text-center">
@@ -188,7 +189,7 @@ const Family = (props:any)=>{
 
             {isModalVisible && <AddNewModal onClose={toggleModal} />} {/* Conditionally render the modal */}
 
-            <div className="flex w-full h-[88%] py-5 px-4">
+            <div className="flex w-[94%] h-[88%] py-5">
                 <div id="horizontal" className="overflow-x-scroll w-full">
                     <table className="min-w-full shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                         <TableHeader headers={tableHeaders} action={true} />

@@ -7,13 +7,13 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { MdOutlineCorporateFare } from "react-icons/md";
 import { GoSignOut } from "react-icons/go";
 import { useAuth } from "@/contexts";
-import { IUserSelfData } from "@/types/user";
 
 
 const ProfileDropdown = () => {
     const [isDropdownActive,setIsDropdownActive] = useState(false);
     const { user, logout } = useAuth();
 
+    console.log(user);
     const handleLogout = async (e: FormEvent) => {
         e.preventDefault();
 
@@ -51,7 +51,7 @@ const ProfileDropdown = () => {
                         <Link className="h-full w-full" href="/profile">
                             <p className="font-semibold">{user?.full_name}</p>
                             <p className="font-light text-[12px] text-gray-500">{user?.email}</p>
-                            <p className="font-light text-[12px] text-gray-500">{user?.position.title}</p>
+                            {/* <p className="font-light text-[12px] text-gray-500">{}</p> */}
                         </Link>
                     </DropdownItem>
                     <DropdownItem key="settings">

@@ -12,6 +12,7 @@ const auth = () => {
     delete: apiUrl.user.delete
   }
 
+
   const self = async () => {
     const response = await api.get<IApiBaseResponse<any>>(
       url.self, { }
@@ -28,18 +29,23 @@ const auth = () => {
     return response.data;
   }
 
-  const deleteUser = async (userid: number) => {
-    const response = await api.delete<IApiBaseResponse<IUserPersonalData>>(
-      `${url.delete}/${userid}`
+  const updatePersonalData = async (userid:number,data:IUserPersonalData) => {
+    const response = await api.put<IApiBaseResponse<any>>(
+      `${url.personalData}/${userid}`,data,        
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
     )
-
-    return response.data
+    
+    return response.data;
   }
 
   return {
     self,
     personalData,
-    deleteUser
+    updatePersonalData
   }
 }
 

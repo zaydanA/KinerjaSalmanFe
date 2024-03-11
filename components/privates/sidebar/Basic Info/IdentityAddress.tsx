@@ -1,6 +1,6 @@
 import { useInput } from "@/hooks/useInput";
 import { useEffect, useState } from "react"
-import BaseInputText from "../../inputs/BaseInputText";
+import BaseInputText from "../../../shares/inputs/BaseInputTextProfile";
 
 const IdentityAddress = (props:any)=>{
     
@@ -12,13 +12,13 @@ const IdentityAddress = (props:any)=>{
     useEffect(()=>{
         props.employee.identity_number && setIdNumber(props.employee.identity_number);
         props.employee.emergency_number && setEmergencyNumber(props.employee.emergency_number);
-        setAddress("-")
+        props.employee.address && setAddress("-")
     },[props.employee])
 
     const CancelChange = ()=>{
         props.employee.identity_number && setIdNumber(props.employee.identity_number);
         props.employee.emergency_number && setEmergencyNumber(props.employee.emergency_number);
-        setAddress("-")
+        props.employee.address && setAddress("-")
     }
     return(
         <div className="h-full flex flex-col items md:items-start md:flex-row w-full pt-5">
