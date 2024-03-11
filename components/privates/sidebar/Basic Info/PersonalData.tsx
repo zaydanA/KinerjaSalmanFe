@@ -160,7 +160,7 @@ const PersonalData = (props:any)=>{
                     </h3>
                     <div className='w-4/6'>
                         {<BaseInputText value={mobilePhone} id={"fullname"} label="" disabled={!isEditPersonal} setValue={setMobilePhone}></BaseInputText>}
-                        {/* {<BaseInputText value={mobilePhone} id={"fullname"} label="" disabled={!isEditPersonal} setValue={setMobilePhone} error={apiBase().error().getErrors("phone_number")?.toString()}></BaseInputText>} */}
+                        {/* {<BaseInputText value={mobilePhone} id={"fullname"} label="" disabled={!isEditPersonal} setValue={setMobilePhone} error={apiBase().error().getErrors(`phone_number`)?.[0].toString()}></BaseInputText>} */}
                     </div>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
