@@ -87,14 +87,22 @@ const PersonalData = (props:any)=>{
             date_of_birth: new Date(birthdate),
             gender: selectedValueGender,
             marital_status: selectedValueMarital,
-            blood_type: selectedValueBloodType,
+            blood_type: selectedValueBloodType !== "-"? selectedValueBloodType : "",
             identity_number: props.employee.identity_number,
             address: props.employee.address,
             last_education: props.employee.last_education,
             status:props.employee.status
         }
-        const response = apiBase().user().updatePersonalData(1,personalData)
+        try {
+            const response = apiBase().user().updatePersonalData(1,personalData)
+            // console.log(response)
+            // setIsEditPersonal(false);
+        } catch (error) {
+            apiBase().error().set(error)
+
+        }
     }
+    // console.log(apiBase().error().getMessage());
 
     const tempBirthdate = props.employee.date_of_birth &&  props.employee.date_of_birth.split('T')[0];
     useEffect(()=>{
@@ -125,11 +133,6 @@ const PersonalData = (props:any)=>{
         props.employee.date_of_birth && setBirthdate(tempBirthdate);
     }
 
-    const datePickerStyle = {
-        width: '200px',
-        height: '50px', // Adjust the height as needed
-        margin: '10px',
-      };
 
     return(
         <>
@@ -157,6 +160,7 @@ const PersonalData = (props:any)=>{
                     </h3>
                     <div className='w-4/6'>
                         {<BaseInputText value={mobilePhone} id={"fullname"} label="" disabled={!isEditPersonal} setValue={setMobilePhone}></BaseInputText>}
+                        {/* {<BaseInputText value={mobilePhone} id={"fullname"} label="" disabled={!isEditPersonal} setValue={setMobilePhone} error={apiBase().error().getErrors("phone_number")?.toString()}></BaseInputText>} */}
                     </div>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
@@ -164,7 +168,7 @@ const PersonalData = (props:any)=>{
                         Email
                     </h3>
                     <div className='w-4/6'>
-                        {<BaseInputText value={email} id={"fullname"} label="" disabled={!isEditPersonal} setValue={setEmail}></BaseInputText>}
+                        {<BaseInputText value={email} id={"fullname"} label="" disabled={true} setValue={setEmail}></BaseInputText>}
                     </div>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
@@ -351,7 +355,7 @@ const PersonalData = (props:any)=>{
                         </button>
                         <button onClick={()=>{
                             updatePersonalData();
-                            setIsEditPersonal(false);
+                            
                         }} className="text-gray-500 border-2 rounded-lg font-mono px-2 bg-[--kinerja-gold] hover:bg-[--kinerja-gold-hover] text-white px-0 md:px-3">
                             Save Changes
                         </button>

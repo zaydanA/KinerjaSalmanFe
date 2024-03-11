@@ -8,9 +8,7 @@ export interface IUserSelfData {
   user_id: number
   email: string
   full_name: string
-  position: {
-    title: string
-  }
+  position_id: number
 }
 
 export interface IUserPersonalData {
