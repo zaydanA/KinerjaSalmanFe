@@ -11,7 +11,12 @@ module.exports = {
     './src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        graph01: "#009BDE",
+        graph02: "#EE8CA5"
+      }
+    },
   },
   plugins: [nextui()],
 }

@@ -16,16 +16,17 @@ export const support = () => {
     getPosition: '/position',
     getDepartment: '/department',
 
-    employee: {
-      employee: '/employee',
-      gender: '/employee/gender'
-    },
+    employee: '/employee',
 
     user: {
       self: '/user/self',
       personalData: '/user/personal-data',
       delete: '/user/delete'
     },
+
+    analytics: {
+      gender: '/analytics/gender'
+    }
   };
 
   return { apiUrl };

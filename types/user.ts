@@ -9,8 +9,14 @@ export interface IUserSelfData {
   email: string
   full_name: string
   position: {
+    position_id: number
     title: string
-  }
+  },
+  dept: {
+    dept_id: number
+    dept_name: string
+  },
+  status: number
 }
 
 export interface IUserPersonalData {

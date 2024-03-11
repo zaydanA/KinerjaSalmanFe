@@ -1,4 +1,3 @@
-import { IApiBaseAuthLogin } from '@/types/auth';
 import { api, support } from './support';
 import { IApiBaseResponse } from '@/types/http';
 import { IApiAddEmployee } from '@/types/employee';
