@@ -18,7 +18,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await apiBase().employee().getGenders();
+        const res = await apiBase().analytics().getGenders();
 
         if (res.status === 'success') {
           setGenderData(res.data);

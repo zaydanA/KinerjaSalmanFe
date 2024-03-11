@@ -4,6 +4,7 @@ import error from './error';
 import employee from "./employee";
 import position from "./position";
 import department from "./department";
+import analytics from "./analytics";
 
 export const apiBase = () => {
   return {
@@ -13,5 +14,6 @@ export const apiBase = () => {
     employee,
     position,
     department,
+    analytics,
   }
 }
