@@ -64,21 +64,25 @@ const AddEmployee = () => {
             employeeID: '',
             department: null,
             position: null,
-            joinDate: null,
-            resignDate: null,
+            joinDate: '',
+            resignDate: '',
         },
         payrollData: {
             npwpNumber: '',
         }
     });
 
-    console.log("data: ", formData)
 
     const [isFormValid, setIsFormValid] = useState(false);
+    let mappedFormData: { personal_data: { full_name: string; email: string; phone_number: string | null; emergency_number: string | null; place_of_birth: string; date_of_birth: string | null; gender: Gender; marital_status: MaritalStatus; blood_type: BloodType; identity_number: string | null; address: string; last_education: LastEducation; status: number; }; employment_data: { employee_id: string; dept_id: number; position_id: number; join_date: string | null; resign_date: string | null; }; payroll_data: { npwp_number: string; }; } | null = null;
 
-    const handleNextStep = () => {
-        if (isFormValid) {
+
+    const handleNextStep = async () => {
+        const isValid = await validateStep(step);
+        if (isValid) {
             setStep(step + 1);
+        } else {
+            console.log('Step validation failed');
         }
     };
 
@@ -97,98 +101,51 @@ const AddEmployee = () => {
         });
     };
 
-    const isRequiredField = (category, field) => {
-        const requiredField = {
-            personalData: [ 'firstName', 'lastName', 'email', 'phoneNumber', 'emergencyNumber', 'address', 'placeOfBirth', 'dateOfBirth', 'gender', 'maritalStatus', 'bloodType', 'identityNumber', 'lastEducation', 'status' ],
-            employeeData: [ 'employeeID', 'department', 'position', 'joinDate', 'resignDate' ],
-            payrollData: [ 'npwpNumber' ]
+    const formattedFormData = {
+        ...formData,
+        personalData: {
+            ...formData.personalData,
+            dateOfBirth: formData.personalData.dateOfBirth ? new Date(formData.personalData.dateOfBirth) : null
+        },
+        employeeData: {
+            ...formData.employeeData,
+            joinDate: formData.employeeData.joinDate ? new Date(formData.employeeData.joinDate) : null,
+            resignDate: formData.employeeData.resignDate ? new Date(formData.employeeData.resignDate) : null
         }
-        return requiredField[category]?.includes(field);
-    }
+    };
+    
 
-    const validateForm = () => {
-        if (step == 1){
-            for (const field in formData['personalData']){
-                if (isRequiredField('personalData', field) && formData['personalData'][field] === '') {
-                    return false;
-                }
-            }
-        } 
-        if (step == 2){
-            for (const field in formData['employeeData']){
-                if (isRequiredField('employeeData', field) && formData['employeeData'][field] === '') {
-                    return false;
-                }
-            }
+    mappedFormData = {
+        personal_data: {
+            full_name: formData.personalData.firstName + ' ' + formData.personalData.lastName,
+            email: formData.personalData.email,
+            phone_number: formData.personalData.phoneNumber,
+            emergency_number: formData.personalData.emergencyNumber,
+            place_of_birth: formData.personalData.placeOfBirth,
+            date_of_birth: formattedFormData.personalData.dateOfBirth ? formattedFormData.personalData.dateOfBirth.toISOString() : null,
+            gender: formData.personalData.gender,
+            marital_status: formData.personalData.maritalStatus,
+            blood_type: formData.personalData.bloodType,
+            identity_number: formData.personalData.identityNumber,
+            address: formData.personalData.address,
+            last_education: formData.personalData.lastEducation,
+            status: formData.personalData.status,
+        },
+        employment_data: {
+            employee_id: formData.employeeData.employeeID,
+            dept_id: parseInt(formData.employeeData.department ?? '0'),
+            position_id: parseInt(formData.employeeData.position ?? '0'), 
+            join_date: formattedFormData.employeeData.joinDate ? formattedFormData.employeeData.joinDate.toISOString() : null,
+            resign_date: formattedFormData.employeeData.resignDate ? formattedFormData.employeeData.resignDate.toISOString() : null,
+        },
+        payroll_data: {
+            npwp_number: formData.payrollData.npwpNumber,
         }
+    };
 
-        if (step == 3){
-            for (const field in formData['payrollData']){
-                if (isRequiredField('payrollData', field) && formData['payrollData'][field] === '') {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
-    useEffect(() => {
-        setIsFormValid(validateForm());
-    }, [formData]);
 
     const handleSubmit = async() => {
         try {
-
-            if(formData.personalData.dateOfBirth instanceof Date){
-                console.log("AAAA")
-            } else {
-                console.log("BBBB")
-            }
-
-            const formattedFormData = {
-                ...formData,
-                personalData: {
-                    ...formData.personalData,
-                    dateOfBirth: formData.personalData.dateOfBirth ? new Date(formData.personalData.dateOfBirth) : null
-                },
-                employeeData: {
-                    ...formData.employeeData,
-                    joinDate: formData.employeeData.joinDate ? new Date(formData.employeeData.joinDate) : null,
-                    resignDate: formData.employeeData.resignDate ? new Date(formData.employeeData.resignDate) : null
-                }
-            };
-
-            
-
-            const mappedFormData = {
-                personal_data: {
-                    full_name: formData.personalData.firstName + ' ' + formData.personalData.lastName,
-                    email: formData.personalData.email,
-                    phone_number: formData.personalData.phoneNumber,
-                    emergency_number: formData.personalData.emergencyNumber,
-                    place_of_birth: formData.personalData.placeOfBirth,
-                    date_of_birth: formattedFormData.personalData.dateOfBirth ? formattedFormData.personalData.dateOfBirth.toISOString() : null,
-                    gender: formData.personalData.gender,
-                    marital_status: formData.personalData.maritalStatus,
-                    blood_type: formData.personalData.bloodType,
-                    identity_number: formData.personalData.identityNumber,
-                    address: formData.personalData.address,
-                    last_education: formData.personalData.lastEducation,
-                    status: formData.personalData.status,
-                },
-                employment_data: {
-                    employee_id: formData.employeeData.employeeID,
-                    dept_id: parseInt(formData.employeeData.department ?? '0'),
-                    position_id: parseInt(formData.employeeData.position ?? '0'), 
-                    join_date: formattedFormData.employeeData.joinDate ? formattedFormData.employeeData.joinDate.toISOString() : null,
-                    resign_date: formattedFormData.employeeData.resignDate ? formattedFormData.employeeData.resignDate.toISOString() : null,
-                },
-                payroll_data: {
-                    npwp_number: formData.payrollData.npwpNumber,
-                }
-            };
-    
             console.log("Mapped Form Data", mappedFormData);
 
             await apiBase().employee().addEmployee(mappedFormData);
@@ -196,6 +153,35 @@ const AddEmployee = () => {
             throw error;
         }
     }
+
+    const validateStep = async (step: number) => {
+        try {
+            console.log(step);
+            console.log("mappedFormData: ", mappedFormData);
+            let dataToSend = {};
+
+            dataToSend.personal_data = mappedFormData.personal_data;
+
+            if (step >= 2) {
+                dataToSend.employment_data = mappedFormData.employment_data;
+            }
+
+            if (step === 3) {
+                dataToSend.payroll_data = mappedFormData.payroll_data;
+            }
+
+            const validationResult = await apiBase().employee().validateAddEmployee(dataToSend, step);
+            console.log("hasil", validationResult);
+            return true;
+        } catch (error) {
+            console.error('Validation Error:', error, "Error di page:", step);
+            return false;
+        }
+    };
+
+    useEffect(() => {
+        validateStep(step).then(valid => setIsFormValid(valid));
+    }, [formData, step]);
 
 
     return (

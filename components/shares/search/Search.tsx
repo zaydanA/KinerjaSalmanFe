@@ -26,12 +26,12 @@ export default function Search({
   }, 1000);
 
   return (
-    <div className="flex">
+    <div className="flex max-lg:text-sm max-md:text-xs">
       <label htmlFor="search" className="sr-only">
         Search
       </label>
       <input
-        className="rounded-md border border-gray-200 py-[9px] pl-2 text-sm outline-2 placeholder:text-gray-500"
+        className="rounded-md border border-gray-200 py-[9px] pl-2 text-sm outline-2 placeholder:text-gray-500 max-lg:text-sm max-md:py-1 max-md:text-xs"
         placeholder={placeholder}
         onChange={(e) => {
           handleSearch(e.target.value);
