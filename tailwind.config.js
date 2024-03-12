@@ -14,7 +14,10 @@ module.exports = {
     extend: {
       colors: {
         graph01: "#009BDE",
-        graph02: "#EE8CA5"
+        graph02: "#EE8CA5",
+        'clr-table-border': "#eeeeee",
+        'clr-blackground-table-header': "#fbfbfb",
+        'clr-blackground-table-body': "#ffffff"
       }
     },
   },
