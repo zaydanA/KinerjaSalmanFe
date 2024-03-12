@@ -11,7 +11,11 @@ const position = () => {
 
     const getPosition = async () => {
         const response = await api.get<IApiBaseResponse<IApiBasePosition[]>>(
-            url.getPosition,
+            url.getPosition,{
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              }
         )
 
         return response.data;

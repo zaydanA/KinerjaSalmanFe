@@ -34,14 +34,7 @@ export default function BaseInputText({
   };
 
   return (
-    <div className="flex flex-col gap-2">
-      <label
-        htmlFor={id}
-        className="text-base block w-fit text-clr-text-primary"
-      >
-        {label}
-      </label>
-
+    <div className="flex flex-col">
       <div className="relative">
         <input
           id={id}
@@ -61,7 +54,7 @@ export default function BaseInputText({
               ? "shadow-input-error focus:shadow-input-focus-error"
               : "hover:shadow-input-hover focus:shadow-input-focus"
           }
-          ${disabled ? "bg-clr-background-base-one bg-white" : " bg-gray-50"}`}
+          ${disabled ? "bg-clr-background-base-one bg-white" : " border-1 border-gray-400"}`}
         />
 
         {needEye && (
@@ -77,12 +70,12 @@ export default function BaseInputText({
         )}
       </div>
 
-      {error && (
+      {/* {error && ( */}
         <div className="flex gap-2 items-center">
-          <PiWarningCircle />
-          <p className="text-sm font-thin text-clr-text-danger">{error}</p>
+          {error && <PiWarningCircle className="text-red-400"/>}
+          <p className="text-sm font-light text-red-400 text-clr-text-danger">{error}</p>
         </div>
-      )}
+      {/* )} */}
     </div>
   );
 }

@@ -6,7 +6,7 @@ const NoSSR = dynamic(() => import('@/components/privates/dashboard/Dashboard'),
 const page = ()=>{
     return (
         <div className="w-full">
-            <NoSSR />
+            {/* <NoSSR /> */}
         </div>
     )
 }
