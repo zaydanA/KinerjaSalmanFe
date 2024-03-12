@@ -12,6 +12,8 @@ import Personal from "@/components/privates/sidebar/Personal";
 import Employment from "@/components/privates/sidebar/Employment";
 import { useAuth } from "@/contexts";
 import { IUserPersonalData, IUserSelfData } from "@/types/user";
+import { usePathname } from "next/navigation";
+import { apiBase } from "@/api";
 const SidebarData = [
     {
         title:"General",
@@ -59,12 +61,37 @@ const NavbarComponentData = [
     ]
 
 interface DetailEmployeeType{
-    employee: IUserPersonalData|null
+    // employee: IUserPersonalData|null
     user: IUserSelfData | undefined | null
-    page:string
+    // page:string
 }
 const DetailEmployee: React.FC<DetailEmployeeType> = (props)=>{
-    
+    const [employee,setEmployee] = useState<IUserPersonalData|null|undefined>(
+        {
+            email: '',
+            full_name:'',
+            phone_number: '',
+            emergency_number: '',
+            place_of_birth: '',
+            date_of_birth: new Date(),
+            gender: '',
+            marital_status: '',
+            blood_type: '',
+            identity_number: '',
+            address: '',
+            last_education: '',
+            status: 0
+        }
+    )
+    const pathname = usePathname().split("/")
+    useEffect(()=>{
+        async function getEmployeeById(){
+            const res = await apiBase().user().personalData(props.user?props.user.user_id:Number(pathname[2]));
+            
+            setEmployee(res && res.data);
+        }   
+        getEmployeeById()
+    },[])
     const [activeComponent, setActiveComponent] = useState(SidebarData[0].subNav[0].title)
     const [activeComponentNavbar, setActiveComponentNavbar] = useState(NavbarComponentData[0].title)
     const [isSidebarOpen,setIsSidebarOpen] = useState(false)
@@ -79,7 +106,7 @@ const DetailEmployee: React.FC<DetailEmployeeType> = (props)=>{
                     <div className={`flex flex-col items-center h-[197px] m-3 border-b-1 pb-2 `}>
                         <Avatar src="https://i.pravatar.cc/150?u=a04258114e29026708c" className="w-[80px] h-[80px] mb-2"/>
                         <h1 className="text-center font-semibold my-2 text-lg">
-                            {props.employee?.full_name}
+                            {employee?.full_name}
                         </h1>
                         {props.user ? 
                         <p className="text-center text-xs font-extralight">
@@ -87,7 +114,7 @@ const DetailEmployee: React.FC<DetailEmployeeType> = (props)=>{
                         </p>
                         :
                         <p className="text-center text-xs font-extralight">
-                            {props.employee?.email}
+                            {employee?.email}
                         </p>
                         }
                     </div>
@@ -99,8 +126,8 @@ const DetailEmployee: React.FC<DetailEmployeeType> = (props)=>{
             <div className={`py-[14px] pr-2 pl-2 md:px-[24px] flex flex-col w-5/6 md:w-full border-l-1 ${isSidebarOpen?"md:ml-0 ml-[38px]":""}`}>
                 <div className="flex flex-col min-h-[52px] mb-[14px] z-[1] gap-1">
                     <Breadcrumbs isDisabled size="sm">
-                        <BreadcrumbItem>{props.page}</BreadcrumbItem>
-                        <BreadcrumbItem>{props.employee?.full_name}</BreadcrumbItem>
+                        <BreadcrumbItem>{pathname[1]}</BreadcrumbItem>
+                        <BreadcrumbItem>{employee?.full_name}</BreadcrumbItem>
                         <BreadcrumbItem>{activeComponent}</BreadcrumbItem>
                         <BreadcrumbItem>{activeComponentNavbar}</BreadcrumbItem>
                     </Breadcrumbs>
@@ -110,7 +137,7 @@ const DetailEmployee: React.FC<DetailEmployeeType> = (props)=>{
                 </div>
                 <div className="h-full flex flex-col ">
                     {
-                       activeComponent == SidebarData[0].subNav[0].title? <Personal employee={props.employee} activeComponentNavbar={activeComponentNavbar} NavbarComponentData={NavbarComponentData} setActiveComponentNavbar={setActiveComponentNavbar}></Personal>: (activeComponent == SidebarData[0].subNav[1].title? <Employment user={props.user}></Employment> : null)
+                       activeComponent == SidebarData[0].subNav[0].title? <Personal employee={employee} activeComponentNavbar={activeComponentNavbar} NavbarComponentData={NavbarComponentData} setActiveComponentNavbar={setActiveComponentNavbar}></Personal>: (activeComponent == SidebarData[0].subNav[1].title? <Employment user={props.user}></Employment> : null)
                     }
                 </div>
             </div>
