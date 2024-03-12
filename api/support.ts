@@ -21,6 +21,7 @@ export const support = () => {
     user: {
       self: '/user/self',
       personalData: '/user/personal-data',
+      employmentData: '/user/employment-data',
       delete: '/user/delete'
     },
 

@@ -1,7 +1,7 @@
 import {useState,useEffect,useMemo} from "react"
 import BaseInputText from '../../../shares/inputs/BaseInputTextProfile';
 import { useInput } from '@/hooks/useInput';
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Spinner } from '@nextui-org/react';
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Spinner, Switch, cn } from '@nextui-org/react';
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -10,54 +10,27 @@ import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { apiBase } from "@/api";
 import { IUserPersonalData } from "@/types/user";
 import { IApiBaseError } from "@/types/http";
+import { PiWarningCircle } from "react-icons/pi";
 
 const gender = ["M","F"];
 const MaritalStatus = ["SINGLE","MARRIED","WIDOW","WIDOWER"]
 const LastEducation = ["TIDAK_SEKOLAH","SD","SMP","SMA_SMK","D3","S1","S2","S3"]
 const BloodType = ["A","B","O","AB"]
-// const newTheme = (theme:any) => createTheme({
-//     ...theme,
-//     components: {
-//       MuiDateCalendar: {
-//         styleOverrides: {
-//           root: {
-//             color: '#957c54',
-//             borderRadius: 8,
-//             borderWidth: 0,
-//             borderColor: '#FFFFFF',
-//             // border: '1px solid',
-//             backgroundColor: '#FFFFFF',
-//           }
-//         }
-//       },
-//     //   MuiPickersDay: {
-//     //     styleOverrides: {
-//     //       today: {
-//     //         color: '#1565c0',
-//     //         borderRadius: 20,
-//     //         borderWidth: 1,
-//     //         // borderColor: '#2196f3',
-//     //         border: '1px solid',
-//     //         backgroundColor: '#000000',
-//     //       }
-//     //     }
-//     //     }
-//     }
-//   })
 const PersonalData = (props:any)=>{
 
     const [isEditPersonal,setIsEditPersonal] = useState<boolean>(false)
-    const [fullName,setFullName] = useInput("-");
-    const [mobilePhone,setMobilePhone] = useInput("-");
-    const [email,setEmail] = useInput("-");
-    const [npwp,setNPWP] = useInput("-");
-    const [placeOfBirth,setPlaceOfBirth] = useInput("-");
-    const [birthdate,setBirthdate] = useState<string>('-')
+    const [fullName,setFullName] = useInput("");
+    const [mobilePhone,setMobilePhone] = useInput("");
+    const [email,setEmail] = useInput("");
+    const [placeOfBirth,setPlaceOfBirth] = useInput("");
+    const [birthdate,setBirthdate] = useState<string>('');
 
-    const [selectedKeysGender, setSelectedKeysGender] = useState<any>(new Set(["-"]));
-    const [selectedKeysMarital, setSelectedKeysMarital] = useState<any>(new Set(["-"]));
-    const [selectedKeysEducation, setSelectedKeysEducation] = useState<any>(new Set(["-"]));
-    const [selectedKeysBloodType, setSelectedKeysBloodType] = useState<any>(new Set(["-"]));
+    const [birthdateError,setBirthdateError] = useState<any>("");
+    
+    const [selectedKeysGender, setSelectedKeysGender] = useState<any>(new Set([""]));
+    const [selectedKeysMarital, setSelectedKeysMarital] = useState<any>(new Set([""]));
+    const [selectedKeysEducation, setSelectedKeysEducation] = useState<any>(new Set([""]));
+    const [selectedKeysBloodType, setSelectedKeysBloodType] = useState<any>(new Set([""]));
 
     const selectedValueGender = useMemo(
       () => Array.from(selectedKeysGender).join(", ").replaceAll("_", " "),
@@ -85,34 +58,33 @@ const PersonalData = (props:any)=>{
             email: email,
             full_name: fullName,
             phone_number: mobilePhone,
-            emergency_number: props.employee.emergency_number,
             place_of_birth: placeOfBirth,
             date_of_birth: new Date(birthdate),
             gender: selectedValueGender,
             marital_status: selectedValueMarital,
             blood_type: selectedValueBloodType !== "-"? selectedValueBloodType : "",
+            last_education: selectedValueEducation,
+            status:status?1:0,
+            emergency_number: props.employee.emergency_number,
             identity_number: props.employee.identity_number,
             address: props.employee.address,
-            last_education: props.employee.last_education,
-            status:props.employee.status
         }
         try {
-            const response = await apiBase().user().updatePersonalData(1,personalData)
+            const response = await apiBase().user().updatePersonalData(props.employee.user_id,personalData)
             // console.log(response)
-            // setIsEditPersonal(false);
+            setIsEditPersonal(false);
         } catch (error) {
             apiBaseError.set(error)
         }
     }
     // console.log(apiBase().error().getMessage());
 
-    const tempBirthdate = props.employee.date_of_birth &&  props.employee.date_of_birth.split('T')[0];
+    const tempBirthdate = props.employee.date_of_birth &&  props.employee.date_of_birth.toString().split('T')[0];
     useEffect(()=>{
         // props.employee.date_of_birth && setBirthdate(tempBirthdate);
         props.employee.full_name && setFullName(props.employee.full_name)
         props.employee.phone_number && setMobilePhone(props.employee.phone_number)
         props.employee.email && setEmail(props.employee.email)
-        props.employee.npwp_number && setNPWP(props.employee.npwp_number)
         props.employee.place_of_birth && setPlaceOfBirth(props.employee.place_of_birth)
         props.employee.gender && setSelectedKeysGender(new Set([props.employee.gender]))
         props.employee.marital_status && setSelectedKeysMarital(new Set([props.employee.marital_status]));
@@ -126,19 +98,21 @@ const PersonalData = (props:any)=>{
         props.employee.full_name && setFullName(props.employee.full_name)
         props.employee.phone_number && setMobilePhone(props.employee.phone_number)
         props.employee.email && setEmail(props.employee.email)
-        props.employee.npwp_number && setNPWP(props.employee.npwp_number)
         props.employee.place_of_birth && setPlaceOfBirth(props.employee.place_of_birth)
         props.employee.gender && setSelectedKeysGender(new Set([props.employee.gender]))
         props.employee.marital_status && setSelectedKeysMarital(new Set([props.employee.marital_status]));
         props.employee.last_education && setSelectedKeysEducation(new Set([props.employee.last_education]));
         props.employee.blood_type && setSelectedKeysBloodType(new Set([props.employee.blood_type]));
         props.employee.date_of_birth && setBirthdate(tempBirthdate);
+
+        setBirthdateError("");
+        apiBaseError.clear();
     }
 
     return(
         <>
         {props.employee.full_name !== undefined ? <div className="h-full flex flex-col items md:items-start md:flex-row w-full pt-5">
-            <div className="flex flex-col md:w-1/6 border-b-1 pb-4 md:border-b-0">
+            <div className="flex flex-col md:w-1/6 border-b-1 md:border-b-0">
                 <h1 className="font-semibold ">
                     Personal Data
                 </h1>
@@ -146,88 +120,100 @@ const PersonalData = (props:any)=>{
                     Your email address is your identity on Kinerja is used to log in.
                 </p>
             </div>
-            <div className="md:w-4/6 md:px-4 flex flex-col pt-1 gap-4">
+            <div className="md:w-4/6 md:px-4 flex flex-col pt-1 gap-3">
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
-                    <h3 className="font-semibold text-sm w-2/6">
+                    <h3 className="font-semibold text-sm w-2/6 py-1 self-start">
                         Full Name
                     </h3>
                     <div className='w-4/6'>
-                        {<BaseInputText value={fullName} id={"fullname"} label="" disabled={!isEditPersonal} setValue={setFullName}></BaseInputText>}
+                        {fullName || isEditPersonal?<BaseInputText 
+                        value={fullName} 
+                        id={"fullname"} 
+                        label="" 
+                        disabled={!isEditPersonal} 
+                        setValue={setFullName}
+                        error={apiBaseError.getErrors('full_name')?.[0].toString()}
+                        ></BaseInputText>:"-"}
                     </div>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
-                    <h3 className="font-semibold text-sm w-2/6">
+                    <h3 className="font-semibold text-sm w-2/6 py-1 self-start">
                         Mobile Phone
                     </h3>
                     <div className='w-4/6'>
-                        <BaseInputText 
+                        {mobilePhone || isEditPersonal?<BaseInputText 
                             value={mobilePhone} 
-                            id={"fullname"} 
+                            id={"mobilephone"} 
                             label="" 
                             disabled={!isEditPersonal} 
                             setValue={setMobilePhone}
                             error={apiBaseError.getErrors('phone_number')?.[0].toString()}
-                        />
-                        {/* {<BaseInputText value={mobilePhone} id={"fullname"} label="" disabled={!isEditPersonal} setValue={setMobilePhone} error={apiBase().error().getErrors(`phone_number`)?.[0].toString()}></BaseInputText>} */}
+                        />:<p className="px-2 text-sm">-</p>}
                     </div>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
-                    <h3 className="font-semibold text-sm w-2/6">
+                    <h3 className="font-semibold text-sm w-2/6 py-1 self-start">
                         Email
                     </h3>
                     <div className='w-4/6'>
                         <BaseInputText 
                             value={email} 
-                            id={"fullname"} 
+                            id={"email"} 
                             label="" 
                             disabled={true} 
                             setValue={setEmail}
-                            
+                            error={apiBaseError.getErrors('email')?.[0].toString()}
                         />
                     </div>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
-                    <h3 className="font-semibold text-sm w-2/6">
-                        NPWP
-                    </h3>
-                    <div className='w-4/6'>
-                        {<BaseInputText value={npwp} id={"fullname"} label="" disabled={!isEditPersonal} setValue={setNPWP}></BaseInputText>}
-                    </div>
-                </div>
-                <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
-                    <h3 className="font-semibold text-sm w-2/6">
+                    <h3 className="font-semibold text-sm w-2/6 py-1 self-start">
                         Place of Birth
                     </h3>
                     <div className='w-4/6'>
-                        {<BaseInputText value={placeOfBirth} id={"fullname"} label="" disabled={!isEditPersonal} setValue={setPlaceOfBirth}></BaseInputText>}
+                        {placeOfBirth || isEditPersonal?<BaseInputText value={placeOfBirth} id={"placeofbirth"} label="" disabled={!isEditPersonal} setValue={setPlaceOfBirth}></BaseInputText>:<p className="px-2 text-sm">-</p>}
                     </div>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
-                    <h3 className="font-semibold text-sm w-2/6">
+                    <h3 className={`font-semibold text-sm w-2/6 ${isEditPersonal?"py-3" : "py-1"} self-start`}>
                         Birthdate
                     </h3>
-                    <div className='w-4/6'>
-                    {/* <ThemeProvider theme={newTheme}> */}
+                    <div className={`w-4/6 flex flex-col justify-center`}>
                     {isEditPersonal ? <LocalizationProvider dateAdapter={AdapterDayjs}>
                         {<DatePicker
                             defaultValue={dayjs(birthdate)}
                             onChange={(newValue:any) => {
                             const middlewareBirthdate = `${newValue.$d.getFullYear()}-${newValue.$d.getMonth()+1 < 10? "0"+(newValue.$d.getMonth()+1):newValue.$d.getMonth()+1}-${newValue.$d.getDate()}`
-                            setBirthdate(middlewareBirthdate)
-                            console.log(middlewareBirthdate)
+                            try {
+
+                                console.log(new Date());
+                                if(newValue.$d > new Date()){
+                                    throw 'Invalid Birthdate';
+                                }else{
+                                    setBirthdateError(null)
+                                    setBirthdate(middlewareBirthdate)
+                                }
+                            } catch (error) {
+                                setBirthdateError(error);
+                            }
                         
                         }}
                             slotProps={{ textField: { size: 'small' } }}
                             />}
+                        {birthdateError?      
+                            <div className="flex flex-row gap-2 items-center">
+                                <PiWarningCircle className="text-red-400"/>
+                                <p className="text-sm font-light text-red-400 text-clr-text-danger">{birthdateError}</p>
+                            </div>:""
+                        }
                     </LocalizationProvider>
                     :<p className="px-2 text-xs w-4/6 items-center">
-                        {props.employee.date_of_birth?birthdate:"-"}
+                        {birthdate?birthdate:"-"}
                     </p> }
-                    {/* </ThemeProvider> */}
                     </div>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
-                    <h3 className="font-semibold text-sm w-2/6">
+                    <h3 className="font-semibold text-sm w-2/6 py-1 self-start">
                         Gender
                     </h3>
                     {isEditPersonal?     
@@ -256,11 +242,11 @@ const PersonalData = (props:any)=>{
                     </Dropdown>
                     </div>
                     : <p className="px-2 text-xs w-4/6 items-center">
-                        {props.employee.gender?selectedValueGender:"-"}
+                        {selectedValueGender?selectedValueGender:"-"}
                     </p> }
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
-                    <h3 className="font-semibold text-sm w-2/6">
+                    <h3 className="font-semibold text-sm w-2/6 py-1 self-start">
                         Marital Status
                     </h3>
                     {isEditPersonal?     
@@ -289,11 +275,11 @@ const PersonalData = (props:any)=>{
                     </Dropdown>
                     </div>
                     : <p className="px-2 text-xs w-4/6 items-center">
-                        {props.employee.marital_status?selectedValueMarital:"-"}
+                        {selectedValueMarital?selectedValueMarital:"-"}
                     </p> }
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
-                    <h3 className="font-semibold text-sm w-2/6">
+                    <h3 className="font-semibold text-sm w-2/6 py-1 self-start">
                         Last Education
                     </h3>
                     {isEditPersonal?     
@@ -322,11 +308,11 @@ const PersonalData = (props:any)=>{
                     </Dropdown>
                     </div>
                     : <p className="px-2 text-xs w-4/6 items-center">
-                        {props.employee.last_education?selectedValueEducation:"-"}
+                        {selectedValueEducation?selectedValueEducation:"-"}
                     </p> }
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
-                    <h3 className="font-semibold text-sm w-2/6">
+                    <h3 className="font-semibold text-sm w-2/6 py-1 self-start">
                         Blood Type
                     </h3>
                     {isEditPersonal?     
@@ -355,7 +341,7 @@ const PersonalData = (props:any)=>{
                     </Dropdown>
                     </div>
                     : <p className="px-2 text-xs w-4/6 items-center">
-                        {props.employee.blood_type?selectedValueBloodType:"-"}
+                        {selectedValueBloodType?selectedValueBloodType:"-"}
                     </p> }
                 
                 </div>

@@ -70,12 +70,12 @@ export default function BaseInputText({
         )}
       </div>
 
-      {error && (
+      {/* {error && ( */}
         <div className="flex gap-2 items-center">
-          <PiWarningCircle />
-          <p className="text-sm font-thin text-clr-text-danger">{error}</p>
+          {error && <PiWarningCircle className="text-red-400"/>}
+          <p className="text-sm font-light text-red-400 text-clr-text-danger">{error}</p>
         </div>
-      )}
+      {/* )} */}
     </div>
   );
 }

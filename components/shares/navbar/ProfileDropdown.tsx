@@ -20,14 +20,7 @@ const ProfileDropdown = () => {
         try {
             await logout();
         } catch (error) {
-            // apiBaseError.set(error);
-
-            // dispatch(
-            //     addNotification({
-            //     message: apiBaseError.getMessage(),
-            //     type: 'danger',
-            //     }),
-            // );
+            
         }
     };
 
@@ -48,10 +41,10 @@ const ProfileDropdown = () => {
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Profile Actions" variant="flat">
                     <DropdownItem key="profile" className="h-16 border-b-2 rounded-b-none">
-                        <Link className="h-full w-full" href="/profile">
+                        <Link className="h-full w-full" href={`/profile`}>
                             <p className="font-semibold">{user?.full_name}</p>
                             <p className="font-light text-[12px] text-gray-500">{user?.email}</p>
-                            {/* <p className="font-light text-[12px] text-gray-500">{}</p> */}
+                            <p className="font-light text-[12px] text-gray-500">{user?.position.title}</p>
                         </Link>
                     </DropdownItem>
                     <DropdownItem key="settings">

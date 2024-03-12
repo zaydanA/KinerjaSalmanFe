@@ -1,31 +1,44 @@
 "use client"
-import Sidebar from "@/components/privates/sidebar/Sidebar";
-import { Avatar } from "@nextui-org/react";
-import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
-import { CiUser } from "react-icons/ci";
 import { useEffect, useState } from 'react';
-import { PiCalculatorThin } from "react-icons/pi";
 import React from "react";
-import {Breadcrumbs, BreadcrumbItem} from "@nextui-org/react";
-import { IoMenuOutline,IoCloseOutline } from "react-icons/io5";
-import Personal from "@/components/privates/sidebar/Personal";
-import Employment from "@/components/privates/sidebar/Employment";
 import DetailEmployee from "@/components/privates/sidebar/detailEmployee/DetailEmployee";
 import { apiBase } from "@/api";
+import { useAuth } from "@/contexts";
+import { usePathname } from "next/navigation";
+import { BloodType, Gender, LastEducation, MaritalStatus } from '@/enums/enums';
+import { IUserPersonalData } from '@/types/user';
 
 const page = ()=>{
-    const [employee,setEmployee] = useState<any>({})
-
-    // useEffect(()=>{
-    //     async function getEmployeeById(){
-    //         const employee = await apiBase().employee().getEmployeeById(1);
+    const [employee,setEmployee] = useState<IUserPersonalData>(
+        {
+            email: '',
+            full_name:'',
+            phone_number: '',
+            emergency_number: '',
+            place_of_birth: '',
+            date_of_birth: new Date(),
+            gender: '',
+            marital_status: '',
+            blood_type: '',
+            identity_number: '',
+            address: '',
+            last_education: '',
+            status: 0
+        }
+    )
+    
+    const pathname = usePathname().split("/")
+    const {user} = useAuth()
+    useEffect(()=>{
+        async function getEmployeeById(){
+            const res = user && await apiBase().user().personalData(user.user_id);
             
-    //         setEmployee(employee.data);
-    //     }   
-    //     getEmployeeById()
-    // },[])
+            setEmployee(res && res.data);
+        }   
+        getEmployeeById()
+    },[])
     return (
-        <DetailEmployee employee={employee}></DetailEmployee>
+        <DetailEmployee page={pathname[1]} employee={employee} user={user}></DetailEmployee>
     )
 }
 export default page;

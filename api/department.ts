@@ -11,7 +11,11 @@ const department = () => {
 
     const getDepartment = async () => {
         const response = await api.get<IApiBaseResponse<IApiBaseDepartment[]>>(
-            url.getDepartment,
+            url.getDepartment,      {
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              }
         )
 
         return response.data;
