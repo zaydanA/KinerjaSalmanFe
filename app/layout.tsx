@@ -33,13 +33,11 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-gray-100 fixed h-screen w-screen`}>
+      <body className={`${inter.className}`}>
         <APIProvider>
           <AuthProvider>
             <NextUIProvider>
-              <div className='h-screen w-screen'>
-                {children}
-              </div>
+              {children}
             </NextUIProvider>
           </AuthProvider>
         </APIProvider>

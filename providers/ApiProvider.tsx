@@ -54,7 +54,7 @@ export default function APIProvider({ children }: APIProviderProps) {
       );
       if (res.data.status === 'success') {
         config.headers.Authorization = `Bearer ${res.data.data.token}`;
-        setToken(`Bearer ${res.data.data.token}`);
+        setToken(res.data.data.token);
       }
 
       return config;

@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Gender, BloodType, LastEducation, MaritalStatus } from '@/enums/enums';
 import BaseInputText from '@/components/shares/inputs/BaseInputText';
 import BaseInputDate from '@/components/shares/inputs/BaseInputDate';
 import DropdownInput from '@/components/shares/inputs/DropdownInput';
 import { IUserPersonalData } from '@/types/user';
-import { apiBase } from '@/api';
-import { IApiBaseError, IApiError } from '@/types/http';
+import { IApiError } from '@/types/http';
 import { lib } from '@/lib';
 
 type ChangeHandler<T> = (data: Partial<T>) => void;
@@ -47,10 +46,10 @@ const PersonalDataForm = ({
     // };
 
     return (
-        <div className="w-1/2 mx-auto mt-5">
+        <div className="w-1/2 mx-auto">
             <h3 className="text-lg mb-1 font-bold"> Personal Data </h3>
-            <p className="text-gray-500"> Fill all employee personal basic information data </p>
-            <div className="grid grid-cols-2 gap-4 my-6">
+            <p className="text-gray-500 text-sm"> Fill all employee personal basic information data </p>
+            <div className="grid grid-cols-2 gap-y-4 gap-x-5 my-6">
                 <BaseInputText
                     id="full_name"
                     label="Full Name"
@@ -130,7 +129,7 @@ const PersonalDataForm = ({
                     error={apiBaseError.getErrors('identity_number')?.[0].toString()}
                     setValue={(e) => handlePersonalDataChange('identity_number', e.target.value)}
                 />
-                <div className='grid grid-cols-2 gap-4'>
+                <div className='grid grid-cols-2 gap-y-4 gap-x-5'>
                     <DropdownInput
                         id="gender"
                         label="Gender"
