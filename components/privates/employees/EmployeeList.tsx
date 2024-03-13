@@ -12,11 +12,13 @@ import Filter from "./Filter";
 import Pagination from "@/components/shares/pagination/Pagination";
 import { useRouter } from "next/navigation";
 import { CiCirclePlus } from "react-icons/ci";
+import { useAuth } from "@/contexts";
 import CryptoJS from "crypto-js";
 const EmployeeList = () => {
   const api = apiBase();
   const customLib = lib();
   const router = useRouter();
+  const { user } = useAuth();
 
   const [currentEmployees, setCurrentEmployees] = useState<IApiBaseEmployee[]>(
     [],
@@ -42,6 +44,7 @@ const EmployeeList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log(user);
         console.log(selectDepartment);
         console.log(selectPosition);
         console.log(selectStatus);
@@ -128,17 +131,19 @@ const EmployeeList = () => {
         <div className="flex w-full justify-between max-md:gap-2 max-sm:flex-col">
           <div className="flex gap-5 max-md:gap-1">
             <Filter
-              label="Employment Status"
+              label="Status"
               filterContent={["Active", "Unactive"]}
               handler={setSelectStatus}
             />
-            <Filter
-              label="Department"
-              filterContent={currentDepartments.map((d) => {
-                return d.dept_name;
-              })}
-              handler={setSelectDepartment}
-            />
+          {currentDepartments.length > 0 && (
+              <Filter
+                label="Department"
+                filterContent={currentDepartments.map((d) => {
+                  return d.dept_name;
+                })}
+                handler={setSelectDepartment}
+              />
+          )}
             <Filter
               label="Position"
               filterContent={currentPositions.map((p) => {
@@ -152,7 +157,7 @@ const EmployeeList = () => {
             setSearchValue={setSearchValue}
           />
         </div>
-        <div className=" overflow-x-scroll rounded-lg border-1 max-xl:h-5/6">
+        <div className=" h-fit overflow-x-scroll rounded-lg border-1">
           <table className=" w-full">
             <TableHeader headers={header} action={true} />
             <tbody>
