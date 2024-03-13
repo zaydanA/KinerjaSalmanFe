@@ -8,12 +8,14 @@ export default function RootLayout({
 }) {
     // const router = useRouter()
     return (
-      <div className="flex flex-col h-full w-full gap-0">
-        <Navbar></Navbar>
-        <div className="h-full w-full bg-gray-100 pt-0 md:pt-6 px-0 md:px-6 overflow-y-auto overflow-x-hidden">
+      <div className="bg-gray-100 flex flex-col min-h-screen">
+        <Navbar />
+        <div className="bg-gray-100 pt-6 px-6 overflow-y-auto flex-grow">
           {children}
-          <footer className="z-30 min-h-[10%] h-fit bg-gray-100 text-xs font-extralight flex justify-center p-5 relative">© 2024 Talenta.co - Advanced Payroll Automation & HR Solution</footer>
         </div>
+        <footer className="bottom-0 w-full bg-gray-100 text-xs font-extralight flex justify-center p-5">
+          © 2024 Talenta.co - Advanced Payroll Automation & HR Solution
+        </footer>
       </div>
     );
   }

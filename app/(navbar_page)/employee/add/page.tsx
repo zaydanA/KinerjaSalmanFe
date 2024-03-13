@@ -1,6 +1,5 @@
 "use client"
-import React, { useState } from "react";
-import Pagination from "@/components/shares/pagination/Pagination";
+import React from "react";
 import AddEmployee from "../../../../components/privates/employees/add/AddEmployee";
 
 const page = () => {

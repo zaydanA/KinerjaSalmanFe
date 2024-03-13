@@ -67,7 +67,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
       }}
     >
       {isLoading ? (
-        <div className='flex w-full h-full justify-center items-center'>
+        <div className='flex w-screen h-screen justify-center items-center'>
           <Spinner color="default" size="lg"/>
         </div>
       ) : (
