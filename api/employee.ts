@@ -1,31 +1,28 @@
 import { api, support } from './support';
 import { IApiBaseResponse } from '@/types/http';
-import { IApiAddEmployee } from '@/types/employee';
-import { IApiEmployeeResponse } from '@/types/employee'
+import { IApiAddEmployee, IApiEmployeeResponse } from '@/types/employee'
 
 
 const employee = () => {
   const { apiUrl } = support();
 
   const url = {
-    employee: apiUrl.employee.employee,
-    addEmployee: apiUrl.employee.employee,
-    validateAddEmployee: `${apiUrl.employee.employee}/validate-add`,
-
-    gender: apiUrl.employee.gender
+    employee: apiUrl.employee,
+    addEmployee: apiUrl.employee,
+    validateAddEmployee: `${apiUrl.employee}/validate-add`,
   }
 
-  const getEmployee = async (q?: string) => {
+  const getEmployee = async (page?: number, limit?: number, q?: string, status?: string[], department?: number[], position?: number[]) => {
     const response = await api.get<IApiBaseResponse<IApiEmployeeResponse>>(
       url.employee,
       {
         params: {
-          page: 1,
-          limit: 1,
+          page: page,
+          limit: limit,
           search: q,
           status: status,
-          // department: department,
-          // position: position,
+          department: department,
+          position: position,
         },
       }
     );
@@ -34,46 +31,32 @@ const employee = () => {
   };
 
   const addEmployee = async (data: any) => {
-      const response = await api.post<IApiBaseResponse<IApiAddEmployee>>(
-        url.addEmployee,
-        data,
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          }
+    const response = await api.post<IApiBaseResponse<IApiAddEmployee>>(
+      url.addEmployee,
+      data,
+      {
+        headers: {
+          'Content-Type': 'application/json'
         }
-      );
+      }
+    );
 
     return response.data;
   }
 
   const validateAddEmployee = async (data: any, step: number) => {
-    try {
-      const response = await api.post<any>(
-          url.validateAddEmployee,
-          data,
-          {
-            params: {
-              step: step,
-            },
-              headers: {
-                  'Content-Type': 'application/json'
-              }
-          }
-      );
-
-      return response.data;
-  } catch (error) {
-      console.error('Error validating employee:', error);
-      throw error; 
-  } 
-  }
-
-  const getGenders = async () => {
-    const response = await api.get<IApiBaseResponse<IApiGenderData[]>>(
-      url.gender,
-      {}
-    )
+    const response = await api.post<IApiBaseResponse<any>>(
+        url.validateAddEmployee,
+        data,
+        {
+          params: {
+            step: step,
+          },
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+    );
 
     return response.data;
   }
@@ -82,8 +65,6 @@ const employee = () => {
     getEmployee,
     addEmployee,
     validateAddEmployee,
-
-    getGenders
   };
 };
 

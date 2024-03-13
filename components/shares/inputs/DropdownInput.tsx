@@ -1,12 +1,14 @@
 import React from 'react';
+import { PiWarningCircle } from 'react-icons/pi';
 
 export type DropdownInputType = {
   id: string;
   label: string;
-  options: Array<{ value: string; label: string }>;
-  selectedValue: string;
+  options: Array<{ value: string | number; label: string }>;
+  selectedValue: string | number;
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   disabled?: boolean;
+  required?: boolean;
   error?: string;
 };
 
@@ -16,34 +18,38 @@ const DropdownInput: React.FC<DropdownInputType> = ({
   options,
   selectedValue,
   onChange,
+  required = false,
   disabled = false,
   error = '',
 }) => {
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={id} className="text-base block w-fit text-clr-text-primary">
-        {label}
+      <label htmlFor={id} className="text-sm font-medium block w-fit text-clr-text-primary">
+        {label} {required ? "*" : ""}
       </label>
-      <select
-        id={id}
-        value={selectedValue}
-        onChange={onChange}
-        disabled={disabled}
-        className={`rounded shadow-input outline-none w-full box-border px-3 py-3.5 transition-all ease-in-out bg-clr-background-base-two text-sm placeholder-clr-text-primary-darken ${error ? 'shadow-input-error focus:shadow-input-focus-error' : 'hover:shadow-input-hover focus:shadow-input-focus'}
-        ${disabled ? 'bg-clr-background-base-one' : ''}`}
-      >
-        {options.map(option => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
+      <div>
+        <select
+          id={id}
+          value={selectedValue}
+          onChange={onChange}
+          disabled={disabled}
+          className={`rounded shadow-input outline-none w-full box-border p-3 transition-all ease-in-out bg-white text-sm placeholder-gray-300 ${error ? 'shadow-input-error focus:shadow-input-focus-error' : 'hover:shadow-input-hover focus:shadow-input-focus'}
+          ${disabled ? 'bg-clr-background-base-one' : ''}`}
+        >
+          {options.map(option => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
 
-      {error && (
-        <div className="flex gap-2 items-center">
-          <p className="text-sm font-thin text-clr-text-danger">{error}</p>
-        </div>
-      )}
+        {error && (
+          <div className="flex gap-1 items-center mt-1">
+            <PiWarningCircle className="text-red-500 w-3.5" />
+            <p className="text-xs font-normal text-red-500">{error}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
