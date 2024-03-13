@@ -21,8 +21,10 @@ const PayrollDataForm = ({
         })
     }
     return (
-        <div className="w-1/2 mx-auto mt-5">
-            <div className="grid grid-cols-2 gap-4 my-6">
+        <div className="w-1/2 mx-auto">
+            <h3 className="text-lg mb-1 font-bold">Payroll Data</h3>
+            <p className="text-gray-500 text-sm">Fill all employee payroll data information</p>
+            <div className="grid grid-cols-2 gap-y-4 gap-x-5 my-6">
                  <BaseInputText
                     id="npwp_number"
                     label="NPWP Number :"
