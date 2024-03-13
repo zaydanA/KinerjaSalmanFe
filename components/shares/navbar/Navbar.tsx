@@ -19,12 +19,11 @@ const NavbarData = [{
 ]
 const Navbar =  (props: any) => {
     const pathname = usePathname();
-    const { user } = useAuth();
 
     return (
         <div className="w-full h-[60px] bg-white shadow-md md:px-5 font-medium text-gray-500 flex flex-row items-center justify-between border-b-1">
             <div className='flex items-center w-3/4 h-full md:gap-6 font-mono'>
-                <Link className='h-full flex' href="/">
+                <Link className='h-full flex' href="/dashboard">
                     <Image
                     src="/LogoSalman.svg"
                     alt="Salman Logo"
@@ -51,8 +50,8 @@ const Navbar =  (props: any) => {
                     ))}
                 </div>
             </div>
-            <div className='pl-2 w-1/4 h-full w-full'>
-                <ProfileDropdown user={user}></ProfileDropdown>
+            <div className='pl-2 w-1/4 h-full'>
+                <ProfileDropdown></ProfileDropdown>
             </div>
             
         </div>

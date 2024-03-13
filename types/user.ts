@@ -41,6 +41,7 @@ export interface IUserEmploymentData {
   position_id: number
   join_date: Date
   resign_date?: Date
+  status?:number
 }
 
 export interface IUserPayrollData {

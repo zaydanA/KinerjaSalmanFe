@@ -7,27 +7,20 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { MdOutlineCorporateFare } from "react-icons/md";
 import { GoSignOut } from "react-icons/go";
 import { useAuth } from "@/contexts";
-import { IUserSelfData } from "@/types/user";
 
 
 const ProfileDropdown = () => {
     const [isDropdownActive,setIsDropdownActive] = useState(false);
     const { user, logout } = useAuth();
 
+    console.log(user);
     const handleLogout = async (e: FormEvent) => {
         e.preventDefault();
 
         try {
             await logout();
         } catch (error) {
-            // apiBaseError.set(error);
-
-            // dispatch(
-            //     addNotification({
-            //     message: apiBaseError.getMessage(),
-            //     type: 'danger',
-            //     }),
-            // );
+            
         }
     };
 
@@ -48,7 +41,7 @@ const ProfileDropdown = () => {
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Profile Actions" variant="flat">
                     <DropdownItem key="profile" className="h-16 border-b-2 rounded-b-none">
-                        <Link className="h-full w-full" href="/profile">
+                        <Link className="h-full w-full" href={`/profile`}>
                             <p className="font-semibold">{user?.full_name}</p>
                             <p className="font-light text-[12px] text-gray-500">{user?.email}</p>
                             <p className="font-light text-[12px] text-gray-500">{user?.position.title}</p>
