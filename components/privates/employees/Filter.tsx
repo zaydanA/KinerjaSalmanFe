@@ -38,7 +38,7 @@ const Filter = ({
 
   return (
     <Dropdown>
-      <DropdownTrigger className="flex w-fit cursor-pointer items-center rounded-lg border px-4 text-sm max-lg:px-2 max-lg:text-sm max-md:py-0">
+      <DropdownTrigger className="flex w-fit cursor-pointer items-center rounded-lg border px-4 text-sm max-lg:px-2 max-lg:text-sm max-md:py-0 max-sm:text-[10px]">
         {label}
       </DropdownTrigger>
       <div className="flex bg-red-500">

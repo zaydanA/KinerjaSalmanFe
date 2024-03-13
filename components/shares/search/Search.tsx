@@ -31,7 +31,7 @@ export default function Search({
         Search
       </label>
       <input
-        className="rounded-md border border-gray-200 py-[9px] pl-2 text-sm outline-2 placeholder:text-gray-500 max-lg:text-sm max-md:py-1 max-md:text-xs"
+        className="rounded-md border border-gray-200 py-[9px] pl-2 text-sm outline-2 placeholder:text-gray-500 max-lg:text-sm max-md:py-1 max-md:text-xs max-sm:text-[10px]"
         placeholder={placeholder}
         onChange={(e) => {
           handleSearch(e.target.value);

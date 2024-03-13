@@ -10,7 +10,6 @@ import {Breadcrumbs, BreadcrumbItem} from "@nextui-org/react";
 import { IoMenuOutline,IoCloseOutline } from "react-icons/io5";
 import Personal from "@/components/privates/sidebar/Personal";
 import Employment from "@/components/privates/sidebar/Employment";
-import { useAuth } from "@/contexts";
 import { IUserPersonalData, IUserSelfData } from "@/types/user";
 import { usePathname } from "next/navigation";
 import { apiBase } from "@/api";

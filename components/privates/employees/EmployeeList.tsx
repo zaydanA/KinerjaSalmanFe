@@ -152,10 +152,6 @@ const EmployeeList = () => {
             setSearchValue={setSearchValue}
           />
         </div>
-        <Search
-          placeholder="Search employees.."
-          setSearchValue={setSearchValue}
-        />
       </div>
       <div className=" overflow-x-scroll rounded-lg border-1 max-xl:h-5/6">
         <table className=" w-full">
