@@ -8,11 +8,9 @@ const employee = () => {
   const { apiUrl } = support();
 
   const url = {
-    employee: apiUrl.employee.employee,
-    addEmployee: apiUrl.employee.employee,
-    validateAddEmployee: `${apiUrl.employee.employee}/validate-add`,
-
-    gender: apiUrl.employee.gender
+    employee: apiUrl.employee,
+    addEmployee: apiUrl.employee,
+    validateAddEmployee: `${apiUrl.employee}/validate-add`,
   }
 
   const getEmployeeById = async (
@@ -83,15 +81,6 @@ const employee = () => {
       console.error('Error validating employee:', error);
       throw error; 
   } 
-  }
-
-  const getGenders = async () => {
-    const response = await api.get<IApiBaseResponse<IApiGenderData[]>>(
-      url.gender,
-      {}
-    )
-
-    return response.data;
   }
 
   return {
