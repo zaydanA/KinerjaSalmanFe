@@ -6,6 +6,8 @@ module.exports = {
   env: {
     API_BASE_URL: "http://localhost:8000/api/v1",
 
-    SSO_URL: "http://localhost:8080/login?serviceURL=http://localhost:8000&callbackURL=http://localhost:8000/api/v1/sign-in-from-sso"
+    SSO_URL: "http://localhost:8080/login?serviceURL=http://localhost:8000&callbackURL=http://localhost:8000/api/v1/sign-in-from-sso",
+
+    NEXT_PUBLIC_SECRET:  "dawjkdbawidaiwdbawdbihaibdihbdawndjawndakwjdbakhwdkadb"
   }
 }

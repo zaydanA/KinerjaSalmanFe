@@ -1,6 +1,10 @@
 import { api, support } from './support';
 import { IApiBaseResponse } from '@/types/http';
-import { IApiAddEmployee, IApiEmployeeResponse } from '@/types/employee'
+import { IApiAddEmployee, IApiGenderData } from '@/types/employee';
+import { IApiEmployeeResponse } from '@/types/employee'
+import department from './department';
+import position from './position';
+
 
 
 const employee = () => {
@@ -10,6 +14,7 @@ const employee = () => {
     employee: apiUrl.employee,
     addEmployee: apiUrl.employee,
     validateAddEmployee: `${apiUrl.employee}/validate-add`,
+
   }
 
   const getEmployee = async (page?: number, limit?: number, q?: string, status?: string[], department?: number[], position?: number[]) => {
@@ -27,8 +32,8 @@ const employee = () => {
       }
     );
 
-    return response.data;
-  };
+        return response.data
+    }
 
   const addEmployee = async (data: any) => {
     const response = await api.post<IApiBaseResponse<IApiAddEmployee>>(
