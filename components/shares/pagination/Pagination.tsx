@@ -1,14 +1,25 @@
 import React from "react";
+import {
+  MdKeyboardArrowLeft,
+  MdKeyboardArrowRight,
+  MdKeyboardDoubleArrowLeft,
+  MdKeyboardDoubleArrowRight,
+} from "react-icons/md";
 
 const Pagination = ({
   currentPage,
   totalPage,
-  onPageChange
+  onPageChange,
 }: {
   currentPage: number;
   totalPage: number;
   onPageChange: (page: number) => void;
 }) => {
+  const handleStart = () => {
+    if (currentPage > 1) {
+      onPageChange(1)
+    }
+  }
   const handlePrevious = () => {
     if (currentPage > 1) {
       onPageChange(currentPage - 1);
@@ -21,24 +32,44 @@ const Pagination = ({
     }
   };
 
+  const handleEnd = () => {
+    if (currentPage < totalPage) {
+      onPageChange(totalPage)
+    }
+  }
+
   return (
-    <nav className="flex items-center justify-center">
-      <button
-        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${
-          currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
-        }`}
-        onClick={handlePrevious}
-        disabled={currentPage === 1}
-      >
-        Previous
-      </button>
-      <ul className="flex">
+    <nav className="flex items-center justify-center gap-3">
+      <div className="flex gap-1">
+        <button
+          className={` rounded-full bg-clr-kinerja-gold px-2 py-2 font-bold text-white hover:bg-clr-kinerja-gold-hover ${
+            currentPage === 1 ? "cursor-not-allowed opacity-50" : ""
+          }`}
+          onClick={handleStart}
+          disabled={currentPage === 1}
+        >
+          <MdKeyboardDoubleArrowLeft />
+        </button>
+        <button
+          className={` rounded-full bg-clr-kinerja-gold px-2 py-2 font-bold text-white hover:bg-clr-kinerja-gold-hover ${
+            currentPage === 1 ? "cursor-not-allowed opacity-50" : ""
+          }`}
+          onClick={handlePrevious}
+          disabled={currentPage === 1}
+        >
+          <MdKeyboardArrowLeft />
+        </button>
+      </div>
+      <div>
+        {currentPage}
+      </div>
+      {/* <ul className="flex">
         {[...Array(totalPage).keys()].map((pageNumber) => (
           <li key={pageNumber + 1}>
             <button
-              className={`ml-1 bg-white hover:bg-gray-200 text-blue-500 font-semibold py-2 px-4 border border-gray-300 rounded-full ${
+              className={`ml-1 bg-white hover:bg-gray-200 text-black font-semibold py-2 px-4 border border-gray-300 rounded-full ${
                 currentPage === pageNumber + 1
-                  ? "bg-blue-500 text-white"
+                  ? " text-black"
                   : ""
               }`}
               onClick={() => onPageChange(pageNumber + 1)}
@@ -47,16 +78,27 @@ const Pagination = ({
             </button>
           </li>
         ))}
-      </ul>
-      <button
-        className={`ml-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${
-          currentPage === totalPage ? "opacity-50 cursor-not-allowed" : ""
-        }`}
-        onClick={handleNext}
-        disabled={currentPage === totalPage}
-      >
-        Next
-      </button>
+      </ul> */}
+      <div className="flex gap-1">
+        <button
+          className={` rounded-full bg-clr-kinerja-gold px-2 py-2 font-bold text-white hover:bg-clr-kinerja-gold-hover ${
+            currentPage === totalPage ? "cursor-not-allowed opacity-50" : ""
+          }`}
+          onClick={handleNext}
+          disabled={currentPage === totalPage}
+        >
+          <MdKeyboardArrowRight />
+        </button>
+        <button
+          className={` rounded-full bg-clr-kinerja-gold px-2 py-2 font-bold text-white hover:bg-clr-kinerja-gold-hover ${
+            currentPage === totalPage ? "cursor-not-allowed opacity-50" : ""
+          }`}
+          onClick={handleEnd}
+          disabled={currentPage === totalPage}
+        >
+          <MdKeyboardDoubleArrowRight />
+        </button>
+      </div>
     </nav>
   );
 };

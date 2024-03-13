@@ -10,7 +10,6 @@ import {Breadcrumbs, BreadcrumbItem} from "@nextui-org/react";
 import { IoMenuOutline,IoCloseOutline } from "react-icons/io5";
 import Personal from "@/components/privates/sidebar/Personal";
 import Employment from "@/components/privates/sidebar/Employment";
-import { useAuth } from "@/contexts";
 import { IUserPersonalData, IUserSelfData } from "@/types/user";
 import { usePathname } from "next/navigation";
 import { apiBase } from "@/api";
@@ -86,7 +85,8 @@ const DetailEmployee: React.FC<DetailEmployeeType> = (props)=>{
     const pathname = usePathname().split("/")
     useEffect(()=>{
         async function getEmployeeById(){
-            const res = await apiBase().user().personalData(props.user?props.user.user_id:Number(pathname[2]));
+            const id = props.user? props.user.user_id:Number(pathname[2])
+            const res = await apiBase().user().personalData(id);
             
             setEmployee(res && res.data);
         }   
@@ -123,7 +123,7 @@ const DetailEmployee: React.FC<DetailEmployeeType> = (props)=>{
                     </div>
                 </div>
             </div>
-            <div className={`py-[14px] pr-2 pl-2 md:px-[24px] flex flex-col w-5/6 md:w-full border-l-1 ${isSidebarOpen?"md:ml-0 ml-[38px]":""}`}>
+            <div className={`py-[14px] pr-2 pl-2 md:px-[24px] flex flex-col w-[90%] md:w-full border-l-1 ${isSidebarOpen?"md:ml-0 ml-[38px]":""}`}>
                 <div className="flex flex-col min-h-[52px] mb-[14px] z-[1] gap-1">
                     <Breadcrumbs isDisabled size="sm">
                         <BreadcrumbItem>{pathname[1]}</BreadcrumbItem>

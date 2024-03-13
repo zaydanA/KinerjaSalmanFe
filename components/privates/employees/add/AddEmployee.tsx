@@ -173,7 +173,7 @@ const AddEmployee = () => {
                 <li className="col-span-1 flex flex-col gap-2 items-center justify-center flex-1">
                     <div 
                         className={`relative rounded-full h-8 w-8 flex items-center justify-center 
-                        ${step >= 1 ? 'bg-gold01 text-white cursor-pointer' : 'bg-transparent border-2 border-gray-300 text-gray-300 cursor-default'}`}
+                        ${step >= 1 ? 'bg-clr-kinerja-gold text-white cursor-pointer' : 'bg-transparent border-2 border-gray-300 text-gray-300 cursor-default'}`}
                         onClick={step > 1 ? () => handlePreviousStep(1) : undefined}
                     >
                     <span className={`${step >= 1 ? 'circle-lg' : 'circle'}`}>1</span>
@@ -181,12 +181,12 @@ const AddEmployee = () => {
                     <div className={`${step >= 1 ? 'text-black' : 'text-gray-400'}`}>Personal data</div>
                 </li>
                 <div className="flex">
-                    <hr className={`w-16 border-1 mt-4 ${step >= 2 ? 'border-gold01' : ''}`} />
+                    <hr className={`w-16 border-1 mt-4 ${step >= 2 ? 'border-clr-kinerja-gold' : ''}`} />
                 </div>
                 <li className="flex flex-col gap-2 items-center justify-center flex-1">
                     <div 
                         className={`relative rounded-full h-8 w-8 flex items-center justify-center 
-                        ${step >= 2 ? 'bg-gold01 text-white cursor-pointer' : 'bg-transparent border-2 border-gray-300 text-gray-300 cursor-default'}`}
+                        ${step >= 2 ? 'bg-clr-kinerja-gold text-white cursor-pointer' : 'bg-transparent border-2 border-gray-300 text-gray-300 cursor-default'}`}
                         onClick={step > 2 ? () => handlePreviousStep(2) : undefined}
                     >
                     <span className={`${step >= 2 ? 'circle-lg' : 'circle'}`}>2</span>
@@ -194,24 +194,24 @@ const AddEmployee = () => {
                     <div className={`${step >= 2 ? 'text-black' : 'text-gray-400'}`}>Employment data</div>
                 </li>
                 <div className="flex">
-                    <hr className={`w-16 border-1 mt-4 ${step >= 3 ? 'border-gold01' : ''}`} />
+                    <hr className={`w-16 border-1 mt-4 ${step >= 3 ? 'border-clr-kinerja-gold' : ''}`} />
                 </div>
                 <li className="flex flex-col gap-2 items-center justify-center flex-1">
                     <div 
                         className={`relative rounded-full h-8 w-8 flex items-center justify-center 
-                        ${step >= 3 ? 'bg-gold01 text-white cursor-pointer' : 'bg-transparent border-2 border-gray-300 text-gray-300 cursor-default'}`}
+                        ${step >= 3 ? 'bg-clr-kinerja-gold text-white cursor-pointer' : 'bg-transparent border-2 border-gray-300 text-gray-300 cursor-default'}`}
                     >
                     <span className={`${step >= 3 ? 'circle-lg' : 'circle'}`}>3</span>
                     </div>
                     <div className={`${step >= 3 ? 'text-black' : 'text-gray-400'}`}>Payroll data</div>
                 </li>
                 <div className="flex">
-                    <hr className={`w-16 border-1 mt-4 ${step >= 4 ? 'border-gold01' : ''}`} />
+                    <hr className={`w-16 border-1 mt-4 ${step >= 4 ? 'border-clr-kinerja-gold' : ''}`} />
                 </div>
                 <li className="flex flex-col gap-2 items-center justify-center flex-1">
                     <div 
                         className={`relative rounded-full h-8 w-8 flex items-center justify-center 
-                        ${step >= 4 ? 'bg-gold01 text-white cursor-pointer' : 'bg-transparent border-2 border-gray-300 text-gray-300 cursor-default'}`}
+                        ${step >= 4 ? 'bg-clr-kinerja-gold text-white cursor-pointer' : 'bg-transparent border-2 border-gray-300 text-gray-300 cursor-default'}`}
                     >
                     <span className={`${step >= 4 ? 'circle-lg' : 'circle'}`}>4</span>
                     </div>

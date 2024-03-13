@@ -15,12 +15,14 @@ const config: Config = {
       colors: {
         graph01: "#009BDE",
         graph02: "#EE8CA5",
-        gold01: "#957c54",
-        gold02: "#87704b",
 
         'clr-table-border': "#eeeeee",
         'clr-blackground-table-header': "#fbfbfb",
-        'clr-blackground-table-body': "#ffffff"
+        'clr-blackground-table-body': "#ffffff",
+
+        'clr-kinerja-gold': "#957c54",
+        "clr-kinerja-gold-hover": "#87704b",
+        "clr-kinerja-gold-hover-border": "#b29f7a",
       },
 
       boxShadow: {

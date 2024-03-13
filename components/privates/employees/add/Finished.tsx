@@ -14,7 +14,7 @@ const Finished = ({
   return (
     <div className='w-1/2 mx-auto'>
       <div className='flex flex-col justify-center items-center text-center gap-4'>
-        <FaCheck size="8em" className="text-gold01" />
+        <FaCheck size="8em" className="text-clr-kinerja-gold" />
         <h1 className='text-normal font-medium'>
           You have successfully added employee data
         </h1>
