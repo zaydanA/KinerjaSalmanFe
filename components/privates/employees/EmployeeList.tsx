@@ -152,47 +152,6 @@ const EmployeeList = () => {
             setSearchValue={setSearchValue}
           />
         </div>
-        <div className=" overflow-x-scroll rounded-lg border-1 max-xl:h-5/6">
-          <table className=" w-full">
-            <TableHeader headers={header} action={true} />
-            <tbody>
-              {currentEmployees.map((e, index) => {
-                const dataContent = [
-                  "https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png",
-                  e.full_name,
-                  e.email,
-                  currentDepartments.find((d) => d.dept_id == e.dept_id)
-                    ?.dept_name,
-                  currentPositions.find((p) => p.position_id == e.position_id)
-                    ?.title,
-                  e.status == 1 ? "Active" : "Inactive",
-                  customLib.formatDate(String(e.join_date)),
-                  e.resign_date
-                    ? customLib.formatDate(String(e.resign_date))
-                    : "-",
-                  customLib.formatDate(String(e.date_of_birth)),
-                  e.phone_number,
-                  e.gender,
-                ];
-                return (
-                  <TableData
-                    key={index}
-                    dataContent={dataContent}
-                    onClickEdit={() => router.push("employee/" + e.user_id)}
-                    isProfile={true}
-                  />
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-        <div>
-          <Pagination
-            currentPage={currentPage}
-            totalPage={totalPage}
-            onPageChange={onPageChange}
-          />
-        </div>
         <Search
           placeholder="Search employees.."
           setSearchValue={setSearchValue}
