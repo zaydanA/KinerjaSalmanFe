@@ -13,7 +13,7 @@ import Pagination from "@/components/shares/pagination/Pagination";
 import { useRouter } from "next/navigation";
 import { CiCirclePlus } from "react-icons/ci";
 import { useAuth } from "@/contexts";
-
+import CryptoJS from "crypto-js";
 const EmployeeList = () => {
   const api = apiBase();
   const customLib = lib();
@@ -121,34 +121,81 @@ const EmployeeList = () => {
 
   return (
     <>
-      <div className="flex justify-between">
-        <h1 className=" text-xl font-bold">Employees</h1>
-        <button onClick={() => router.push("employee/add")}>
-          <CiCirclePlus className="h-8 w-8" />
-        </button>
-      </div>
-      <div className="flex w-full justify-between max-md:gap-2 max-sm:flex-col">
-        <div className="flex gap-5 max-md:gap-1">
-          <Filter
-            label="Status"
-            filterContent={["Active", "Unactive"]}
-            handler={setSelectStatus}
-          />
-          {currentDepartments.length > 0 && (
+      <div className="flex flex-col gap-5">
+        <div className="flex justify-between">
+          <h1 className=" text-2xl font-bold">Employees</h1>
+          <button onClick={() => router.push("employee/add")}>
+            <CiCirclePlus className="h-8 w-8" />
+          </button>
+        </div>
+        <div className="flex w-full justify-between max-md:gap-2 max-sm:flex-col">
+          <div className="flex gap-5 max-md:gap-1">
             <Filter
-              label="Department"
-              filterContent={currentDepartments.map((d) => {
-                return d.dept_name;
-              })}
-              handler={setSelectDepartment}
+              label="Status"
+              filterContent={["Active", "Unactive"]}
+              handler={setSelectStatus}
             />
+          {currentDepartments.length > 0 && (
+              <Filter
+                label="Department"
+                filterContent={currentDepartments.map((d) => {
+                  return d.dept_name;
+                })}
+                handler={setSelectDepartment}
+              />
           )}
-          <Filter
-            label="Position"
-            filterContent={currentPositions.map((p) => {
-              return p.title;
-            })}
-            handler={setSelectPosition}
+            <Filter
+              label="Position"
+              filterContent={currentPositions.map((p) => {
+                return p.title;
+              })}
+              handler={setSelectPosition}
+            />
+          </div>
+          <Search
+            placeholder="Search employees.."
+            setSearchValue={setSearchValue}
+          />
+        </div>
+        <div className=" h-fit overflow-x-scroll rounded-lg border-1">
+          <table className=" w-full">
+            <TableHeader headers={header} action={true} />
+            <tbody>
+              {currentEmployees.map((e, index) => {
+                const dataContent = [
+                  "https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png",
+                  e.full_name,
+                  e.email,
+                  currentDepartments.find((d) => d.dept_id == e.dept_id)
+                    ?.dept_name,
+                  currentPositions.find((p) => p.position_id == e.position_id)
+                    ?.title,
+                  e.status == 1 ? "Active" : "Inactive",
+                  customLib.formatDate(String(e.join_date)),
+                  e.resign_date
+                    ? customLib.formatDate(String(e.resign_date))
+                    : "-",
+                  customLib.formatDate(String(e.date_of_birth)),
+                  e.phone_number,
+                  e.gender,
+                ];
+                return (
+                  <TableData
+                    key={index}
+                    dataContent={dataContent}
+                    onClickEdit={() => router.push("employee/" + e.user_id)}
+                    isProfile={true}
+                  />
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <Pagination
+            currentPage={currentPage}
+            totalPage={totalPage}
+            onPageChange={onPageChange}
           />
         </div>
         <Search
@@ -156,7 +203,7 @@ const EmployeeList = () => {
           setSearchValue={setSearchValue}
         />
       </div>
-      <div className=" h-fit overflow-x-scroll rounded-lg border-1">
+      <div className=" overflow-x-scroll rounded-lg border-1 max-xl:h-5/6">
         <table className=" w-full">
           <TableHeader headers={header} action={true} />
           <tbody>
@@ -182,7 +229,8 @@ const EmployeeList = () => {
                 <TableData
                   key={index}
                   dataContent={dataContent}
-                  onClickEdit={() => router.push("employee/" + e.user_id)}
+                  onClickEdit={() => {
+                    router.push(`employee/${e.user_id}?query=${e.dept_id}`)}}
                   isProfile={true}
                 />
               );

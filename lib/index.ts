@@ -31,9 +31,17 @@ export const lib = () => {
     }
   }
 
+  const toLabelCase = (str: string, capital: boolean): string => {
+    return str
+      .split('_')
+      .map(word => word.charAt(0).toUpperCase() + (capital ? word.slice(1).toUpperCase() : word.slice(1).toLowerCase()))
+      .join(' ');
+  }
+
   return {
     formatDate,
     getDate,
-    getTimeOfDay
+    getTimeOfDay,
+    toLabelCase
   }
 }

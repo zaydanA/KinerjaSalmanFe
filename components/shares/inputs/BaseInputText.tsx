@@ -9,7 +9,8 @@ type BaseInputType = {
   placeholder?: string;
   disabled?: boolean;
   type?: "number" | "text" | "password" | "password-no-eye" | "date";
-  value: string;
+  required?: boolean;
+  value?: string;
   error?: string;
   setValue: (event: ChangeEvent<HTMLInputElement>) => void;
 };
@@ -20,6 +21,7 @@ export default function BaseInputText({
   placeholder = "",
   disabled = false,
   type = "text",
+  required = false,
   value,
   error = "",
   setValue,
@@ -37,9 +39,9 @@ export default function BaseInputText({
     <div className="flex flex-col gap-2">
       <label
         htmlFor={id}
-        className="text-base block w-fit text-clr-text-primary"
+        className="text-sm font-medium block w-fit text-black"
       >
-        {label}
+        {label} {required ? "*" : ""}
       </label>
 
       <div className="relative">
@@ -56,7 +58,7 @@ export default function BaseInputText({
           value={value}
           onChange={setValue}
           disabled={disabled}
-          className={`rounded shadow-input outline-none w-full box-border px-3 py-3.5 transition-all ease-in-out bg-clr-background-base-two text-sm placeholder-clr-text-primary-darken ${
+          className={`rounded shadow-input outline-none w-full box-border p-3 transition-all ease-in-out bg-white text-sm placeholder-gray-300 ${
             error
               ? "shadow-input-error focus:shadow-input-focus-error"
               : "hover:shadow-input-hover focus:shadow-input-focus"
@@ -75,14 +77,14 @@ export default function BaseInputText({
             </button>
           </div>
         )}
-      </div>
 
-      {error && (
-        <div className="flex gap-2 items-center">
-          <PiWarningCircle />
-          <p className="text-sm font-thin text-clr-text-danger">{error}</p>
+        {error && (
+        <div className="flex gap-1 items-center mt-1">
+          <PiWarningCircle className="text-red-500 w-3.5" />
+          <p className="text-xs font-normal text-red-500">{error}</p>
         </div>
       )}
+      </div>
     </div>
   );
 }

@@ -13,11 +13,11 @@ export default function ProtectedRoute({ children,allowedDept,allowedPos } : Pro
   const router = useRouter();
   const {user} = useAuth();
   // Add your RBAC checks here
-  useLayoutEffect(() => {
-    // Example: Check if user has admin role
-    var next = allowedDept.some((item: number | undefined ) => item === user?.dept.dept_id);
-    next = allowedPos.some((item: number | undefined ) => item === user?.position.position_id);
+  useEffect(() => {
+    console.log(allowedDept)
+    const next = allowedDept.some((item: number | undefined) => item === user?.dept.dept_id) && allowedPos.some((item: number | undefined) => item === user?.position.position_id);
 
+    console.log(next);
     if (!next){
         router.push('/dashboard')
     }

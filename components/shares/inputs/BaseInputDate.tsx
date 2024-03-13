@@ -4,6 +4,7 @@ import { PiWarningCircle } from "react-icons/pi";
 export type BaseInputDateType = {
   id: string;
   label: string;
+  required?: boolean;
   value: string;
   error?: string;
   setValue: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -12,6 +13,7 @@ export type BaseInputDateType = {
 const BaseInputDate: React.FC<BaseInputDateType> = ({
   id,
   label,
+  required = false,
   value,
   error = "",
   setValue,
@@ -20,27 +22,29 @@ const BaseInputDate: React.FC<BaseInputDateType> = ({
     <div className="flex flex-col gap-2">
       <label
         htmlFor={id}
-        className="text-base block w-fit text-clr-text-primary"
+        className="text-sm font-medium block w-fit text-black"
       >
-        {label}
+        {label} {required ? "*" : ""}
       </label>
-      <input
-        id={id}
-        type="date"
-        value={value}
-        onChange={setValue}
-        className={`rounded shadow-input outline-none w-full box-border px-3 py-3.5 transition-all ease-in-out bg-clr-background-base-two text-sm placeholder-clr-text-primary-darken ${
-          error
-            ? "shadow-input-error focus:shadow-input-focus-error"
-            : "hover:shadow-input-hover focus:shadow-input-focus"
-        }`}
-      />
-      {error && (
-        <div className="flex gap-2 items-center">
-          <PiWarningCircle />
-          <p className="text-sm font-thin text-clr-text-danger">{error}</p>
-        </div>
-      )}
+      <div>
+        <input
+          id={id}
+          type="date"
+          value={value}
+          onChange={setValue}
+          className={`rounded shadow-input outline-none w-full box-border p-3 transition-all ease-in-out bg-white text-sm placeholder-gray-300 ${
+            error
+              ? "shadow-input-error focus:shadow-input-focus-error"
+              : "hover:shadow-input-hover focus:shadow-input-focus"
+          }`}
+        />
+        {error && (
+          <div className="flex gap-1 items-center mt-1">
+            <PiWarningCircle className="text-red-500 w-3.5" />
+            <p className="text-xs font-normal text-red-500">{error}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
