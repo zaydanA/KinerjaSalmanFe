@@ -12,7 +12,7 @@ import Filter from "./Filter";
 import Pagination from "@/components/shares/pagination/Pagination";
 import { useRouter } from "next/navigation";
 import { CiCirclePlus } from "react-icons/ci";
-
+import CryptoJS from "crypto-js";
 const EmployeeList = () => {
   const api = apiBase();
   const customLib = lib();
@@ -177,7 +177,8 @@ const EmployeeList = () => {
                 <TableData
                   key={index}
                   dataContent={dataContent}
-                  onClickEdit={() => router.push("employee/" + e.user_id)}
+                  onClickEdit={() => {
+                    router.push(`employee/${e.user_id}?query=${e.dept_id}`)}}
                   isProfile={true}
                 />
               );
