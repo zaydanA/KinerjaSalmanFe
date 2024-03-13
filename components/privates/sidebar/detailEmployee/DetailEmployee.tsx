@@ -73,7 +73,7 @@ const DetailEmployee: React.FC<DetailEmployeeType> = (props)=>{
             phone_number: '',
             emergency_number: '',
             place_of_birth: '',
-            date_of_birth: new Date(),
+            date_of_birth: '',
             gender: '',
             marital_status: '',
             blood_type: '',
