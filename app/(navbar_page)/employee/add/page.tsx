@@ -2,11 +2,14 @@
 import React, { useState } from "react";
 import Pagination from "@/components/shares/pagination/Pagination";
 import AddEmployee from "../../../../components/privates/employees/add/AddEmployee";
+import ProtectedRoute from "@/app/Rbac";
 
 const page = () => {
 
     return (
-        <AddEmployee/>
+        <ProtectedRoute allowedDept={[1,2]} allowedPos={[1,2]}>
+            <AddEmployee/>
+        </ProtectedRoute>
     )
 }
 
