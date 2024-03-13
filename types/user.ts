@@ -1,9 +1,3 @@
-// export interface IAddEmployee {
-//   personal_data: IUserPersonalData,
-//   employment_data: IUserEmploymentData,
-//   payroll_data: IUserPayrollData
-// }
-
 export interface IUserSelfData {
   user_id: number
   email: string
@@ -25,7 +19,7 @@ export interface IUserPersonalData {
   phone_number: string
   emergency_number: string
   place_of_birth?: string
-  date_of_birth: Date
+  date_of_birth: string
   gender: string
   marital_status: string
   blood_type?: string
@@ -36,12 +30,11 @@ export interface IUserPersonalData {
 }
 
 export interface IUserEmploymentData {
-  employee_id: string
+  employee_id?: string
   dept_id: number
   position_id: number
-  join_date: Date
-  resign_date?: Date
-  status?:number
+  join_date: string
+  resign_date?: string
 }
 
 export interface IUserPayrollData {

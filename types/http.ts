@@ -10,6 +10,13 @@ export type IApiBaseResponseError<T> = {
   errors?: T
 }
 
+export interface IApiError {
+  set: (error: unknown) => void;
+  getErrors: (key?: string | undefined) => string[] | (IApiBaseError & any[]) | undefined;
+  getMessage: () => string | undefined;
+  clear: () => void;
+}
+
 export type IApiBaseError = Record<string, string[]>;
 
 export type IApiBaseContext = {
