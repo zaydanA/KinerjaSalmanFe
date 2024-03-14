@@ -26,12 +26,11 @@ const initialFormData: IApiAddEmployee = {
         blood_type: '',
         identity_number: '',
         last_education: '',
-        status: 1,
     },
     employment_data: {
         dept_id: -1,
         position_id: -1,
-        join_date: ''
+        join_date: '',
     },
     payroll_data: {
         npwp_number: '',

@@ -43,9 +43,7 @@ const EmploymentDataForm = ({
         try {
             const department = await apiBase().department().getDepartment();
             let filteredDepartments = [...department.data];
-            filteredDepartments = department.data.filter(dep => dep.dept_name !== "BOD");
-
-            console.log("department usernya: ", user?.dept.dept_name)
+            // filteredDepartments = department.data.filter(dep => dep.dept_name !== "BOD");
 
             if (user?.position.title !== "Director" && user?.dept.dept_name !== "HRD") {
                 filteredDepartments = department.data.filter(dep => dep.dept_name === user?.dept.dept_name);

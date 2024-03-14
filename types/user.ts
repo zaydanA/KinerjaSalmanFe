@@ -26,7 +26,6 @@ export interface IUserPersonalData {
   identity_number: string
   address: string
   last_education: string
-
 }
 
 export interface IUserEmploymentData {
