@@ -11,21 +11,21 @@ import ProtectedRoute from '@/app/Rbac';
 import CryptoJS from "crypto-js";
 const page = ()=>{
 
-    const pathname = usePathname().split("/")
-    console.log(pathname[2]);
-    const dept_id : any = useSearchParams().get("query");
-    const [employee,setEmployee] = useState<IUserEmploymentData>()
-    useEffect(()=>{
-        async function getEmployee(){
-            const response = await apiBase().user().employmentData(Number(pathname[2]))
-            console.log(response)
-            setEmployee(response.data);
-        }
-        getEmployee()
+    // const pathname = usePathname().split("/")
+    // console.log(pathname[2]);
+    // const dept_id : any = useSearchParams().get("query");
+    // const [employee,setEmployee] = useState<IUserEmploymentData>()
+    // useEffect(()=>{
+    //     async function getEmployee(){
+    //         const response = await apiBase().user().employmentData(Number(pathname[2]))
+    //         console.log(response)
+    //         setEmployee(response.data);
+    //     }
+    //     getEmployee()
         
-    },[])
+    // },[])
     return (
-        <ProtectedRoute allowedDept={[1,2,Number(dept_id)]} allowedPos={[1,2]}>
+        <ProtectedRoute>
             <DetailEmployee user={undefined}></DetailEmployee>
         </ProtectedRoute>
     )
