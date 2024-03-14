@@ -64,7 +64,7 @@ const EmploymentDataForm = ({
     const handleEmploymentDataChange = (name: keyof IUserEmploymentData, value: any) => {
         handleChange({
             [name]: value
-        })
+        });
     }
 
     return (
@@ -88,7 +88,7 @@ const EmploymentDataForm = ({
                     options= {departments.map(department => ({ value: department.dept_id, label: department.dept_name }))}
                     selectedValue={formData.dept_id}
                     error={apiBaseError.getErrors('dept_id')?.[0].toString()}
-                    onChange={(e) => handleEmploymentDataChange('dept_id', e.target.value)}
+                    onChange={(e) => handleEmploymentDataChange('dept_id', parseInt(e.target.value))}
                 />
                 <DropdownInput
                     id="position_id"
@@ -97,7 +97,7 @@ const EmploymentDataForm = ({
                     options= {positions.map(position => ({ value: position.position_id, label: position.title }))}
                     selectedValue={formData.position_id}
                     error={apiBaseError.getErrors('position_id')?.[0].toString()}
-                    onChange={(e) => handleEmploymentDataChange('position_id', e.target.value)}
+                    onChange={(e) => handleEmploymentDataChange('position_id', parseInt(e.target.value))}
                 />
             </div>
         </div>
