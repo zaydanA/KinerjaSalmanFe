@@ -1,26 +1,35 @@
 "use client"
 import { useAuth } from '@/contexts';
 import { useRouter } from 'next/navigation';
-import { ReactNode, useEffect, useLayoutEffect } from 'react';
+import { ReactNode, useEffect, useLayoutEffect, useState } from 'react';
 interface ProtectedRouteProps {
-    children: ReactNode;
-    allowedDept: number[]|any;
-    allowedPos:number[];
+  children: ReactNode;
+  allowedDept?: number[];
+  allowedPos?: number[];
 
-  }
-export default function ProtectedRoute({ children,allowedDept,allowedPos } : ProtectedRouteProps) {
+  // Define any other props you want to pass
+}
+
+
+export default function ProtectedRoute({
+  children,
+  allowedDept,
+  allowedPos 
+} : ProtectedRouteProps) {
   const router = useRouter();
-  const {user} = useAuth();
+  const { user } = useAuth();
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+
 
   useEffect(() => {
-
-    const next = allowedDept.some((item: number | undefined) => item === user?.dept.dept_id) && allowedPos.some((item: number | undefined) => item === user?.position.position_id);
-
-    console.log(next);
-    if (!next){
-        router.push('/dashboard')
+    if (allowedPos && !allowedPos.some((item) => item === user?.position.position_id)) {
+      router.push('/dashboard');
+    } else if (allowedDept && !allowedDept.some((item) => item === user?.dept.dept_id)) {
+      router.push('/dashboard');
+    } else {
+      setIsAuthenticated(true);
     }
   }, []);
 
-  return <>{children}</>;
+  return isAuthenticated ? <>{children}</> : null;
 }

@@ -5,14 +5,6 @@ import { createContext, useContext } from "react";
 const context = createContext<IApiBaseAuthContext>({
   user: null,
 
-  // refreshToken: async () => {
-  //   return undefined;
-  // },
-
-  self: async () => {
-    return undefined;
-  },
-
   logout: async () => {
     return undefined;
   }

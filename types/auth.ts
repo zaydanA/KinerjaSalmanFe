@@ -13,9 +13,5 @@ export type IApiBaseAuthRefreshToken = {
 export type IApiBaseAuthContext = {
   user: IUserSelfData | null
 
-  // refreshToken: () => Promise<void>
-
-  self: () => Promise<void>
-
   logout: () => Promise<void>
 }

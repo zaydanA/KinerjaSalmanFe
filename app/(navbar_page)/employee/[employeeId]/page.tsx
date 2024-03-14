@@ -9,8 +9,9 @@ const page = ()=>{
 
     const dept_id : string|null = useSearchParams().get("query");
 
+
     return (
-        <ProtectedRoute allowedDept={[1,2,Number(dept_id)]} allowedPos={[1,2]}>
+        <ProtectedRoute>
             <DetailEmployee user={undefined}></DetailEmployee>
         </ProtectedRoute>
     )

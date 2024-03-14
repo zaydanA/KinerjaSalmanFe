@@ -39,7 +39,7 @@ const initialFormData: IApiAddEmployee = {
 }
 
 const AddEmployee = () => {
-    const [step, setStep] = useState(1);
+    const [step, setStep] = useState(2);
     const [formData, setFormData] = useState<IApiAddEmployee>(initialFormData);
 
     const apiBaseError = apiBase().error<IApiBaseError>();
@@ -165,7 +165,7 @@ const AddEmployee = () => {
     }  
 
     return (
-        <div className="mx-auto p-4">
+        <div className="mx-auto">
             <h2 className="text-lg mb-1 text-gray-500"> Employee </h2>
             <h1 className="text-2xl font-bold mb-4"> Add Employee </h1>
 

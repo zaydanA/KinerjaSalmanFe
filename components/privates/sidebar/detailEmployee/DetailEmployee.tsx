@@ -13,6 +13,8 @@ import Employment from "@/components/privates/sidebar/Employment";
 import { IUserPersonalData, IUserSelfData } from "@/types/user";
 import { usePathname } from "next/navigation";
 import { apiBase } from "@/api";
+import { useRouter } from "next/navigation";
+
 const SidebarData = [
     {
         title:"General",
@@ -70,7 +72,7 @@ const DetailEmployee: React.FC<DetailEmployeeType> = (props)=>{
             phone_number: '',
             emergency_number: '',
             place_of_birth: '',
-            date_of_birth: new Date(),
+            date_of_birth: '',
             gender: '',
             marital_status: '',
             blood_type: '',
@@ -80,21 +82,32 @@ const DetailEmployee: React.FC<DetailEmployeeType> = (props)=>{
             status: 0
         }
     )
-    const pathname = usePathname().split("/")
+    const pathname = usePathname().split("/");
+    const router = useRouter();
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+
     useEffect(()=>{
         async function getEmployeeById(){
-            const id = props.user? props.user.user_id:Number(pathname[2])
-            const res = await apiBase().user().personalData(id);
-            
-            setEmployee(res && res.data);
+            try {
+                const id = props.user? props.user.user_id:Number(pathname[2])
+                const res = await apiBase().user().personalData(id);
+
+                if (res.status === "success") {
+                    setIsAuthenticated(true);
+                    setEmployee(res.data);
+                }
+            } catch (error) {
+                router.push('/dashboard');
+            }
         }   
         getEmployeeById()
-    },[])
+    },[]);
+
     const [activeComponent, setActiveComponent] = useState(SidebarData[0].subNav[0].title)
     const [activeComponentNavbar, setActiveComponentNavbar] = useState(NavbarComponentData[0].title)
     const [isSidebarOpen,setIsSidebarOpen] = useState(false)
 
-    return (
+    return isAuthenticated ? (
         <div className="md:w-full h-fit min-h-[90%] bg-white shadow-md rounded-lg flex border-1 mt-[-2px] md:m-0">
             <div className={`max-w-[240px] rounded-l-lg z-20 h-fit w-fit pt-3 bg-white flex flex-col ${isSidebarOpen?"absolute min-w-[240px] h-full md:border-r-0 border-r-1 md:relative" : "h-full"}`}>
                 <div className="flex flex-row w-full px-1 bg-white">
@@ -140,6 +153,6 @@ const DetailEmployee: React.FC<DetailEmployeeType> = (props)=>{
                 </div>
             </div>
         </div>
-    )
+    ) : null;
 }
 export default DetailEmployee;
