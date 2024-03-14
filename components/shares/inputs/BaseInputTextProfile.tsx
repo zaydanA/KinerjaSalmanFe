@@ -49,12 +49,18 @@ export default function BaseInputText({
           value={value}
           onChange={setValue}
           disabled={disabled}
-          className={`rounded outline-none w-full px-2 py-1 transition-all ease-in-out bg-clr-background-base-two text-sm placeholder-clr-text-primary-darken ${
-            error
-              ? "shadow-input-error focus:shadow-input-focus-error"
-              : "hover:shadow-input-hover focus:shadow-input-focus"
+          className={
+            `
+            rounded outline-none w-full px-2 py-1 transition-all ease-in-out text-sm placeholder-gray-300
+            ${disabled 
+              ? "bg-white" 
+              : (
+                  error 
+                  ? "shadow-input-error focus:shadow-input-focus-error" 
+                  : "border-1 border-clr-kinerja-gold hover:shadow-input-hover focus:shadow-input-focus"
+                )
+            }`
           }
-          ${disabled ? "outline-none bg-clr-background-base-one bg-white" : " border-1 border-[--kinerja-gold]"}`}
         />
 
         {needEye && (
@@ -70,12 +76,12 @@ export default function BaseInputText({
         )}
       </div>
 
-      {/* {error && ( */}
+      {error && (
         <div className="flex gap-2 items-center">
-          {error && <PiWarningCircle className="text-red-400"/>}
-          <p className="text-sm font-light text-red-400 text-clr-text-danger">{error}</p>
+          {error && <PiWarningCircle className="text-red-500"/>}
+          <p className="text-sm font-light text-red-500 text-clr-text-danger">{error}</p>
         </div>
-      {/* )} */}
+      )}
     </div>
   );
 }

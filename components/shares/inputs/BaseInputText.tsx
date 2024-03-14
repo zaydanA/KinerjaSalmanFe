@@ -58,12 +58,18 @@ export default function BaseInputText({
           value={value}
           onChange={setValue}
           disabled={disabled}
-          className={`rounded shadow-input outline-none w-full box-border p-3 transition-all ease-in-out bg-white text-sm placeholder-gray-300 ${
-            error
-              ? "shadow-input-error focus:shadow-input-focus-error"
-              : "hover:shadow-input-hover focus:shadow-input-focus"
+          className={
+            `
+            rounded outline-none w-full p-3 transition-all ease-in-out text-sm placeholder-gray-300
+            ${disabled 
+              ? "bg-white" 
+              : (
+                  error 
+                  ? "shadow-input-error focus:shadow-input-focus-error" 
+                  : "shadow-input box-border hover:shadow-input-hover focus:shadow-input-focus"
+                )
+            }`
           }
-          ${disabled ? "bg-clr-background-base-one" : ""}`}
         />
 
         {needEye && (

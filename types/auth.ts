@@ -14,4 +14,8 @@ export type IApiBaseAuthContext = {
   user: IUserSelfData | null
 
   logout: () => Promise<void>
+
+  isHRDManagerOrDirector: () => boolean
+
+  isManager: () => boolean
 }
