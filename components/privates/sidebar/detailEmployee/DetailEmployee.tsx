@@ -14,6 +14,7 @@ import { IUserPersonalData, IUserSelfData } from "@/types/user";
 import { usePathname } from "next/navigation";
 import { apiBase } from "@/api";
 import { useRouter } from "next/navigation";
+import { IApiBaseError } from "@/types/http";
 
 const SidebarData = [
     {
@@ -87,6 +88,7 @@ const DetailEmployee: React.FC<DetailEmployeeType> = (props)=>{
     const pathname = usePathname().split("/");
     const router = useRouter();
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+    const apiBaseError = apiBase().error<IApiBaseError>();
 
     useEffect(()=>{
         async function getEmployeeById(){
@@ -99,7 +101,11 @@ const DetailEmployee: React.FC<DetailEmployeeType> = (props)=>{
                     setEmployee(res.data);
                 }
             } catch (error) {
-                router.push('/dashboard');
+                apiBaseError.set(error);
+                
+                if (apiBaseError.getStatusCode() === 403) { // Forbidden
+                    router.push('/dashboard');
+                }
             }
         }   
         getEmployeeById()
