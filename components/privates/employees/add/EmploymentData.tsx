@@ -27,7 +27,8 @@ const EmploymentDataForm = ({
     const fetchDataPosition = async () => {
         try {
             const position = await apiBase().position().getPosition();
-            setPositions(position.data);
+            const filteredPositions = position.data.filter(pos => pos.title !== 'Director');
+            setPositions(filteredPositions);
         } catch (error) {
             throw error;
         }
