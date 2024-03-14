@@ -7,6 +7,14 @@ const context = createContext<IApiBaseAuthContext>({
 
   logout: async () => {
     return undefined;
+  },
+
+  isHRDManagerOrDirector: () => {
+    return false;
+  },
+
+  isManager: () => {
+    return false;
   }
 });
 

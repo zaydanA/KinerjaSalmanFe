@@ -87,3 +87,7 @@ body {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 	background-color: var(--kinerja-gold);
 }
+
+select {
+  border-right: 10px solid transparent
+}

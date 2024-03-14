@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { apiBase } from '@/api';
 import { IApiBasePosition } from '@/types/position';
 import { IApiBaseDepartment } from '@/types/department';
-import BaseInputText from '@/components/shares/inputs/BaseInputText';
 import BaseInputDate from '@/components/shares/inputs/BaseInputDate';
 import DropdownInput from '@/components/shares/inputs/DropdownInput';
 import { IUserEmploymentData } from '@/types/user';

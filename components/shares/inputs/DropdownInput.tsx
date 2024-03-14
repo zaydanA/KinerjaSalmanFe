@@ -1,3 +1,4 @@
+// import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import React from 'react';
 import { PiWarningCircle } from 'react-icons/pi';
 
@@ -33,8 +34,18 @@ const DropdownInput: React.FC<DropdownInputType> = ({
           value={selectedValue}
           onChange={onChange}
           disabled={disabled}
-          className={`rounded shadow-input outline-none w-full box-border px-2 py-3 transition-all ease-in-out bg-white text-sm placeholder-gray-300 ${error ? 'shadow-input-error focus:shadow-input-focus-error' : 'hover:shadow-input-hover focus:shadow-input-focus'}
-          ${disabled ? 'bg-clr-background-base-one' : ''}`}
+          className={
+            `
+            rounded outline-none w-full p-3 transition-all ease-in-out text-sm placeholder-gray-300
+            ${disabled 
+              ? "bg-white" 
+              : (
+                  error 
+                  ? "shadow-input-error focus:shadow-input-focus-error" 
+                  : "shadow-input hover:shadow-input-hover focus:shadow-input-focus"
+                )
+            }`
+          }
         >
           <option key="" className="" disabled value={(typeof selectedValue === 'string' ? '' : -1)}>
             {`Select ${label}`}
@@ -45,6 +56,30 @@ const DropdownInput: React.FC<DropdownInputType> = ({
             </option>
           ))}
         </select>
+        {/* <Dropdown>
+          <DropdownTrigger className='rounded outline-none w-full p-3 transition-all ease-in-out text-sm placeholder-gray-300 shadow-input box-border hover:shadow-input-hover focus:shadow-input-focus'>
+            <Button 
+              variant="flat" 
+              className="bg-white"
+            >
+              {`Select ${label}`}
+            </Button>
+          </DropdownTrigger>
+          <DropdownMenu 
+              aria-label="Single selection example"
+              variant="flat"
+              disallowEmptySelection
+              selectionMode="single"
+              selectedKeys={selectedValue}
+              onSelectionChange={onChange}
+              >
+              {options.map((option)=>(
+                <DropdownItem key={option.value}>
+                  {option.label}
+                </DropdownItem>
+              ))}
+        </DropdownMenu>
+      </Dropdown> */}
 
         {error && (
           <div className="flex gap-1 items-center mt-1">
