@@ -37,7 +37,8 @@ const EmploymentDataForm = ({
     const fetchDataDepartment = async () => {
         try {
             const department = await apiBase().department().getDepartment();
-            setDepartments(department.data);
+            const filteredDepartments = department.data.filter(dep => dep.dept_name !== 'BOD');
+            setDepartments(filteredDepartments);
         } catch (error) {
             throw error;
         }
