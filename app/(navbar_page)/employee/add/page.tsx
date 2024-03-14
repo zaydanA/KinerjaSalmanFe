@@ -1,12 +1,13 @@
 "use client"
-import React, { useState } from "react";
-import Pagination from "@/components/shares/pagination/Pagination";
+import React from "react";
 import AddEmployee from "../../../../components/privates/employees/add/AddEmployee";
+import ProtectedRoute from "@/app/Rbac";
 
 const page = () => {
-
     return (
-        <AddEmployee/>
+        <ProtectedRoute allowedPos={[1, 2]}>
+            <AddEmployee/>
+        </ProtectedRoute>
     )
 }
 

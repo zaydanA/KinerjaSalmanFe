@@ -11,13 +11,14 @@ import { apiBase } from "@/api";
 import { IUserPersonalData } from "@/types/user";
 import { IApiBaseError } from "@/types/http";
 import { PiWarningCircle } from "react-icons/pi";
+import { useAuth } from "@/contexts";
 
 const gender = ["M","F"];
 const MaritalStatus = ["SINGLE","MARRIED","WIDOW","WIDOWER"]
 const LastEducation = ["TIDAK_SEKOLAH","SD","SMP","SMA_SMK","D3","S1","S2","S3"]
 const BloodType = ["A","B","O","AB"]
 const PersonalData = (props:any)=>{
-
+    const {user} = useAuth();
     const [isEditPersonal,setIsEditPersonal] = useState<boolean>(false)
     const [fullName,setFullName] = useInput("");
     const [mobilePhone,setMobilePhone] = useInput("");
@@ -59,12 +60,11 @@ const PersonalData = (props:any)=>{
             full_name: fullName,
             phone_number: mobilePhone,
             place_of_birth: placeOfBirth,
-            date_of_birth: new Date(birthdate),
+            date_of_birth: birthdate,
             gender: selectedValueGender,
             marital_status: selectedValueMarital,
             blood_type: selectedValueBloodType !== "-"? selectedValueBloodType : "",
             last_education: selectedValueEducation,
-            status:status?1:0,
             emergency_number: props.employee.emergency_number,
             identity_number: props.employee.identity_number,
             address: props.employee.address,
@@ -363,7 +363,7 @@ const PersonalData = (props:any)=>{
                     </div>}
             </div>
             <div className="md:w-1/6 py-5 md:p-0">
-                {!isEditPersonal?<button onClick={()=>{setIsEditPersonal(true)}} className="text-gray-500 border-2 rounded-lg font-mono hover:border-[--kinerja-gold-hover-border] px-2">Edit</button>:<></>}
+                {!isEditPersonal ?<button onClick={()=>{setIsEditPersonal(true)}} className="text-gray-500 border-2 rounded-lg font-mono hover:border-[--kinerja-gold-hover-border] px-2">Edit</button>:<></>}
             </div>
         </div>: <div className='flex w-full h-[400px] justify-center items-center'>
             <Spinner color="default" size="lg"/>

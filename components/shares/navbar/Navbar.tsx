@@ -4,26 +4,52 @@ import { usePathname } from "next/navigation";
 import Link from 'next/link';
 import ProfileDropdown from './ProfileDropdown';
 import { useAuth } from '@/contexts';
-const NavbarData = [{
+import { useEffect, useState } from 'react';
+
+const NavbarDataForManagerAndAbove = [{
     title:"Dashboard",
     path:"/dashboard"
-
 },{
     title: "Employee",
     path: "/employee"
 },{
     title:"Payroll",
     path:"/payroll"
+}];
+
+const NavbarDataForBelowManager = [{
+    title:"Dashboard",
+    path:"/dashboard"
+},{
+    title:"Payroll",
+    path:"/payroll"
+}];
+
+interface NavbarData {
+    title: string
+    path: string
 }
 
-]
 const Navbar =  (props: any) => {
     const pathname = usePathname();
+    const { user } = useAuth();
+    const [navbarData, setNavbarData] = useState<NavbarData[]>();
+
+    useEffect(() => {
+        if (user?.position.position_id === 1 || user?.position.position_id === 2) {
+            setNavbarData(NavbarDataForManagerAndAbove);
+        } else {
+            setNavbarData(NavbarDataForBelowManager);
+        }
+    
+        return;
+    }, []);
+    
 
     return (
-        <div className="w-full h-[60px] bg-white shadow-md md:px-5 font-medium text-gray-500 flex flex-row items-center justify-between border-b-1">
+        <div className="sticky top-0 z-50 w-full h-[60px] bg-white shadow-md md:px-5 font-medium text-gray-500 flex flex-row items-center justify-between border-b-1">
             <div className='flex items-center w-3/4 h-full md:gap-6 font-mono'>
-                <Link className='h-full flex' href="/dashboard">
+                <Link className='h-full flex' href="/">
                     <Image
                     src="/LogoSalman.svg"
                     alt="Salman Logo"
@@ -42,10 +68,10 @@ const Navbar =  (props: any) => {
                     />
                 </Link>
                 <div id="horizontal2" className='flex flex-row h-full w-full items-center md:ml-5 gap-0 text-sm md:pl-0 pt-2 overflow-x-scroll'>
-                    {NavbarData.map((page,index)=>(
+                    {navbarData?.map((page,index)=>(
                         <div key={index} className='flex flex-col h-full hover:bg-gray-100 rounded-t-[25px] cursor-pointer'>
                             <Link className='flex h-full items-center pt-1 px-5' href={`${page.path}`}>{page.title}</Link>
-                            {<div className={pathname === page.path? "h-[5px] bg-[--kinerja-gold] rounded-t-lg":"h-[5px] bg-transparent rounded-t-lg"}></div>}
+                            {<div className={pathname.startsWith(page.path) ? "h-[5px] bg-[--kinerja-gold] rounded-t-lg":"h-[5px] bg-transparent rounded-t-lg"}></div>}
                         </div>
                     ))}
                 </div>

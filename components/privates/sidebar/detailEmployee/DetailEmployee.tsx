@@ -10,10 +10,12 @@ import {Breadcrumbs, BreadcrumbItem} from "@nextui-org/react";
 import { IoMenuOutline,IoCloseOutline } from "react-icons/io5";
 import Personal from "@/components/privates/sidebar/Personal";
 import Employment from "@/components/privates/sidebar/Employment";
-import { useAuth } from "@/contexts";
 import { IUserPersonalData, IUserSelfData } from "@/types/user";
 import { usePathname } from "next/navigation";
 import { apiBase } from "@/api";
+import { useRouter } from "next/navigation";
+import { IApiBaseError } from "@/types/http";
+
 const SidebarData = [
     {
         title:"General",
@@ -55,8 +57,6 @@ const NavbarComponentData = [
         title:"Basic Info",
     },{
         title: "Family",
-    },{
-        title:"Emergency Contact",
     }
     ]
 
@@ -80,24 +80,39 @@ const DetailEmployee: React.FC<DetailEmployeeType> = (props)=>{
             identity_number: '',
             address: '',
             last_education: '',
-            status: 0
         }
     )
-    const pathname = usePathname().split("/")
+    const pathname = usePathname().split("/");
+    const router = useRouter();
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+    const apiBaseError = apiBase().error<IApiBaseError>();
+
     useEffect(()=>{
         async function getEmployeeById(){
-            const id = props.user? props.user.user_id:Number(pathname[2])
-            const res = await apiBase().user().personalData(id);
-            
-            setEmployee(res && res.data);
+            try {
+                const id = props.user? props.user.user_id:Number(pathname[2])
+                const res = await apiBase().user().personalData(id);
+
+                if (res.status === "success") {
+                    setIsAuthenticated(true);
+                    setEmployee(res.data);
+                }
+            } catch (error) {
+                apiBaseError.set(error);
+                
+                if (apiBaseError.getStatusCode() === 403) { // Forbidden
+                    router.push('/dashboard');
+                }
+            }
         }   
         getEmployeeById()
-    },[])
+    },[]);
+
     const [activeComponent, setActiveComponent] = useState(SidebarData[0].subNav[0].title)
     const [activeComponentNavbar, setActiveComponentNavbar] = useState(NavbarComponentData[0].title)
     const [isSidebarOpen,setIsSidebarOpen] = useState(false)
 
-    return (
+    return isAuthenticated ? (
         <div className="md:w-full h-fit min-h-[90%] bg-white shadow-md rounded-lg flex border-1 mt-[-2px] md:m-0">
             <div className={`max-w-[240px] rounded-l-lg z-20 h-fit w-fit pt-3 bg-white flex flex-col ${isSidebarOpen?"absolute min-w-[240px] h-full md:border-r-0 border-r-1 md:relative" : "h-full"}`}>
                 <div className="flex flex-row w-full px-1 bg-white">
@@ -143,6 +158,6 @@ const DetailEmployee: React.FC<DetailEmployeeType> = (props)=>{
                 </div>
             </div>
         </div>
-    )
+    ) : null;
 }
 export default DetailEmployee;

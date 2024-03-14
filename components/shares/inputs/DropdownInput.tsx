@@ -33,7 +33,7 @@ const DropdownInput: React.FC<DropdownInputType> = ({
           value={selectedValue}
           onChange={onChange}
           disabled={disabled}
-          className={`rounded shadow-input outline-none w-full box-border p-3 transition-all ease-in-out bg-white text-sm placeholder-gray-300 ${error ? 'shadow-input-error focus:shadow-input-focus-error' : 'hover:shadow-input-hover focus:shadow-input-focus'}
+          className={`rounded shadow-input outline-none w-full box-border px-2 py-3 transition-all ease-in-out bg-white text-sm placeholder-gray-300 ${error ? 'shadow-input-error focus:shadow-input-focus-error' : 'hover:shadow-input-hover focus:shadow-input-focus'}
           ${disabled ? 'bg-clr-background-base-one' : ''}`}
         >
           {options.map(option => (

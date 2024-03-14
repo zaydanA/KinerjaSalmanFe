@@ -13,19 +13,6 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<IUserSelfData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  // const refreshToken = async () => {
-  //   const res = await apiBase().auth().refreshToken();
-
-  //   if (res.status === "success") {
-  //     setToken(res.data.token);
-  //     try {
-  //       await self();
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  // };
-
   const self = async () => {
     const res = await apiBase().user().self();
 
@@ -61,13 +48,12 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     <AuthContext.Provider
       value={{
         user,
-        // refreshToken,
-        self,
+        isLoading,
         logout,
       }}
     >
       {isLoading ? (
-        <div className='flex w-full h-full justify-center items-center'>
+        <div className='flex w-screen h-screen justify-center items-center'>
           <Spinner color="default" size="lg"/>
         </div>
       ) : (

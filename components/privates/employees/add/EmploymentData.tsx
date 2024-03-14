@@ -7,7 +7,6 @@ import BaseInputDate from '@/components/shares/inputs/BaseInputDate';
 import DropdownInput from '@/components/shares/inputs/DropdownInput';
 import { IUserEmploymentData } from '@/types/user';
 import { IApiError } from '@/types/http';
-import { lib } from '@/lib';
 
 type ChangeHandler<T> = (data: Partial<T>) => void;
 type EmploymentDataFormProps = {
@@ -56,10 +55,10 @@ const EmploymentDataForm = ({
     }
 
     return (
-        <div className="w-1/2 mx-auto mt-5">
+        <div className="w-1/2 mx-auto">
             <h3 className="text-lg mb-1 font-bold"> Employment Data </h3>
-            <p className="text-gray-500"> Fill all employee data information related to company </p>
-            <div className="grid grid-cols-2 gap-4 my-6">
+            <p className="text-gray-500 text-sm"> Fill all employee data information related to company </p>
+            <div className="grid grid-cols-2 gap-y-4 gap-x-5 my-6">
                 <BaseInputDate
                     id="join_date"
                     label="Join Date"

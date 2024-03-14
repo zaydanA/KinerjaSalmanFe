@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 const useError = <TError = unknown>() => {
   const [errors, setErrors] = useState<TError | undefined>(undefined);
   const message = useRef<string | undefined>(undefined);
+  const statusCode = useRef<number | undefined>(undefined);
 
   const getErrors = (key?: keyof TError) => {
     if (errors instanceof Array && !key) {
@@ -19,12 +20,17 @@ const useError = <TError = unknown>() => {
     return message.current;
   }
 
+  const getStatusCode = () => {
+    return statusCode.current;
+  }
+
   const set = (error: unknown) => {
     const err = error as AxiosError<IApiBaseResponseError<TError>>
 
     setErrors(err.response?.data.errors);
 
     message.current = err.response?.data.message;
+    statusCode.current = err.response?.status;
   }
 
   const clear = () => {
@@ -32,9 +38,10 @@ const useError = <TError = unknown>() => {
     // setMessage(undefined);
 
     message.current = undefined;
+    statusCode.current = undefined;
   }
 
-  return { set, getErrors, getMessage, clear };
+  return { set, getErrors, getMessage, getStatusCode, clear };
 }
 
 export default useError;
