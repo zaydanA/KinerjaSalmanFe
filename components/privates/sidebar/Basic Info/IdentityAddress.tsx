@@ -25,7 +25,6 @@ const IdentityAddress = (props:any)=>{
             marital_status: props.employee.marital_status,
             blood_type: props.employee.blood_type,
             last_education: props.employee.last_education,
-            status:props.employee.status,
             identity_number: idNumber,
             address: address,
             emergency_number: emergencyNumber,
