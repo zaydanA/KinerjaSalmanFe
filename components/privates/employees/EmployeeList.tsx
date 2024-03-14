@@ -19,6 +19,7 @@ const EmployeeList = () => {
   const api = apiBase();
   const customLib = lib();
   const router = useRouter();
+  const { user } = useAuth();
 
   const [currentEmployees, setCurrentEmployees] = useState<IApiBaseEmployee[]>(
     [],
@@ -113,15 +114,21 @@ const EmployeeList = () => {
     "Gender",
   ];
 
+  const isAuthorizedToAddEmployee =
+    user?.position.title === "Director" ||
+    user?.position.title === "Manager";
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-6">
         <div className="flex justify-between">
           <h1 className=" text-2xl font-bold">Employees</h1>
-          <BaseInputButton
-            text="Add employee"
-            onClick={() => router.push("employee/add")}
-          />
+          {isAuthorizedToAddEmployee &&
+            <BaseInputButton
+              text="Add employee"
+              onClick={() => router.push("employee/add")}
+            />
+          }
         </div>
         <div className="flex w-full justify-between max-md:gap-2 max-sm:flex-col">
           <div className="flex gap-5 max-md:gap-1">
