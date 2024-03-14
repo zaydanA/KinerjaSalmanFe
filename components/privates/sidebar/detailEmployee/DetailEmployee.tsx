@@ -54,8 +54,6 @@ const NavbarComponentData = [
         title:"Basic Info",
     },{
         title: "Family",
-    },{
-        title:"Emergency Contact",
     }
     ]
 

@@ -177,7 +177,7 @@ const Family = (props:any)=>{
     
 
     return(
-        <>
+        <div className="w-full h-full">
             <div className="flex w-full min-h-[12%] py-5 justify-end px-5">
                 <button 
                   className="border-1 rounded-lg px-5 md:mr-5 bg-gray-50 font-light text-gray-500 text-sm"
@@ -207,7 +207,7 @@ const Family = (props:any)=>{
                     </table>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 
