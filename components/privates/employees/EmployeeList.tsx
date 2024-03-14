@@ -115,7 +115,7 @@ const EmployeeList = () => {
 
   const isAuthorizedToAddEmployee =
     user.position.title === "Director" ||
-    (user.position.title === "Manager" && user.dept.dept_name === "HRD");
+    (user.position.title === "Manager");
 
   return (
     <div className="flex flex-col gap-4">
