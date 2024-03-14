@@ -24,7 +24,7 @@ const DropdownInput: React.FC<DropdownInputType> = ({
 }) => {
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={id} className="text-sm font-medium block w-fit text-clr-text-primary">
+      <label htmlFor={id} className="text-sm font-medium block w-fit">
         {label} {required ? "*" : ""}
       </label>
       <div>
@@ -36,6 +36,9 @@ const DropdownInput: React.FC<DropdownInputType> = ({
           className={`rounded shadow-input outline-none w-full box-border px-2 py-3 transition-all ease-in-out bg-white text-sm placeholder-gray-300 ${error ? 'shadow-input-error focus:shadow-input-focus-error' : 'hover:shadow-input-hover focus:shadow-input-focus'}
           ${disabled ? 'bg-clr-background-base-one' : ''}`}
         >
+          <option key="" className="" disabled value={(typeof selectedValue === 'string' ? '' : -1)}>
+            {`Select ${label}`}
+          </option>
           {options.map(option => (
             <option key={option.value} value={option.value}>
               {option.label}

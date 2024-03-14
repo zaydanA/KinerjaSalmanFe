@@ -41,26 +41,25 @@ const EmployeeList = () => {
 
   const [searchValue, setSearchValue] = useState<string>("");
 
+  // This only called once when the page rendered
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const employees = await api.employee().getEmployee(currentPage, 10);
         const departments = await api.department().getDepartment();
         const positions = await api.position().getPosition();
 
-        setCurrentEmployees(employees.data.data);
         setCurrentDepartments(departments.data);
         setCurrentPositions(positions.data);
-        setTotalPage(employees.data.last_page);
       } catch (error) {
         console.error(error);
       }
     };
 
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useMemo(async () => {
+  const fetchList = async () => {
     const deptIds =
       selectDepartment &&
       currentDepartments
@@ -72,30 +71,67 @@ const EmployeeList = () => {
         .filter((p) => selectPosition.includes(p.title))
         .map((p) => p.position_id);
 
-    try {
-      const employees = await api
-        .employee()
-        .getEmployee(
-          currentPage,
-          10,
-          searchValue,
-          selectStatus,
-          deptIds,
-          posIds,
-        );
-      setCurrentEmployees(employees.data.data);
-      setTotalPage(employees.data.last_page);
-    } catch (error) {
-      console.error(error);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const employees = await api.employee().getEmployee(
+      currentPage,
+      10,
+      searchValue,
+      selectStatus,
+      deptIds,
+      posIds,
+    );
+
+    // return employees;
+    setCurrentEmployees(employees.data.data);
+    setTotalPage(employees.data.last_page);
+  }
+
+  // Rerenders everytime the dependency changes, note: better to call rather than using useEffect
+  useEffect(() => {
+    fetchList();
   }, [
     searchValue,
     selectDepartment,
     selectPosition,
     selectStatus,
-    currentPage,
+    currentPage
   ]);
+
+  // useMemo(async () => {
+  //   const deptIds =
+  //     selectDepartment &&
+  //     currentDepartments
+  //       .filter((d) => selectDepartment.includes(d.dept_name))
+  //       .map((d) => d.dept_id);
+  //   const posIds =
+  //     selectPosition &&
+  //     currentPositions
+  //       .filter((p) => selectPosition.includes(p.title))
+  //       .map((p) => p.position_id);
+
+  //   try {
+  //     const employees = await api
+  //       .employee()
+  //       .getEmployee(
+  //         currentPage,
+  //         10,
+  //         searchValue,
+  //         selectStatus,
+  //         deptIds,
+  //         posIds,
+  //       );
+  //     setCurrentEmployees(employees.data.data);
+  //     setTotalPage(employees.data.last_page);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [
+  //   searchValue,
+  //   selectDepartment,
+  //   selectPosition,
+  //   selectStatus,
+  //   currentPage,
+  // ]);
 
   const onPageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
