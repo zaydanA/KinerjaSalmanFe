@@ -19,6 +19,7 @@ const EmployeeList = () => {
   const api = apiBase();
   const customLib = lib();
   const router = useRouter();
+  const { user } = useAuth();
 
   const [currentEmployees, setCurrentEmployees] = useState<IApiBaseEmployee[]>(
     [],
@@ -114,8 +115,8 @@ const EmployeeList = () => {
   ];
 
   const isAuthorizedToAddEmployee =
-    user.position.title === "Director" ||
-    (user.position.title === "Manager");
+    user?.position.title === "Director" ||
+    user?.position.title === "Manager";
 
   return (
     <div className="flex flex-col gap-4">
