@@ -123,9 +123,10 @@ const EmployeeList = () => {
         <div className="flex justify-between">
           <h1 className=" text-2xl font-bold">Employees</h1>
           {isAuthorizedToAddEmployee &&
-            <button onClick={() => router.push("employee/add")}>
-              <CiCirclePlus className="h-8 w-8" />
-            </button>
+            <BaseInputButton
+              text="Add employee"
+              onClick={() => router.push("employee/add")}
+            />
           }
         </div>
         <div className="flex w-full justify-between max-md:gap-2 max-sm:flex-col">
