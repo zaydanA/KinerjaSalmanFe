@@ -13,7 +13,6 @@ const ProfileDropdown = () => {
     const [isDropdownActive,setIsDropdownActive] = useState(false);
     const { user, logout } = useAuth();
 
-    console.log(user);
     const handleLogout = async (e: FormEvent) => {
         e.preventDefault();
 

@@ -12,7 +12,9 @@ import Filter from "./Filter";
 import Pagination from "@/components/shares/pagination/Pagination";
 import { useRouter } from "next/navigation";
 import { CiCirclePlus } from "react-icons/ci";
-import CryptoJS from "crypto-js";
+import BaseInputButton from "@/components/shares/buttons/BaseInputButton";
+import { useAuth } from "@/contexts";
+
 const EmployeeList = () => {
   const api = apiBase();
   const customLib = lib();
@@ -42,10 +44,6 @@ const EmployeeList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(selectDepartment);
-        console.log(selectPosition);
-        console.log(selectStatus);
-
         const employees = await api.employee().getEmployee(currentPage, 10);
         const departments = await api.department().getDepartment();
         const positions = await api.position().getPosition();
@@ -59,7 +57,6 @@ const EmployeeList = () => {
       }
     };
 
-    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -117,13 +114,14 @@ const EmployeeList = () => {
   ];
 
   return (
-    <>
-      <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-6">
         <div className="flex justify-between">
           <h1 className=" text-2xl font-bold">Employees</h1>
-          <button onClick={() => router.push("employee/add")}>
-            <CiCirclePlus className="h-8 w-8" />
-          </button>
+          <BaseInputButton
+            text="Add employee"
+            onClick={() => router.push("employee/add")}
+          />
         </div>
         <div className="flex w-full justify-between max-md:gap-2 max-sm:flex-col">
           <div className="flex gap-5 max-md:gap-1">
@@ -180,7 +178,7 @@ const EmployeeList = () => {
                   key={index}
                   dataContent={dataContent}
                   onClickEdit={() => {
-                    router.push(`employee/${e.user_id}?query=${e.dept_id}`)}}
+                    router.push(`employee/${e.user_id}`)}}
                   isProfile={true}
                 />
               );
@@ -195,7 +193,7 @@ const EmployeeList = () => {
           onPageChange={onPageChange}
         />
       </div>
-    </>
+    </div>
   );
 };
 

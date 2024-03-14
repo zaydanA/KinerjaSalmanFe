@@ -19,7 +19,7 @@ export interface IUserPersonalData {
   phone_number: string
   emergency_number: string
   place_of_birth?: string
-  date_of_birth: Date
+  date_of_birth: string
   gender: string
   marital_status: string
   blood_type?: string
