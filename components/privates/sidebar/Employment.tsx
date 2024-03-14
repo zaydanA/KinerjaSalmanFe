@@ -1,8 +1,5 @@
 import { apiBase } from "@/api";
-import BaseInputText from "@/components/shares/inputs/BaseInputTextProfile";
 import { useAuth } from "@/contexts";
-import { useInput } from "@/hooks/useInput";
-import { IApiBaseDepartment } from "@/types/department";
 import { IApiBaseError, IApiBaseResponse } from "@/types/http";
 import { IUserEmploymentData } from "@/types/user";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
@@ -12,18 +9,6 @@ import dayjs from "dayjs";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-
-// const departementEnums:any = {
-//     "0":"",
-//     1:"BOD",
-//     2:"HRD",
-//     3:"IT",
-//     4:"Education",
-//     "BOD":1,
-//     "HRD":2,
-//     "IT":3,
-//     "Education":4,
-// }
 const Employment = (props:any) => {
 
     const [departmentEnums,setDepartementEnums] = useState<any>()
@@ -35,12 +20,12 @@ const Employment = (props:any) => {
             employee_id: '',
             dept_id: 0,
             position_id: 0,
-            join_date: new Date(),
-            resign_date: new Date(),
+            join_date: '',
+            resign_date: '',
             status:1
         }
     )
-    const [employeeID,setEmployeeID] = useInput("");
+    const [employeeID,setEmployeeID] = useState<string|undefined>("");
     
     const [selectedKeysDept, setSelectedKeysDept] = useState<any>(new Set([""]));
     const [selectedKeysPos, setSelectedKeysPos] = useState<any>(new Set([""]));
@@ -52,33 +37,40 @@ const Employment = (props:any) => {
     const pathname = usePathname().split("/")
     useEffect(()=>{
         async function getEmployment(){
-            const response:IApiBaseResponse<IUserEmploymentData> = await apiBase().user().employmentData(props.user?props.user.user_id:pathname[2])
-            const departementResponse:IApiBaseResponse<any> = await apiBase().department().getDepartment();
-            const positionResponse:IApiBaseResponse<any> = await apiBase().position().getPosition();
-            
-            setDepartementEnums(departementResponse.data);
-            setPositionEnums(positionResponse.data);
-
-            setEmploymentData(response.data);
-            console.log(positionResponse.data);
-            const employment = response.data;
-            console.log(employment)
-            
-            employment && setEmployeeID(employment.employee_id);
-            const foundDept = departementResponse.data.find((obj:any) => obj.dept_id === employment.dept_id);
-            const foundPos = positionResponse.data.find((obj:any) => obj.position_id === employment.position_id);
-            foundDept && setSelectedKeysDept(foundDept.dept_name); 
-            foundPos && setSelectedKeysPos(foundPos.title); 
-            
-            const tempJoinDate = employment &&  employment.join_date.toString().split('T')[0];
-            const tempResignDate = employment.resign_date &&  employment.resign_date.toString().split('T')[0];
-            tempJoinDate && setJoinDate(tempJoinDate);
-            tempResignDate && setResignDate(tempResignDate);
-
-            employment.status && setStatus(Boolean(employment.status))
+            try {
+                
+                const response:IApiBaseResponse<IUserEmploymentData> = await apiBase().user().employmentData(props.user?props.user.user_id:pathname[2])
+                const departementResponse:IApiBaseResponse<any> = await apiBase().department().getDepartment();
+                const positionResponse:IApiBaseResponse<any> = await apiBase().position().getPosition();
+                
+                setDepartementEnums(departementResponse.data);
+                setPositionEnums(positionResponse.data);
+    
+                setEmploymentData(response.data);
+                console.log(positionResponse.data);
+                const employment = response.data;
+                console.log(employment)
+                
+                employment && setEmployeeID(employment.employee_id);
+                const foundDept = departementResponse.data.find((obj:any) => obj.dept_id === employment.dept_id);
+                const foundPos = positionResponse.data.find((obj:any) => obj.position_id === employment.position_id);
+                foundDept && setSelectedKeysDept(foundDept.dept_name); 
+                foundPos && setSelectedKeysPos(foundPos.title); 
+                
+                const tempJoinDate = employment &&  employment.join_date.toString().split('T')[0];
+                const tempResignDate = employment.resign_date &&  employment.resign_date.toString().split('T')[0];
+                tempJoinDate && setJoinDate(tempJoinDate);
+                tempResignDate && setResignDate(tempResignDate);
+    
+                employment.status && setStatus(Boolean(employment.status))
+            } catch (error) {
+                
+            }
         }
         getEmployment()
     },[])
+
+    const pos = [1,2];
 
     const CancelChange = ()=>{
         employmentData && setEmployeeID(employmentData.employee_id);
@@ -104,13 +96,12 @@ const Employment = (props:any) => {
             employee_id: employeeID,
             dept_id: departmentEnums.find((obj:any) => obj.dept_name === selectedKeysDept).dept_id,
             position_id: positionEnums.find((obj:any) => obj.title === selectedKeysPos).position_id,
-            join_date: new Date(joinDate),
-            resign_date: resignDate ? new Date(resignDate) : undefined,
+            join_date: joinDate,
+            resign_date: resignDate ? resignDate : undefined,
             status:Number(status),
         }
         try {
 
-            // console.log(updateEmploymentData)
             const response = await apiBase().user().updateEmploymentData(props.user.user_id?props.user.user_id:user?.user_id,updateEmploymentData)
             console.log(response)
             setIsEditEmployment(false);
@@ -141,14 +132,6 @@ const Employment = (props:any) => {
                         Employee ID
                     </h3>
                     <div className='w-4/6'>
-                        {/* <BaseInputText
-                            value={employeeID} 
-                            id={"fullname"} 
-                            label="" 
-                            disabled={!isEditEmployment} 
-                            setValue={setEmployeeID}
-                            error={apiBaseError.getErrors('employee_id')?.[0].toString()}
-                        /> */}
                         <p className="px-2 text-xs w-4/6 items-center">
                             {employeeID?employeeID:"-"}
                         </p> 
@@ -234,26 +217,11 @@ const Employment = (props:any) => {
                                 value={dayjs(joinDate)}
                                 onChange={(newValue:any) => {
                                 const middlewareBirthdate = `${newValue.$d.getFullYear()}-${newValue.$d.getMonth()+1 < 10? "0"+(newValue.$d.getMonth()+1):newValue.$d.getMonth()+1}-${newValue.$d.getDate()}`
-                                try {
-                                    if(newValue.$d > new Date()){
-                                        throw 'Invalid Birthdate';
-                                    }else{
-                                        // setBirthdateError(null)
-                                        setJoinDate(middlewareBirthdate)
-                                    }
-                                } catch (error) {
-                                    // setBirthdateError(error);
-                                }
+                                setJoinDate(middlewareBirthdate)
                             
                             }}
                                 slotProps={{ textField: { size: 'small' } }}
                                 />}
-                            {/* {birthdateError?      
-                                <div className="flex flex-row gap-2 items-center">
-                                    <PiWarningCircle className="text-red-400"/>
-                                    <p className="text-sm font-light text-red-400 text-clr-text-danger">{birthdateError}</p>
-                                </div>:""
-                            } */}
                         </LocalizationProvider>
                         :<p className="px-2 text-xs w-4/6 items-center">
                             {joinDate?joinDate:"-"}
@@ -270,26 +238,11 @@ const Employment = (props:any) => {
                                     value={dayjs(resignDate)}
                                     onChange={(newValue:any) => {
                                     const middlewareBirthdate = `${newValue.$d.getFullYear()}-${newValue.$d.getMonth()+1 < 10? "0"+(newValue.$d.getMonth()+1):newValue.$d.getMonth()+1}-${newValue.$d.getDate()}`
-                                    try {
-                                        if(newValue.$d > new Date()){
-                                            throw 'Invalid Birthdate';
-                                        }else{
-                                            // setBirthdateError(null)
-                                            setResignDate(middlewareBirthdate)
-                                        }
-                                    } catch (error) {
-                                        // setBirthdateError(error);
-                                    }
+                                    setResignDate(middlewareBirthdate)
                                 
                                 }}
                                     slotProps={{ textField: { size: 'small' } }}
                                     />}
-                                {/* {birthdateError?      
-                                    <div className="flex flex-row gap-2 items-center">
-                                        <PiWarningCircle className="text-red-400"/>
-                                        <p className="text-sm font-light text-red-400 text-clr-text-danger">{birthdateError}</p>
-                                    </div>:""
-                                } */}
                             </LocalizationProvider>
                             :<p className="px-2 text-xs w-4/6 items-center">
                                 {resignDate?resignDate:"-"}
@@ -304,16 +257,6 @@ const Employment = (props:any) => {
                     <div  className='w-4/6 flex items-center px-1'>
                         {<Switch isDisabled={!isEditEmployment} isSelected={status} 
                         onValueChange={()=>{
-                            // if(status === true){
-                            //     const resign_date = new Date()
-                            //     const middlewareResginDate = `${resign_date.getFullYear()}-${resign_date.getMonth()+1 < 10? "0"+(resign_date.getMonth()+1):resign_date.getMonth()+1}-${resign_date.getDate()}`
-                            //     setResignDate(middlewareResginDate);
-                            // }else{
-                            //     // const join_date = new Date()
-                            //     // const middlewareJoinDate = `${join_date.getFullYear()}-${join_date.getMonth()+1 < 10? "0"+(join_date.getMonth()+1):join_date.getMonth()+1}-${join_date.getDate()}`
-                            //     // setJoinDate(middlewareJoinDate);
-                            //     setResignDate(undefined);
-                            // }
                             setStatus(!status)
                             
                         }}
@@ -351,7 +294,7 @@ const Employment = (props:any) => {
                     </div>}
             </div>
             <div className="md:w-1/6 py-5 md:p-0">
-                {!isEditEmployment && <button onClick={()=>{setIsEditEmployment(true)}} className="text-gray-500 border-2 rounded-lg font-mono hover:border-[--kinerja-gold-hover-border] px-2">Edit</button>}
+                {( !isEditEmployment && (user?.position.position_id == 1 || user?.position.position_id === 2) && (user?.dept.dept_id == 1 || user?.dept.dept_id || user.dept.dept_id === employmentData.dept_id) )   ? <button onClick={()=>{setIsEditEmployment(true)}} className="text-gray-500 border-2 rounded-lg font-mono hover:border-[--kinerja-gold-hover-border] px-2">Edit</button> : <></>}
             </div>
         </div>
         </div>

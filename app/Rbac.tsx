@@ -1,7 +1,7 @@
 "use client"
 import { useAuth } from '@/contexts';
 import { useRouter } from 'next/navigation';
-import { ReactNode, useEffect, useLayoutEffect, useState } from 'react';
+import { ReactNode, useEffect,useState } from 'react';
 interface ProtectedRouteProps {
   children: ReactNode;
   allowedDept?: number[];
@@ -20,6 +20,7 @@ export default function ProtectedRoute({
   const { user } = useAuth();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
+
   useEffect(() => {
     if (allowedPos && !allowedPos.some((item) => item === user?.position.position_id)) {
       router.push('/dashboard');
@@ -32,5 +33,3 @@ export default function ProtectedRoute({
 
   return isAuthenticated ? <>{children}</> : null;
 }
-
-// export default ProtectedRoute;

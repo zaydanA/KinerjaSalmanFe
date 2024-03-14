@@ -57,8 +57,6 @@ const NavbarComponentData = [
         title:"Basic Info",
     },{
         title: "Family",
-    },{
-        title:"Emergency Contact",
     }
     ]
 
@@ -82,7 +80,6 @@ const DetailEmployee: React.FC<DetailEmployeeType> = (props)=>{
             identity_number: '',
             address: '',
             last_education: '',
-            status: 0
         }
     )
     const pathname = usePathname().split("/");
