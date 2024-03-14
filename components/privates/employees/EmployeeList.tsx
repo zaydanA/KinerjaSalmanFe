@@ -119,14 +119,20 @@ const EmployeeList = () => {
     "Gender",
   ];
 
+  const isAuthorizedToAddEmployee =
+    user.position.title === "Director" ||
+    (user.position.title === "Manager" && user.dept.dept_name === "HRD");
+
   return (
     <>
       <div className="flex flex-col gap-5">
         <div className="flex justify-between">
           <h1 className=" text-2xl font-bold">Employees</h1>
-          <button onClick={() => router.push("employee/add")}>
-            <CiCirclePlus className="h-8 w-8" />
-          </button>
+          {isAuthorizedToAddEmployee &&
+            <button onClick={() => router.push("employee/add")}>
+              <CiCirclePlus className="h-8 w-8" />
+            </button>
+          }
         </div>
         <div className="flex w-full justify-between max-md:gap-2 max-sm:flex-col">
           <div className="flex gap-5 max-md:gap-1">
