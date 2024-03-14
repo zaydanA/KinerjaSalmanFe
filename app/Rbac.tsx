@@ -1,7 +1,7 @@
 "use client"
 import { useAuth } from '@/contexts';
 import { useRouter } from 'next/navigation';
-import { ReactNode, useEffect, useLayoutEffect, useState } from 'react';
+import { ReactNode, useEffect,useState } from 'react';
 interface ProtectedRouteProps {
   children: ReactNode;
   allowedDept?: number[];

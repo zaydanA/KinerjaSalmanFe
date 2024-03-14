@@ -20,7 +20,7 @@ const IdentityAddress = (props:any)=>{
             full_name: props.employee.full_name,
             phone_number: props.employee.phone_number,
             place_of_birth: props.employee.place_of_birth,
-            date_of_birth: new Date(props.employee.date_of_birth),
+            date_of_birth: props.employee.date_of_birth,
             gender: props.employee.gender,
             marital_status: props.employee.marital_status,
             blood_type: props.employee.blood_type,

@@ -59,7 +59,7 @@ const PersonalData = (props:any)=>{
             full_name: fullName,
             phone_number: mobilePhone,
             place_of_birth: placeOfBirth,
-            date_of_birth: new Date(birthdate),
+            date_of_birth: birthdate,
             gender: selectedValueGender,
             marital_status: selectedValueMarital,
             blood_type: selectedValueBloodType !== "-"? selectedValueBloodType : "",
