@@ -14,7 +14,7 @@ const Filter = ({
 }: {
   label: string;
   filterContent: string[];
-  handler: React.Dispatch<React.SetStateAction<string[] | undefined>>;
+  handler: (p: string[]) => void;
 }) => {
   const [checkedValues, setCheckedValues] = useState<string[]>([]);
 

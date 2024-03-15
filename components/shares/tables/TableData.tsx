@@ -21,8 +21,8 @@ const TableData = ({
           {/* Change to <Image /> from NextJS */}
           <img alt="profile picture" src={dataContent[0]?.toString()} />
         </div>
-        <div className="flex flex-col">
-          <p>{dataContent[1]}</p>
+        <div className="flex max-w-xs flex-col max-md:max-w-36 max-sm:max-w-16">
+          <p className="overflow-hidden text-ellipsis">{dataContent[1]}</p>
           <p className=" text-xs max-lg:hidden">{dataContent[2]}</p>
         </div>
       </div>
@@ -36,20 +36,20 @@ const TableData = ({
         index == 0 && !isProfile ? (
           <td
             key={index}
-            className="-border-b--clr-table-border sticky left-0 whitespace-nowrap border-b-1 border-r-1 border-solid bg-clr-blackground-table-body p-4 text-start max-md:text-xs max-lg:text-sm max-sm:text-[10px]"
+            className="-border-b--clr-table-border sticky left-0 overflow-hidden text-ellipsis whitespace-nowrap border-b-1 border-r-1 border-solid bg-clr-blackground-table-body p-4 text-start max-lg:text-sm max-md:max-w-36 max-md:text-xs max-sm:max-w-16 max-sm:text-[10px]"
           >
             {data}
           </td>
         ) : (
           <td
             key={index}
-            className=" -border-b--clr-table-border whitespace-nowrap border-b-1 border-solid bg-clr-blackground-table-body p-4 px-3.5 text-start max-md:text-xs max-lg:text-sm max-sm:text-[10px]"
+            className=" -border-b--clr-table-border whitespace-nowrap border-b-1 border-solid bg-clr-blackground-table-body p-4 px-3.5 text-start max-lg:text-sm max-md:text-xs max-sm:text-[10px]"
           >
             {data}
           </td>
         ),
       )}
-      <td className="-border-b--clr-table-border sticky right-0 whitespace-nowrap border-b-1 border-l-1 border-solid bg-clr-blackground-table-body p-4 px-3.5 text-start max-md:px-4 max-md:text-xs max-lg:text-sm max-sm:text-[10px]">
+      <td className="-border-b--clr-table-border whitespace-nowrap border-b-1 border-l-1 border-solid bg-clr-blackground-table-body p-4 px-3.5 text-start max-lg:text-sm max-md:px-4 max-md:text-xs max-sm:text-[10px] min-[320px]:sticky min-[320px]:right-0">
         <div
           className={
             onClickEdit && onClickDelete
