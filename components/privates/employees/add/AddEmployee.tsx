@@ -278,7 +278,7 @@ const AddEmployee = () => {
                         <BaseInputButton
                             text="Back"
                             type="underlined"
-                            onClick={handlePreviousStep}
+                            onClick={() => handlePreviousStep()}
                         />
                     }
                     {step < 3 && (
