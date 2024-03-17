@@ -6,6 +6,7 @@ import position from "./position";
 import department from "./department";
 import analytics from "./analytics";
 import attendance from "./attendance";
+import application from "./application";
 
 export const apiBase = () => {
   return {
@@ -16,6 +17,7 @@ export const apiBase = () => {
     position,
     department,
     analytics,
-    attendance
+    attendance,
+    application,
   }
 }

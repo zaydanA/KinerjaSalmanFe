@@ -1,6 +1,6 @@
 "use client"
 import { apiBase } from '@/api';
-import { IApiAttendancePayload } from '@/types/attendance';
+import { IApiAttendanceData, IApiAttendancePayload } from '@/types/attendance';
 import BaseCard from '@/components/shares/cards/BaseCard';
 import React, { useEffect, useState } from 'react'
 import { lib } from '@/lib';
@@ -8,11 +8,14 @@ import BaseInputText from '@/components/shares/inputs/BaseInputText';
 import { useInput } from '@/hooks/useInput';
 import { IApiBaseError } from '@/types/http';
 import BaseInputButton from '@/components/shares/buttons/BaseInputButton';
+import { useAuth } from '@/contexts';
 
 const LiveAttendance = () => {
   const [attendanceData, setAttendanceData] = useState<IApiAttendancePayload>();
+  const [logData, setLogData] = useState<IApiAttendanceData[]>();
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const customLib = lib();
+  const { user } = useAuth();
 
   const [notes, setNotes] = useInput();
 
@@ -43,6 +46,16 @@ const LiveAttendance = () => {
         if (res.status === 'success') {
           setAttendanceData(res.data);
         }
+
+        // Log
+        if (user?.user_id) {
+          const res_log = await apiBase().attendance().getUserAttendance(user?.user_id);
+
+          if (res_log.status === 'success') {
+            setLogData(res_log.data);
+          }
+        }
+
       } catch (error) {
         console.error(error);
       }
@@ -104,7 +117,7 @@ const LiveAttendance = () => {
       <h1 className="text-2xl font-bold mb-4">Live Attendance</h1>
 
       <div className='flex items-center justify-center'>
-        <div className='max-w-xl w-full'>
+        <div className='flex flex-col max-w-xl w-full gap-8'>
           <BaseCard outline={true} padding={false}>
             <div className='block text-center'>
               <div className='p-6 border-b-1'>
@@ -143,6 +156,22 @@ const LiveAttendance = () => {
               </div>
             </div>
           </BaseCard>
+
+          <div>
+            <h3 className="text-md font-semibold mb-4">Attendance Log</h3>
+            <div className='max-h-32 overflow-y-auto'>
+              {logData?.map((logItem, index) => (
+                <div key={index}>
+                  <BaseCard
+                    outline={true}
+                  >
+                    <p>Date: {customLib.formatDate(logItem.date)}</p>
+                    <p>Type: {logItem.attendance_type}</p>
+                  </BaseCard>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -49,10 +49,26 @@ export const lib = () => {
       .join(' ');
   }
 
+  const toHoursMinutes = (date: Date | string): string | null => {
+    if (typeof date === 'string') {
+      date = new Date(date);
+    }
+
+    if (!date) {
+      return null;
+    }
+
+    const hours = date.getUTCHours().toString().padStart(2, '0');
+    const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+
+    return `${hours}:${minutes}`;
+  }
+
   return {
     formatDate,
     getDate,
     getTimeOfDay,
-    toLabelCase
+    toLabelCase,
+    toHoursMinutes
   }
 }

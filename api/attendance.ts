@@ -1,4 +1,4 @@
-import { IApiAttendancePagination, IApiAttendancePayload, IApiClocksAttendancePayload } from '@/types/attendance';
+import { IApiAttendanceData, IApiAttendancePagination, IApiAttendancePayload, IApiClocksAttendancePayload } from '@/types/attendance';
 import { api, support } from './support';
 import { IApiBaseResponse } from '@/types/http';
 
@@ -9,7 +9,8 @@ const attendance = () => {
   const url = {
     todaySelf: apiUrl.attendance.todaySelf,
     todayClocks: apiUrl.attendance.todayClocks,
-    todayAll: apiUrl.attendance.todayAll
+    todayAll: apiUrl.attendance.todayAll,
+    user: apiUrl.attendance.user
   }
 
   const getTodaySelf = async () => {
@@ -60,10 +61,23 @@ const attendance = () => {
     return response.data;
   }
 
+  const getUserAttendance = async (user_id:number) => {
+    const response = await api.get<IApiBaseResponse<IApiAttendanceData[]>>(
+      `${url.user}/${user_id}`,{
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+
+    return response.data;
+  }
+
   return {
     getTodaySelf,
     clocksAttendanceToday,
-    getTodayAll
+    getTodayAll,
+    getUserAttendance
   };
 };
 

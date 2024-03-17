@@ -142,8 +142,11 @@ const EmployeeList = () => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-6">
-        <div className="flex justify-between">
-          <h1 className=" text-2xl font-bold">Employees</h1>
+        <div className="flex justify-between items-end">
+          <div>
+            <h2 className="text-lg mb-1 text-gray-500">Employee</h2>
+            <h1 className="text-2xl font-bold">List of Employees</h1>
+          </div>
           <BaseInputButton
             text="Add employee"
             onClick={() => router.push("employee/add")}

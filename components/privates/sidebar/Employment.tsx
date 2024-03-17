@@ -309,7 +309,7 @@ const Employment = (props:any) => {
             </div>
             <div className="md:w-4/6 md:px-4 flex flex-col pt-1 gap-4">
                 <p className="text-sm text-gray-500">
-                    Employee doesn't have direct reports
+                    Employee doesn&apos;t have direct reports
                 </p>
             </div>
             <div className="md:w-1/6">

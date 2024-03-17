@@ -43,7 +43,7 @@ const TableData = ({
         ) : (
           <td
             key={index}
-            className=" -border-b--clr-table-border whitespace-nowrap border-b-1 border-solid bg-clr-blackground-table-body p-4 px-3.5 text-start max-lg:text-sm max-md:text-xs max-sm:text-[10px]"
+            className="-border-b--clr-table-border whitespace-nowrap border-b-1 border-solid bg-clr-blackground-table-body p-4 px-3.5 text-start max-lg:text-sm max-md:text-xs max-sm:text-[10px]"
           >
             {data}
           </td>
