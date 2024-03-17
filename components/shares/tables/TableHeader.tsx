@@ -15,7 +15,7 @@ const TableHeader = ({
           index == 0 ? (
             <th
               key={index}
-              className=" -border-b--clr-table-border sticky left-0 top-0 z-[2] whitespace-nowrap border-b-1 border-r-1 border-solid bg-clr-blackground-table-header p-4 px-3.5 text-start max-lg:text-sm max-md:text-xs max-sm:text-[10px]"
+              className="-border-b--clr-table-border sticky left-0 top-0 z-[2] whitespace-nowrap border-b-1 border-r-1 border-solid bg-clr-blackground-table-header p-4 px-3.5 text-start max-lg:text-sm max-md:text-xs max-sm:text-[10px]"
             >
               {h}
             </th>

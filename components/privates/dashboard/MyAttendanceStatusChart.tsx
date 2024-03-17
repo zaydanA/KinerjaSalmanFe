@@ -9,14 +9,14 @@ defaults.responsive = true;
 defaults.plugins.legend.display = false;
 
 interface Props {
-  genderData: IApiAnalyticsData[]
+  myAttendancesData: IApiAnalyticsData[]
 }
 
-const GenderDiversityChart: React.FC<Props> = ({ genderData }) => {
-  const colorDataReal = ["#009BDE", "#EE8CA5"]
+const MyAttendanceStatusChart: React.FC<Props> = ({ myAttendancesData }) => {
+  const colorDataReal = ["#009BDE", "#d1d5db"]
   const colorData = [
     "bg-graph-blue",
-    "bg-graph-pink",
+    "bg-gray-300",
   ]
 
   return(
@@ -24,33 +24,43 @@ const GenderDiversityChart: React.FC<Props> = ({ genderData }) => {
       <div>
         <Doughnut
           data={{
-            labels: genderData.map((data) => data.label),
+            labels: myAttendancesData.map((data) => data.label),
             datasets: [
               {
                 label: "Count",
-                data: genderData.map((data) => data.value),
-                backgroundColor: colorDataReal.map((data) => data),
+                data: myAttendancesData.map((data) => data.value),
+                backgroundColor: colorDataReal.map((data) => data)
               }
             ]
+          }}
+          options={{
+            circumference: 180,
+            rotation: 270,
+            cutout: '75%',
+            plugins: {
+              tooltip: {
+                filter: (tooltipItem) => {
+                  return tooltipItem.dataIndex === 0
+                }
+              }
+            }
           }}
         />
       </div>
       <div className='flex flex-col gap-3 text-xs mt-2'>
-        {genderData.map((data, index) => (
+        {myAttendancesData.map((data, index) => (
           <>
-            {index !== 0 && (
-              <hr className='w-full border-0.5 border-gray-300' />
-            )}
-            <div key={index} className='grid grid-cols-2 items-center'>
+            {index === 0 && (
+              <div key={index} className='grid grid-cols-2 items-center'>
               <div className='flex gap-2 items-center'>
                 <span className={`round-lg ${colorData[index]} w-2 h-2 rounded-sm`}>&nbsp;</span>
                 <p className='font-semibold'>{data.label}</p>
               </div>
               <div className='flex justify-end items-center text-gray-500 font-normal'>
-                <p className='text-end mr-6'>{data.value}</p>
                 <p className='w-10 text-start'>{data.percentage}%</p>
               </div>
             </div>
+            )}
           </>
         ))}
       </div>
@@ -58,4 +68,4 @@ const GenderDiversityChart: React.FC<Props> = ({ genderData }) => {
   );
 }
 
-export default GenderDiversityChart;
+export default MyAttendanceStatusChart;
