@@ -9,16 +9,27 @@ export const lib = () => {
     return `${day} / ${month} / ${year}`;
   }
 
-  const getDate = () => {
-    const today = new Date();
-    const options = { weekday: 'long', day: 'numeric', month: 'long' } as const;
+  const getDate = (today: Date, withYear = false) => {
+    let options;
+
+    if (withYear) {
+      options = { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' } as const;
+    } else {
+      options = { weekday: 'long', day: 'numeric', month: 'long' } as const;
+    }
     const date = today.toLocaleDateString('en-US', options);
-    const [weekday, month, day] = date.split(' ');
-    return `${weekday} ${day} ${month}`;
+
+    if (withYear) {
+      const [weekday, month, day, year] = date.split(' ');
+      return `${weekday} ${day.replace(',', '')} ${month} ${year}`;
+    } else {
+      const [weekday, month, day] = date.split(' ');
+      return `${weekday} ${day} ${month}`;
+    }
   }
 
-  const getTimeOfDay = () => {
-    const currentTime = new Date().getHours();
+  const getTimeOfDay = (today: Date) => {
+    const currentTime = today.getHours();
 
     if (currentTime >= 5 && currentTime < 12) {
       return 'morning';

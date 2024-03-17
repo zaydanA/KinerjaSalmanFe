@@ -1,6 +1,6 @@
 import { api, support } from './support';
 import { IApiBaseResponse } from '@/types/http';
-import { IApiAddEmployee, IApiGenderData } from '@/types/employee';
+import { IApiAddEmployee } from '@/types/employee';
 import { IApiEmployeeResponse } from '@/types/employee'
 import department from './department';
 import position from './position';

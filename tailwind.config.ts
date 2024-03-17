@@ -13,8 +13,12 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        graph01: "#009BDE",
-        graph02: "#EE8CA5",
+        'graph-blue': "#009BDE",
+        'graph-pink': "#EE8CA5",
+        'graph-orange': "#F96D01",
+        'graph-purple': "#5B37D4",
+        'graph-dark-blue': "#005FBF",
+        'graph-green': "#8FB140",
 
         'clr-table-border': "#eeeeee",
         'clr-blackground-table-header': "#fbfbfb",

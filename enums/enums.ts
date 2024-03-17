@@ -27,3 +27,11 @@ export enum LastEducation {
     S2 = 'S2',
     S3 = 'S3',
 }
+
+export enum AttendanceType {
+  PRESENT = 'PRESENT',
+  ON_LEAVE = 'ON_LEAVE',
+  SICK = 'SICK',
+  ABSENT = 'ABSENT',
+  OTHER = 'OTHER'
+}

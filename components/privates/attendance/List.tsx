@@ -1,35 +1,27 @@
-"use client";
-import TableData from "@/components/shares/tables/TableData";
-import TableHeader from "@/components/shares/tables/TableHeader";
-import { apiBase } from "@/api";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { IApiBaseEmployee } from "@/types/employee";
+"use client"
+
+import Pagination from "@/components/shares/pagination/Pagination";
 import Search from "@/components/shares/search/Search";
+import TableData from "@/components/shares/tables/TableData";
+import Filter from "../employees/Filter";
+import BaseInputButton from "@/components/shares/buttons/BaseInputButton";
+import { useEffect, useRef, useState } from "react";
+import { apiBase } from "@/api";
+import { lib } from "@/lib";
+import { useRouter } from "next/router";
+import { IApiAttendanceList, IApiAttendancePagination } from "@/types/attendance";
 import { IApiBaseDepartment } from "@/types/department";
 import { IApiBasePosition } from "@/types/position";
-import { lib } from "@/lib";
-import Filter from "./Filter";
-import Pagination from "@/components/shares/pagination/Pagination";
-import { useRouter } from "next/navigation";
-import { CiCirclePlus } from "react-icons/ci";
-import BaseInputButton from "@/components/shares/buttons/BaseInputButton";
-import { useAuth } from "@/contexts";
 
-const EmployeeList = () => {
+const ListAttendance = () => {
   const api = apiBase();
   const customLib = lib();
   const router = useRouter();
   // const { user } = useAuth();
 
-  const [currentEmployees, setCurrentEmployees] = useState<IApiBaseEmployee[]>(
-    [],
-  );
-  const [currentDepartments, setCurrentDepartments] = useState<
-    IApiBaseDepartment[]
-  >([]);
-  const [currentPositions, setCurrentPositions] = useState<IApiBasePosition[]>(
-    [],
-  );
+  const [currentAttendances, setCurrentAttendances] = useState<IApiAttendanceList[]>([]);
+  const [currentDepartments, setCurrentDepartments] = useState<IApiBaseDepartment[]>([]);
+  const [currentPositions, setCurrentPositions] = useState<IApiBasePosition[]>([]);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState<number>(0);
@@ -45,10 +37,10 @@ const EmployeeList = () => {
       try {
         const departments = await api.department().getDepartment();
         const positions = await api.position().getPosition();
-        const employees = await api.employee().getEmployee();
+        const attendances = await api.attendance().getTodayAll();
 
-        setCurrentEmployees(employees.data.data);
-        setTotalPage(employees.data.last_page);
+        setCurrentAttendances(attendances.data.data);
+        setTotalPage(attendances.data.last_page);
         setCurrentDepartments(departments.data);
         setCurrentPositions(positions.data);
       } catch (error) {
@@ -60,87 +52,9 @@ const EmployeeList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const fetchList = async ({
-    page,
-  }: {
-    search?: string;
-    page: number;
-    filterStatus?: string[];
-    filterDepartment?: number[];
-    filterPosition?: number[];
-  }) => {
-    const employees = await api
-      .employee()
-      .getEmployee(
-        page,
-        10,
-        searchValue.current,
-        selectStatus.current,
-        selectDepartment.current,
-        selectPosition.current,
-      );
-
-    // return employees;
-    setCurrentPage(page);
-    setCurrentEmployees(employees.data.data);
-    setTotalPage(employees.data.last_page);
-  };
-
-  const handleSearch = (s: string) => {
-    searchValue.current = s;
-    fetchList({ page: 1 });
-    // fetchList({ search: s, page: 1 });
-  };
-  const handleFilterStatus = (s?: string[]) => {
-    selectStatus.current = s;
-    fetchList({ page: 1 });
-    // fetchList({ filterStatus: s, page: 1 });
-  };
-
-  const handleFilterDepartment = (d?: string[]) => {
-    // setSelectDepartment(d)
-    selectDepartment.current =
-      d &&
-      currentDepartments
-        .filter((dept) => d.includes(dept.dept_name))
-        .map((dept) => dept.dept_id);
-
-    fetchList({ page: 1 });
-    // fetchList({ filterDepartment: deptIds, page: 1 });
-  };
-
-  const handleFilterPosition = (p?: string[]) => {
-    // setSelectPosition(p)
-    selectPosition.current =
-      p &&
-      currentPositions
-        .filter((post) => p.includes(post.title))
-        .map((post) => post.position_id);
-
-    fetchList({ page: 1 });
-    // fetchList({ filterPosition: posIds, page: 1 });
-  };
-
-  const onPageChange = (pageNumber: number) => {
-    fetchList({ page: pageNumber });
-  };
-
-  const header = [
-    "Employee",
-    "Department",
-    "Position",
-    "Employment Status",
-    "Join Date",
-    "Resign Date",
-    "Birth Date",
-    "Phone",
-    "Gender",
-  ];
-
-  // const isAuthenticated = isHRDManagerOrDirector() || isManager(); // Udah dihandle di protected route
-
   return (
-    <div className="flex flex-col gap-4">
+    <>
+      <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-6">
         <div className="flex justify-between">
           <h1 className=" text-2xl font-bold">Employees</h1>
@@ -221,7 +135,8 @@ const EmployeeList = () => {
         />
       </div>
     </div>
-  );
-};
+    </>
+  )
+}
 
-export default EmployeeList;
+export default ListAttendance

@@ -26,7 +26,15 @@ export const support = () => {
     },
 
     analytics: {
-      gender: '/analytics/gender'
+      genders: '/analytics/genders',
+      todaysAttendances: '/analytics/todays-attendances',
+      myAttendances: '/analytics/my-attendances'
+    },
+
+    attendance: {
+      todaySelf: '/attendance/today/self',
+      todayClocks: '/attendance/today/clocks',
+      todayAll: '/attendance/today/all'
     }
   };
 
