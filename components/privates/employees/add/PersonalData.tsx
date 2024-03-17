@@ -19,57 +19,43 @@ const PersonalDataForm = ({
     handleChange, 
     apiBaseError 
 }: PersonalDataFormProps) => {
-    // const [emailError, setEmailError] = useState('');
-
-    const handlePersonalDataChange = (name: keyof IUserPersonalData, value: any) => {
+    const handlePersonalDataChange = (name: keyof IUserPersonalData, value: any) => {        
         handleChange({
             [name]: value
-        })
+        });
     }
 
     const customLib = lib();
-
-    // const handleEmailChange = (event) => {
-    //     const { name, value } = event.target;
-    //     handlePersonalDataChange(name, value);
-
-    //     if (!isValidEmail(value)) {
-    //         setEmailError('Please enter a valid email address');
-    //     } else {
-    //         setEmailError('');
-    //     }
-    // };
-
-    // const isValidEmail = (email) => {
-    //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    //     return emailRegex.test(email);
-    // };
 
     return (
         <div className="w-1/2 mx-auto">
             <h3 className="text-lg mb-1 font-bold"> Personal Data </h3>
             <p className="text-gray-500 text-sm"> Fill all employee personal basic information data </p>
             <div className="grid grid-cols-2 gap-y-4 gap-x-5 my-6">
-                <BaseInputText
-                    id="full_name"
-                    label="Full Name"
-                    placeholder="Full Name"
-                    type="text"
-                    required={true}
-                    value={formData.full_name}
-                    error={apiBaseError.getErrors('full_name')?.[0].toString()}
-                    setValue={(e) => handlePersonalDataChange('full_name', e.target.value)}
-                />
-                <BaseInputText
-                    id="email"
-                    label="Email"
-                    placeholder="Email"
-                    type="text"
-                    required={true}
-                    value={formData.email}
-                    error={apiBaseError.getErrors('email')?.[0].toString()}
-                    setValue={(e) => handlePersonalDataChange('email', e.target.value)}
-                />
+                <div className="col-span-2">
+                    <BaseInputText
+                        id="full_name"
+                        label="Full Name"
+                        placeholder="Full Name"
+                        type="text"
+                        required={true}
+                        value={formData.full_name}
+                        error={apiBaseError.getErrors('full_name')?.[0].toString()}
+                        setValue={(e) => handlePersonalDataChange('full_name', e.target.value)}
+                    />
+                </div>
+                <div className="col-span-2">
+                    <BaseInputText
+                        id="email"
+                        label="Email"
+                        placeholder="Email"
+                        type="text"
+                        required={true}
+                        value={formData.email}
+                        error={apiBaseError.getErrors('email')?.[0].toString()}
+                        setValue={(e) => handlePersonalDataChange('email', e.target.value)}
+                    />
+                </div>
                 <BaseInputText
                     id="phone_number"
                     label="Phone Number"
@@ -129,26 +115,24 @@ const PersonalDataForm = ({
                     error={apiBaseError.getErrors('identity_number')?.[0].toString()}
                     setValue={(e) => handlePersonalDataChange('identity_number', e.target.value)}
                 />
-                <div className='grid grid-cols-2 gap-y-4 gap-x-5'>
-                    <DropdownInput
-                        id="gender"
-                        label="Gender"
-                        required={true}
-                        options={Object.keys(Gender).map(gender => ({ value: gender, label: customLib.toLabelCase(gender, true) }))}
-                        selectedValue={formData.gender}
-                        error={apiBaseError.getErrors('gender')?.[0].toString()}
-                        onChange={(e) => handlePersonalDataChange('gender', e.target.value)}
-                    />
-                    <DropdownInput
-                        id="blood_type"
-                        label="Blood Type"
-                        required={false}
-                        options={Object.keys(BloodType).map(blood_type => ({ value: blood_type, label: blood_type }))}
-                        selectedValue={formData.blood_type as string}
-                        error={apiBaseError.getErrors('blood_type')?.[0].toString()}
-                        onChange={(e) => handlePersonalDataChange('blood_type', e.target.value)}
-                    />
-                </div>
+                <DropdownInput
+                    id="gender"
+                    label="Gender"
+                    required={true}
+                    options={Object.keys(Gender).map(gender => ({ value: gender, label: customLib.toLabelCase(gender, true) }))}
+                    selectedValue={formData.gender}
+                    error={apiBaseError.getErrors('gender')?.[0].toString()}
+                    onChange={(e) => handlePersonalDataChange('gender', e.target.value)}
+                />
+                <DropdownInput
+                    id="blood_type"
+                    label="Blood Type"
+                    required={false}
+                    options={Object.keys(BloodType).map(blood_type => ({ value: blood_type, label: blood_type }))}
+                    selectedValue={formData.blood_type as string}
+                    error={apiBaseError.getErrors('blood_type')?.[0].toString()}
+                    onChange={(e) => handlePersonalDataChange('blood_type', e.target.value)}
+                />
                 <DropdownInput
                     id="marital_status"
                     label="Marital Status"

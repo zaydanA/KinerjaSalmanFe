@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { apiBase } from '@/api';
 import { IApiBasePosition } from '@/types/position';
 import { IApiBaseDepartment } from '@/types/department';
-import BaseInputText from '@/components/shares/inputs/BaseInputText';
 import BaseInputDate from '@/components/shares/inputs/BaseInputDate';
 import DropdownInput from '@/components/shares/inputs/DropdownInput';
 import { IUserEmploymentData } from '@/types/user';
 import { IApiError } from '@/types/http';
+import { useAuth } from '@/contexts';
 
 type ChangeHandler<T> = (data: Partial<T>) => void;
 type EmploymentDataFormProps = {
@@ -20,6 +20,7 @@ const EmploymentDataForm = ({
     handleChange,
     apiBaseError
 }: EmploymentDataFormProps) => {
+    const { user } = useAuth();
 
     const [positions, setPositions] = useState<IApiBasePosition[]>([]);
     const [departments, setDepartments] = useState<IApiBaseDepartment[]>([]);
@@ -27,7 +28,11 @@ const EmploymentDataForm = ({
     const fetchDataPosition = async () => {
         try {
             const position = await apiBase().position().getPosition();
-            setPositions(position.data);
+            let filteredPositions = [...position.data];
+            if (user?.position.title !== "Director") {
+                filteredPositions = position.data.filter(pos => pos.title !== 'Director');  
+            }
+            setPositions(filteredPositions);
         } catch (error) {
             throw error;
         }
@@ -36,7 +41,13 @@ const EmploymentDataForm = ({
     const fetchDataDepartment = async () => {
         try {
             const department = await apiBase().department().getDepartment();
-            setDepartments(department.data);
+            let filteredDepartments = [...department.data];
+            // filteredDepartments = department.data.filter(dep => dep.dept_name !== "BOD");
+
+            if (user?.position.title !== "Director" && user?.dept.dept_name !== "HRD") {
+                filteredDepartments = department.data.filter(dep => dep.dept_name === user?.dept.dept_name);
+            }
+            setDepartments(filteredDepartments);
         } catch (error) {
             throw error;
         }
@@ -50,7 +61,7 @@ const EmploymentDataForm = ({
     const handleEmploymentDataChange = (name: keyof IUserEmploymentData, value: any) => {
         handleChange({
             [name]: value
-        })
+        });
     }
 
     return (
@@ -74,7 +85,7 @@ const EmploymentDataForm = ({
                     options= {departments.map(department => ({ value: department.dept_id, label: department.dept_name }))}
                     selectedValue={formData.dept_id}
                     error={apiBaseError.getErrors('dept_id')?.[0].toString()}
-                    onChange={(e) => handleEmploymentDataChange('dept_id', e.target.value)}
+                    onChange={(e) => handleEmploymentDataChange('dept_id', parseInt(e.target.value))}
                 />
                 <DropdownInput
                     id="position_id"
@@ -83,7 +94,7 @@ const EmploymentDataForm = ({
                     options= {positions.map(position => ({ value: position.position_id, label: position.title }))}
                     selectedValue={formData.position_id}
                     error={apiBaseError.getErrors('position_id')?.[0].toString()}
-                    onChange={(e) => handleEmploymentDataChange('position_id', e.target.value)}
+                    onChange={(e) => handleEmploymentDataChange('position_id', parseInt(e.target.value))}
                 />
             </div>
         </div>

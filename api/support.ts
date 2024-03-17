@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 export const url = process.env.API_BASE_URL;
 export const api = axios.create({
@@ -8,26 +8,31 @@ export const api = axios.create({
 
 export const support = () => {
   const apiUrl = {
-    login: '/login',
-    refreshToken: '/refresh-token',
-    logout: '/logout',
-    self: '/self',
+    login: "/login",
+    refreshToken: "/refresh-token",
+    logout: "/logout",
+    self: "/self",
 
-    getPosition: '/position',
-    getDepartment: '/department',
+    getPosition: "/position",
+    getDepartment: "/department",
 
-    employee: '/employee',
+    employee: "/employee",
 
     user: {
-      self: '/user/self',
-      personalData: '/user/personal-data',
-      employmentData: '/user/employment-data',
-      delete: '/user/delete'
+      self: "/user/self",
+      personalData: "/user/personal-data",
+      employmentData: "/user/employment-data",
+      delete: "/user/delete",
     },
 
     analytics: {
-      gender: '/analytics/gender'
-    }
+      gender: "/analytics/gender",
+    },
+
+    application: {
+      applyLeave: "/application/apply-leave",
+      applyDuty: "/application/apply-duty",
+    },
   };
 
   return { apiUrl };

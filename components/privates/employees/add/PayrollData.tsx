@@ -18,7 +18,7 @@ const PayrollDataForm = ({
     const handlePayrollDataChange = (name: keyof IUserPayrollData, value: any) => {
         handleChange({
             [name]: value
-        })
+        });
     }
     return (
         <div className="w-1/2 mx-auto">
@@ -31,6 +31,7 @@ const PayrollDataForm = ({
                     placeholder="NPWP Number"
                     type="text"
                     value={formData.npwp_number}
+                    error={apiBaseError.getErrors('npwp_number')?.[0].toString()}
                     setValue={(e) => handlePayrollDataChange('npwp_number', e.target.value)}
                 />
             </div>

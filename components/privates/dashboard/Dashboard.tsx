@@ -10,9 +10,10 @@ import GenderDiversityChart from './GenderDiversityChart';
 import { IApiGenderData } from '@/types/employee';
 
 const Dashboard = () => {
-  const { user } = useAuth();
+  const { user, isHRDManagerOrDirector, isManager } = useAuth();
   const apiBaseError = apiBase().error<IApiBaseError>();
   const customLib = lib();
+  const canAccess = isHRDManagerOrDirector() || isManager();
 
   const [genderData, setGenderData] = useState<IApiGenderData[]>([]);
   useEffect(() => {
@@ -28,13 +29,15 @@ const Dashboard = () => {
       }
     };
 
-    fetchData();
+    if (canAccess) {
+      fetchData();
+    }
   }, []);
 
   return (
     <>
-      <div className='grid grid-cols-3 gap-4'>
-        <div className='col-span-3'>
+      <div className='grid grid-cols-4 gap-4'>
+        <div className='col-span-4'>
           <BaseCard>
             <div className='flex flex-col gap-4'>
               <div className='flex flex-col gap-1'>
@@ -46,21 +49,30 @@ const Dashboard = () => {
         </div>
         <BaseCard>
           <div className='flex flex-col gap-4'>
-            <h1 className='font-semibold text-md'>Total Employment</h1>
-            <EmploymentChart/>
+            <h1 className='font-semibold text-md'>Attendance Status</h1>
           </div>
         </BaseCard>
-        <BaseCard>
-          <div className='flex flex-col gap-4'>
-            <h1 className='font-semibold text-md'>Gender Diversity</h1>
-            <GenderDiversityChart genderData={genderData}/>
-          </div>
-        </BaseCard>
-        <BaseCard>
-          <div className='flex flex-col gap-4'>
-            <h1 className='font-semibold text-md'>Today&apos;s Attendance</h1>
-          </div>
-        </BaseCard>
+        {canAccess && (
+          <>
+            <BaseCard>
+              <div className='flex flex-col gap-4'>
+                <h1 className='font-semibold text-md'>Total Employment</h1>
+                {/* <EmploymentChart/> */}
+              </div>
+            </BaseCard>
+            <BaseCard>
+              <div className='flex flex-col gap-4'>
+                <h1 className='font-semibold text-md'>Gender Diversity</h1>
+                <GenderDiversityChart genderData={genderData}/>
+              </div>
+            </BaseCard>
+            <BaseCard>
+              <div className='flex flex-col gap-4'>
+                <h1 className='font-semibold text-md'>Today&apos;s Attendance</h1>
+              </div>
+            </BaseCard>
+          </>
+        )}
       </div>
     </>
   )

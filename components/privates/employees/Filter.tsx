@@ -14,7 +14,7 @@ const Filter = ({
 }: {
   label: string;
   filterContent: string[];
-  handler: React.Dispatch<React.SetStateAction<string[] | undefined>>;
+  handler: (p: string[]) => void;
 }) => {
   const [checkedValues, setCheckedValues] = useState<string[]>([]);
 
@@ -24,17 +24,15 @@ const Filter = ({
   ) => {
     const isChecked = event.target.checked;
     if (isChecked) {
-      setCheckedValues([...checkedValues, value]);
+      const newValues = [...checkedValues, value]
+      setCheckedValues(newValues);
+      handler(newValues);
     } else {
-      setCheckedValues(checkedValues.filter((item) => item !== value));
+      const newValues = checkedValues.filter((item) => item !== value);
+      setCheckedValues(newValues);
+      handler(newValues);
     }
   };
-
-  useEffect(
-    () => handler(checkedValues),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [checkedValues],
-  );
 
   return (
     <Dropdown>

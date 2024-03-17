@@ -21,17 +21,16 @@ const initialFormData: IApiAddEmployee = {
         address: '',
         place_of_birth: '',
         date_of_birth: '',
-        gender: Gender.M,
-        marital_status: MaritalStatus.SINGLE,
-        blood_type: BloodType.A,
+        gender: '',
+        marital_status: '',
+        blood_type: '',
         identity_number: '',
-        last_education: LastEducation.TIDAK_SEKOLAH,
-        status: 1,
+        last_education: '',
     },
     employment_data: {
-        dept_id: 2,
-        position_id: 5,
-        join_date: ''
+        dept_id: -1,
+        position_id: -1,
+        join_date: '',
     },
     payroll_data: {
         npwp_number: '',
@@ -39,7 +38,7 @@ const initialFormData: IApiAddEmployee = {
 }
 
 const AddEmployee = () => {
-    const [step, setStep] = useState(2);
+    const [step, setStep] = useState(1);
     const [formData, setFormData] = useState<IApiAddEmployee>(initialFormData);
 
     const apiBaseError = apiBase().error<IApiBaseError>();
@@ -112,7 +111,6 @@ const AddEmployee = () => {
             "date_of_birth",
             "identity_number",
             "gender",
-            "blood_type",
             "marital_status",
             "last_education"
         ];
@@ -141,7 +139,7 @@ const AddEmployee = () => {
             const key = field as keyof IUserEmploymentData;
 
             const value = formData.employment_data[key];
-            return (typeof value === 'string' && value.trim() !== '') || (typeof value === 'number' && isFinite(value));
+            return (typeof value === 'string' && value.trim() !== '') || (typeof value === 'number' && value !== -1);
         });
 
         return isEmploymentDataValid;
@@ -280,7 +278,7 @@ const AddEmployee = () => {
                         <BaseInputButton
                             text="Back"
                             type="underlined"
-                            onClick={handlePreviousStep}
+                            onClick={() => handlePreviousStep()}
                         />
                     }
                     {step < 3 && (

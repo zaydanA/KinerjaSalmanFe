@@ -8,7 +8,7 @@ export default function Search({
   setSearchValue,
 }: {
   placeholder: string;
-  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+  setSearchValue: (s: string) => void;
 }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();

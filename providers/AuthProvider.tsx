@@ -31,6 +31,30 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
+  const isHRDManagerOrDirector = () => {
+    if (user) {
+      if (user.position.position_id === 2 && user.dept.dept_id === 2) {
+        return true;
+      }
+
+      if (user.position.position_id === 1 && user.dept.dept_id === 1) {
+        return true;
+      }
+    }
+    
+    return false;
+  }
+
+  const isManager = () => {
+    if (user) {
+      if (user.position.position_id === 2) {
+        return true;
+      }
+    }
+    
+    return false;
+  }
+
   useEffect(() => {
     const fetchSelf = async () => {
       try {
@@ -48,8 +72,9 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     <AuthContext.Provider
       value={{
         user,
-        isLoading,
         logout,
+        isHRDManagerOrDirector,
+        isManager,
       }}
     >
       {isLoading ? (

@@ -29,7 +29,7 @@ const TableHeader = ({
           ),
         )}
         {action ? (
-          <th className="-border-b--clr-table-border sticky right-0 top-0 z-[1] whitespace-nowrap border-b-1 border-l-1 border-solid bg-clr-blackground-table-header p-4 px-10 text-start max-lg:text-sm max-md:px-4 max-md:text-xs max-sm:text-[10px]"></th>
+          <th className="-border-b--clr-table-border top-0 z-[1] whitespace-nowrap border-b-1 border-l-1 border-solid bg-clr-blackground-table-header p-4 px-10 text-start max-lg:text-sm max-md:px-4 max-md:text-xs max-sm:text-[10px] min-[320px]:sticky min-[320px]:right-0"></th>
         ) : (
           ""
         )}
