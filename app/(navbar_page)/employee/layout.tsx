@@ -8,7 +8,7 @@ export default function RootLayout({
 }) {
     // const router = useRouter()
     return (
-      <div className="bg-white rounded-md py-10 px-12 border max-sm:p-2">
+      <div className="bg-white rounded-md border max-sm:p-2">
         {children}
       </div>
     );

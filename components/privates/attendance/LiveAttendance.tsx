@@ -9,7 +9,7 @@ import { useInput } from '@/hooks/useInput';
 import { IApiBaseError } from '@/types/http';
 import BaseInputButton from '@/components/shares/buttons/BaseInputButton';
 import { useAuth } from '@/contexts';
-
+import { LuCalendarClock } from "react-icons/lu";
 const LiveAttendance = () => {
   const [attendanceData, setAttendanceData] = useState<IApiAttendancePayload>();
   const [logData, setLogData] = useState<IApiAttendanceData[]>();
@@ -159,8 +159,8 @@ const LiveAttendance = () => {
 
           <div>
             <h3 className="text-md font-semibold mb-4">Attendance Log</h3>
-            <div className='max-h-32 overflow-y-auto'>
-              {logData?.map((logItem, index) => (
+            <div className='max-h-5/6 overflow-y-auto'>
+              {logData ? logData.map((logItem, index) => (
                 <div key={index}>
                   <BaseCard
                     outline={true}
@@ -169,7 +169,20 @@ const LiveAttendance = () => {
                     <p>Type: {logItem.attendance_type}</p>
                   </BaseCard>
                 </div>
-              ))}
+              ))
+            :
+              <div className='w-full flex flex-col items-center text-black gap-5'>
+                <LuCalendarClock className='text-8xl text-[--kinerja-gold]'/>
+                <div className='flex flex-col items-center gap-1'>
+                  <h3 className='font-semibold text-md'>
+                    No attenndance log today
+                  </h3>
+                  <p className='text-sm text-gray-500'>
+                    Your Clock In/Out actiity will show up here.
+                  </p>
+                </div>
+              </div>
+            }
             </div>
           </div>
         </div>
