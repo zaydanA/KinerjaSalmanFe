@@ -3,8 +3,8 @@ export interface IApiAttendanceData {
   user_id: number
   date: string
   attendance_type: string
-  clock_in: string
-  clock_out: string
+  clock_in: string | null
+  clock_out: string | null
   notes: string
 }
 
@@ -41,15 +41,16 @@ export interface IApiAttendanceList {
   user_id: number
   date: string
   attendance_type: string
-  clock_in: string
-  clock_out: string
+  clock_in: string | null
+  clock_out: string | null
+  notes: string
 }
 
 export interface IApiUpdateAttendancePayload {
   date: string
   attendance_type: string
-  clock_in: string
-  clock_out: string
+  clock_in: string | null
+  clock_out: string | null
   notes: string
 }
 

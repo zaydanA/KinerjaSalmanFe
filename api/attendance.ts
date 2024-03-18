@@ -1,4 +1,4 @@
-import { IApiAttendanceData, IApiAttendancePagination, IApiAttendancePayload, IApiClocksAttendancePayload } from '@/types/attendance';
+import { IApiAttendanceData, IApiAttendancePagination, IApiAttendancePayload, IApiClocksAttendancePayload, IApiUpdateAttendancePayload } from '@/types/attendance';
 import { api, support } from './support';
 import { IApiBaseResponse } from '@/types/http';
 
@@ -73,11 +73,26 @@ const attendance = () => {
     return response.data;
   }
 
+  const updateUserAttendance = async (user_id:number, data: IApiUpdateAttendancePayload) => {
+    const response = await api.put<IApiBaseResponse<IApiAttendanceData>>(
+      `${url.user}/${user_id}`,
+      data,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+
+    return response.data;
+  }
+
   return {
     getTodaySelf,
     clocksAttendanceToday,
     getTodayAll,
-    getUserAttendance
+    getUserAttendance,
+    updateUserAttendance,
   };
 };
 

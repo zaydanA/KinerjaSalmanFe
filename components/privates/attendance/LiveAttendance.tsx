@@ -56,6 +56,7 @@ const LiveAttendance = () => {
           }
         }
 
+        setNotes(res.data.attendance.notes);
       } catch (error) {
         console.error(error);
       }
@@ -111,7 +112,7 @@ const LiveAttendance = () => {
   }
 
   return (
-   <>
+   <>    
     <div className="mx-auto">
       <h2 className="text-lg mb-1 text-gray-500">Attendance</h2>
       <h1 className="text-2xl font-bold mb-4">Live Attendance</h1>
@@ -128,6 +129,8 @@ const LiveAttendance = () => {
                 <p className='font-semibold'>{attendanceData?.working_hours.message}</p>
                 <p className='text-sm'>{workingHours}</p>
 
+                <p className='text-sm mt-2'>Status: <b className='font-semibold'>{customLib.toLabelCase(attendanceData?.attendance.attendance_type ?? '', false)}</b></p>
+
                 <div className='mt-6 grid grid-cols-2 gap-6'>
                   <div className='col-span-2'>
                     <BaseInputText
@@ -136,6 +139,7 @@ const LiveAttendance = () => {
                       placeholder="Place your notes here"
                       type="text"
                       required={false}
+                      disabled={!attendanceData?.can_clock_in && !attendanceData?.can_clock_out}
                       value={notes}
                       error={apiBaseError.getErrors('notes')?.[0].toString()}
                       setValue={(e) => setNotes(e.target.value)}

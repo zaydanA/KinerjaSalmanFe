@@ -9,11 +9,25 @@ import { useEffect, useRef, useState } from "react";
 import { apiBase } from "@/api";
 import { lib } from "@/lib";
 import { useRouter } from "next/navigation";
-import { IApiAttendanceList, IApiAttendancePagination } from "@/types/attendance";
+import { IApiAttendanceList, IApiAttendancePagination, IApiUpdateAttendancePayload } from "@/types/attendance";
 import { IApiBaseDepartment } from "@/types/department";
 import { IApiBasePosition } from "@/types/position";
 import { AttendanceType } from "@/enums/enums";
 import TableHeader from "@/components/shares/tables/TableHeader";
+import BaseModal from "@/components/shares/modals/BaseModal";
+import BaseInputText from "@/components/shares/inputs/BaseInputText";
+import DropdownInput from "@/components/shares/inputs/DropdownInput";
+import { IApiBaseError } from "@/types/http";
+import BaseInputTime from "@/components/shares/inputs/BaseInputTime";
+import BaseInputTextArea from "@/components/shares/inputs/BaseInputTextArea";
+
+const initialFormData: IApiUpdateAttendancePayload = {
+  date: '',
+  attendance_type: '',
+  clock_in: '',
+  clock_out: '',
+  notes : ''
+}
 
 const ListAttendance = () => {
   const api = apiBase();
@@ -122,8 +136,128 @@ const ListAttendance = () => {
     "Clock Out"
   ];
 
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [formData, setFormData] = useState<IApiUpdateAttendancePayload>(initialFormData);
+  const [userOpen, setUserOpen] = useState<number | null>(null);
+  const apiBaseError = apiBase().error<IApiBaseError>();
+
+  const handleModalOpen = (
+    user_id: number,
+    date: string,
+    attendance_type: string,
+    clock_in: string | null,
+    clock_out: string | null,
+    notes : string
+  ) => {
+    setFormData({
+      date,
+      attendance_type,
+      clock_in,
+      clock_out,
+      notes
+    });
+
+    setUserOpen(user_id);
+    setModalOpen(true);
+  }
+
+  const handleSubmit = async () => {
+    try {
+      if (userOpen) {
+        const res = await apiBase().attendance().updateUserAttendance(userOpen, formData);
+
+        if (res.status === 'success') {
+          // Update
+          const indexToUpdate = currentAttendances.findIndex(entry => entry.user_id === userOpen);
+          
+          setCurrentAttendances(prevData => {
+            const newData = [...prevData];
+            newData[indexToUpdate] = { ...newData[indexToUpdate], ...res.data };
+            return newData;
+          });
+          
+          setModalOpen(false);
+          setUserOpen(null);
+        }
+      }
+    } catch (error) {
+      apiBaseError.set(error);
+      //TODO: toast
+    }
+  }
+  
   return (
     <>
+      <BaseModal
+        open={modalOpen}
+        setOpen={setModalOpen}
+      >
+        <div>
+          <h1 className="text-lg font-semibold">Attendance Details</h1>
+          <div className="grid grid-cols-2 gap-y-4 gap-x-5 my-6">
+            <BaseInputText
+              id="date"
+              label="Date"
+              placeholder="Date"
+              type="text"
+              disabled={true}
+              value={customLib.formatDate(formData.date)}
+              error={apiBaseError.getErrors('date')?.[0].toString()}
+            />
+            <DropdownInput
+              id="attendance_type"
+              label="Attendance Type"
+              required={true}
+              options={Object.keys(AttendanceType).map(attendance_type => ({ value: attendance_type, label: customLib.toLabelCase(attendance_type, false) }))}
+              selectedValue={formData.attendance_type}
+              error={apiBaseError.getErrors('attendance_type')?.[0].toString()}
+              onChange={(e) => setFormData({
+                ...formData,
+                attendance_type: e.target.value
+              })}
+            />
+            <BaseInputTime
+              id="clock_in"
+              label="Clock In"
+              value={customLib.toHoursMinutes(formData.clock_in) as string}
+              error={apiBaseError.getErrors('clock_in')?.[0].toString()}
+              setValue={(e) => setFormData({
+                ...formData,
+                clock_in: customLib.fromHoursMinutes(e.target.value)
+              })}
+            />
+            <BaseInputTime
+              id="clock_out"
+              label="Clock Out"
+              value={customLib.toHoursMinutes(formData.clock_out) as string}
+              error={apiBaseError.getErrors('clock_out')?.[0].toString()}
+              setValue={(e) => setFormData({
+                ...formData,
+                clock_out: customLib.fromHoursMinutes(e.target.value)
+              })}
+            />
+
+            <div className="col-span-2">
+              <BaseInputTextArea
+                id="notes"
+                label="Notes"
+                placeholder="Notes"
+                value={formData.notes}
+                error={apiBaseError.getErrors('notes')?.[0].toString()}
+                setValue={(e) => setFormData({
+                  ...formData,
+                  notes: e.target.value
+                })}
+              />
+            </div>
+          </div>
+          <BaseInputButton
+            text="Submit"
+            onClick={() => handleSubmit()}
+          >
+          </BaseInputButton>
+        </div>
+      </BaseModal>
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-6">
           <div className="flex justify-between items-end">
@@ -182,7 +316,14 @@ const ListAttendance = () => {
                   <TableData
                     key={index}
                     dataContent={dataContent}
-                    onClickEdit={() => console.log()}
+                    onClickEdit={() => handleModalOpen(
+                      e.user_id,
+                      e.date,
+                      e.attendance_type,
+                      e.clock_in,
+                      e.clock_out,
+                      e.notes
+                    )}
                     isProfile={true}
                   />
                 );

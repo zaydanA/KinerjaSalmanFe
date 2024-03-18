@@ -5,6 +5,7 @@ import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
 import { CiUser } from "react-icons/ci";
 import { useEffect, useState } from 'react';
 import { PiCalculatorThin } from "react-icons/pi";
+import { CiTimer } from "react-icons/ci";
 import React from "react";
 import {Breadcrumbs, BreadcrumbItem} from "@nextui-org/react";
 import { IoMenuOutline,IoCloseOutline } from "react-icons/io5";
@@ -37,6 +38,17 @@ const SidebarData = [
             },
         ]
     
+    },
+    {
+        title: "Time Management",
+        icon: <CiTimer />,
+        iconOpened:<RiArrowDropUpLine className="h-full text-3xl text-[--kinerja-gold]"/>,
+        iconClosed:<RiArrowDropDownLine className="h-full text-3xl text-[--kinerja-gold]"/>,
+        subNav:[
+            {
+                title:"Attendance"
+            },
+        ]
     },
     {
         title:"Payroll",
