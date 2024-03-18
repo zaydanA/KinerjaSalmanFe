@@ -4,7 +4,6 @@ import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Avatar, User} fro
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import Link from "next/link";
 import { IoSettingsOutline } from "react-icons/io5";
-import { MdOutlineCorporateFare } from "react-icons/md";
 import { GoSignOut } from "react-icons/go";
 import { useAuth } from "@/contexts";
 
@@ -50,12 +49,6 @@ const ProfileDropdown = () => {
                         <div className="flex h-full items-center align-center gap-2">
                             <IoSettingsOutline/>
                             <Link href="/account">Account Settings</Link>
-                        </div>
-                    </DropdownItem>
-                    <DropdownItem key="team_settings">
-                        <div className="flex h-full items-center align-center gap-2">
-                            <MdOutlineCorporateFare />
-                            <Link href="/company">Company Settings</Link>
                         </div>
                     </DropdownItem>
                     <DropdownItem key="logout" color="danger" onClick={handleLogout}>

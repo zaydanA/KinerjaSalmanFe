@@ -76,7 +76,7 @@ body {
 #horizontal2::-webkit-scrollbar
 {
 	width: 6px;
-  height:0px;
+  height:5px;
   margin-top: 2px;
 	background-color: #F5F5F5;
 }

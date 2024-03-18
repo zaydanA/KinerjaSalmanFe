@@ -6,7 +6,9 @@ import ProtectedRoute from "@/app/Rbac";
 const page = () => {
     return (
         <ProtectedRoute allowedPos={[1, 2]}>
-            <AddEmployee/>
+            <div className="py-10 px-12">
+                <AddEmployee/>
+            </div>
         </ProtectedRoute>
     )
 }

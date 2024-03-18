@@ -113,8 +113,8 @@ const DetailEmployee: React.FC<DetailEmployeeType> = (props)=>{
     const [isSidebarOpen,setIsSidebarOpen] = useState(false)
 
     return isAuthenticated ? (
-        <div className="md:w-full h-fit min-h-[90%] bg-white shadow-md rounded-lg flex border-1 mt-[-2px] md:m-0">
-            <div className={`max-w-[240px] rounded-l-lg z-20 h-fit w-fit pt-3 bg-white flex flex-col ${isSidebarOpen?"absolute min-w-[240px] h-full md:border-r-0 border-r-1 md:relative" : "h-full"}`}>
+        <div className="md:w-full h-fit min-h-[90%] bg-white shadow-md rounded-lg flex border-1 md:m-0">
+            <div className={`max-w-[240px] rounded-l-lg z-20 h-fit w-fit pt-3 bg-white flex flex-col ${isSidebarOpen?"absolute w-full h-fit md:h-full md:border-r-0 border-1 shadow-lg md:shadow-none md:border-b-0 md:relative" : "h-full"}`}>
                 <div className="flex flex-row w-full px-1 bg-white">
                     {isSidebarOpen ? <IoCloseOutline className="text-3xl" onClick={()=>{setIsSidebarOpen(false)}}></IoCloseOutline> : <IoMenuOutline className="text-3xl" onClick={()=>{setIsSidebarOpen(true)}}></IoMenuOutline>}
                 </div>
