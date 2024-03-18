@@ -15,6 +15,9 @@ const NavbarDataForManagerAndAbove = [{
 },{
     title:"Payroll",
     path:"/payroll"
+}, {
+    title:"Live Attendance",
+    path:"/live-attendance"
 }];
 
 const NavbarDataForBelowManager = [{
@@ -23,6 +26,9 @@ const NavbarDataForBelowManager = [{
 },{
     title:"Payroll",
     path:"/payroll"
+}, {
+    title:"Live Attendance",
+    path:"/live-attendance"
 }];
 
 interface NavbarData {
@@ -32,11 +38,11 @@ interface NavbarData {
 
 const Navbar =  (props: any) => {
     const pathname = usePathname();
-    const { user } = useAuth();
+    const { isHRDManagerOrDirector, isManager } = useAuth();
     const [navbarData, setNavbarData] = useState<NavbarData[]>();
 
     useEffect(() => {
-        if (user?.position.position_id === 1 || user?.position.position_id === 2) {
+        if (isHRDManagerOrDirector() || isManager()) {
             setNavbarData(NavbarDataForManagerAndAbove);
         } else {
             setNavbarData(NavbarDataForBelowManager);

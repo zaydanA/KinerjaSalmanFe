@@ -19,7 +19,7 @@ const EmployeeList = () => {
   const api = apiBase();
   const customLib = lib();
   const router = useRouter();
-  const { user } = useAuth();
+  // const { user } = useAuth();
 
   const [currentEmployees, setCurrentEmployees] = useState<IApiBaseEmployee[]>(
     [],
@@ -137,20 +137,20 @@ const EmployeeList = () => {
     "Gender",
   ];
 
-  const isAuthorizedToAddEmployee =
-    user?.position.title === "Director" || user?.position.title === "Manager";
+  // const isAuthenticated = isHRDManagerOrDirector() || isManager(); // Udah dihandle di protected route
 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-6">
-        <div className="flex justify-between">
-          <h1 className=" text-2xl font-bold">Employees</h1>
-          {isAuthorizedToAddEmployee && (
-            <BaseInputButton
-              text="Add employee"
-              onClick={() => router.push("employee/add")}
-            />
-          )}
+        <div className="flex justify-between items-end">
+          <div>
+            <h2 className="text-lg mb-1 text-gray-500">Employee</h2>
+            <h1 className="text-2xl font-bold">List of Employees</h1>
+          </div>
+          <BaseInputButton
+            text="Add employee"
+            onClick={() => router.push("employee/add")}
+          />
         </div>
         <div className="flex w-full justify-between max-md:gap-2 max-sm:flex-col">
           <div className="flex gap-5 max-md:gap-1">

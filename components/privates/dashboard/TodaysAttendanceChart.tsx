@@ -1,6 +1,6 @@
 import React from 'react';
 import { defaults }  from 'chart.js/auto';
-import { Doughnut } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2';
 import { IApiAnalyticsData } from '@/types/analytics';
 
 defaults.maintainAspectRatio = false;
@@ -9,26 +9,29 @@ defaults.responsive = true;
 defaults.plugins.legend.display = false;
 
 interface Props {
-  genderData: IApiAnalyticsData[]
+  todaysAttendanceData: IApiAnalyticsData[]
 }
 
-const GenderDiversityChart: React.FC<Props> = ({ genderData }) => {
-  const colorDataReal = ["#009BDE", "#EE8CA5"]
+const TodaysAttendanceChart: React.FC<Props> = ({ todaysAttendanceData }) => {
+  const colorDataReal = ["#005FBF", "#009BDE", "#F96D01", "#5B37D4", "#8FB140"]
   const colorData = [
+    "bg-graph-dark-blue",
     "bg-graph-blue",
-    "bg-graph-pink",
+    "bg-graph-orange",
+    "bg-graph-purple",
+    "bg-graph-green",
   ]
-
+  
   return(
     <div className='h-60 overflow-y-auto flex flex-col gap-4'>
       <div>
-        <Doughnut
+        <Pie
           data={{
-            labels: genderData.map((data) => data.label),
+            labels: todaysAttendanceData.map((data) => data.label),
             datasets: [
               {
                 label: "Count",
-                data: genderData.map((data) => data.value),
+                data: todaysAttendanceData.map((data) => data.value),
                 backgroundColor: colorDataReal.map((data) => data),
               }
             ]
@@ -36,7 +39,7 @@ const GenderDiversityChart: React.FC<Props> = ({ genderData }) => {
         />
       </div>
       <div className='flex flex-col gap-3 text-xs mt-2'>
-        {genderData.map((data, index) => (
+        {todaysAttendanceData.map((data, index) => (
           <>
             {index !== 0 && (
               <hr className='w-full border-0.5 border-gray-300' />
@@ -58,4 +61,4 @@ const GenderDiversityChart: React.FC<Props> = ({ genderData }) => {
   );
 }
 
-export default GenderDiversityChart;
+export default TodaysAttendanceChart;

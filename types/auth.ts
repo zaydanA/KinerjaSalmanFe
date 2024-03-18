@@ -1,5 +1,4 @@
-import { IApiBaseResponse } from "./http"
-import { IUserPersonalData, IUserSelfData } from "./user"
+import { IUserSelfData } from "./user"
 
 export type IApiBaseAuthLogin = {
   user: IUserSelfData
