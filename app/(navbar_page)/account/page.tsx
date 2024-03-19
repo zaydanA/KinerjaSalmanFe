@@ -2,8 +2,8 @@
 
 const page = ()=>{
     return (
-        <div className="w-full">
-        
+        <div className="flex w-full h-full bg-white">
+            dadwdwad
         </div>
     )
 }
