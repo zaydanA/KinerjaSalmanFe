@@ -16,6 +16,7 @@ import { usePathname } from "next/navigation";
 import { apiBase } from "@/api";
 import { useRouter } from "next/navigation";
 import { IApiBaseError } from "@/types/http";
+import Attendance from "../Attendance";
 
 const SidebarData = [
     {
@@ -37,7 +38,6 @@ const SidebarData = [
             title:"Additional Info"
             },
         ]
-    
     },
     {
         title: "Time Management",
@@ -164,8 +164,22 @@ const DetailEmployee: React.FC<DetailEmployeeType> = (props)=>{
                     </h1>
                 </div>
                 <div className="h-full flex flex-col ">
-                    {
+                    {/* {
                        activeComponent == SidebarData[0].subNav[0].title? <Personal employee={employee} activeComponentNavbar={activeComponentNavbar} NavbarComponentData={NavbarComponentData} setActiveComponentNavbar={setActiveComponentNavbar}></Personal>: (activeComponent == SidebarData[0].subNav[1].title? <Employment user={props.user}></Employment> : null)
+                    } */}
+                    {
+                        (() => {
+                            switch (activeComponent) {
+                                case SidebarData[0].subNav[0].title:
+                                    return <Personal employee={employee} activeComponentNavbar={activeComponentNavbar} NavbarComponentData={NavbarComponentData} setActiveComponentNavbar={setActiveComponentNavbar} />;
+                                case SidebarData[0].subNav[1].title:
+                                    return <Employment user={props.user} />;
+                                case SidebarData[1].subNav[0].title:
+                                    return <Attendance user={props.user} />;
+                                default:
+                                    return null;
+                            }
+                        })()
                     }
                 </div>
             </div>

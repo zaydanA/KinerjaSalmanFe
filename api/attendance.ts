@@ -1,4 +1,4 @@
-import { IApiAttendanceData, IApiAttendancePagination, IApiAttendancePayload, IApiClocksAttendancePayload, IApiUpdateAttendancePayload } from '@/types/attendance';
+import { IApiAttendanceData, IApiAttendancePagination, IApiAttendancePaginationSelf, IApiAttendancePayload, IApiClocksAttendancePayload, IApiUpdateAttendancePayload } from '@/types/attendance';
 import { api, support } from './support';
 import { IApiBaseResponse } from '@/types/http';
 
@@ -61,13 +61,38 @@ const attendance = () => {
     return response.data;
   }
 
-  const getUserAttendance = async (user_id:number) => {
-    const response = await api.get<IApiBaseResponse<IApiAttendanceData[]>>(
-      `${url.user}/${user_id}`,{
-        headers: {
-          'Content-Type': 'application/json'
-        }
+  const getUserAttendance = async (
+    user_id: number, 
+    last_week?: boolean,
+    page?: number,
+    limit?: number,
+    attendance_type?: string[],
+    year?: number,
+    month?: number
+  ) => {
+    const response = await api.get<IApiBaseResponse<IApiAttendancePaginationSelf>>(
+      `${url.user}/${user_id}`,
+      {
+        params: {
+          page: page,
+          limit: limit,
+          last_week: last_week,
+          attendance_type: attendance_type,
+          year: year,
+          month: month
+        },
       }
+    )
+
+    return response.data;
+  }
+
+  const getUserAttendanceYear = async (
+    user_id: number, 
+  ) => {
+    const response = await api.get<IApiBaseResponse<number[]>>(
+      `${url.user}/${user_id}/year`,
+      { }
     )
 
     return response.data;
@@ -92,6 +117,7 @@ const attendance = () => {
     clocksAttendanceToday,
     getTodayAll,
     getUserAttendance,
+    getUserAttendanceYear,
     updateUserAttendance,
   };
 };

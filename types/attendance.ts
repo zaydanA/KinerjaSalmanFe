@@ -28,6 +28,13 @@ export interface IApiAttendancePagination {
   data: IApiAttendanceList[]
 }
 
+export interface IApiAttendancePaginationSelf {
+  total: number
+  current_page: number
+  last_page: number
+  data: IApiAttendanceData[]
+}
+
 export interface IApiAttendanceList {
   // User data
   user: {
@@ -51,7 +58,7 @@ export interface IApiUpdateAttendancePayload {
   attendance_type: string
   clock_in: string | null
   clock_out: string | null
-  notes: string
+  notes?: string
 }
 
 export interface IApiClocksAttendancePayload {

@@ -49,10 +49,13 @@ const LiveAttendance = () => {
 
         // Log
         if (user?.user_id) {
-          const res_log = await apiBase().attendance().getUserAttendance(user?.user_id);
+          const res_log = await apiBase().attendance().getUserAttendance(
+            user.user_id,
+            true
+          );
 
           if (res_log.status === 'success') {
-            setLogData(res_log.data);
+            setLogData(res_log.data.data);
           }
         }
 
@@ -162,7 +165,7 @@ const LiveAttendance = () => {
           </BaseCard>
 
           <div>
-            <h3 className="text-md font-semibold mb-4">Attendance Log</h3>
+            <h3 className="text-md font-semibold mb-4">Attendance Log This Week</h3>
             <div className='max-h-5/6 overflow-y-auto'>
               {logData ? logData.map((logItem, index) => (
                 <div key={index}>
@@ -179,10 +182,10 @@ const LiveAttendance = () => {
                 <LuCalendarClock className='text-8xl text-[--kinerja-gold]'/>
                 <div className='flex flex-col items-center gap-1'>
                   <h3 className='font-semibold text-md'>
-                    No attenndance log today
+                    No attendance log this week
                   </h3>
                   <p className='text-sm text-gray-500'>
-                    Your Clock In/Out actiity will show up here.
+                    Your Clock In/Out activity will show up here.
                   </p>
                 </div>
               </div>

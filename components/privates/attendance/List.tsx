@@ -32,8 +32,6 @@ const initialFormData: IApiUpdateAttendancePayload = {
 const ListAttendance = () => {
   const api = apiBase();
   const customLib = lib();
-  const router = useRouter();
-  // const { user } = useAuth();
 
   const [currentAttendances, setCurrentAttendances] = useState<IApiAttendanceList[]>([]);
   const [currentDepartments, setCurrentDepartments] = useState<IApiBaseDepartment[]>([]);
@@ -154,14 +152,14 @@ const ListAttendance = () => {
       attendance_type,
       clock_in,
       clock_out,
-      notes
+      notes: notes ?? ''
     });
 
     setUserOpen(user_id);
     setModalOpen(true);
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit: () => Promise<void> = async () => {
     try {
       if (userOpen) {
         const res = await apiBase().attendance().updateUserAttendance(userOpen, formData);
@@ -251,11 +249,12 @@ const ListAttendance = () => {
               />
             </div>
           </div>
-          <BaseInputButton
-            text="Submit"
-            onClick={() => handleSubmit()}
-          >
-          </BaseInputButton>
+          <div className="flex justify-end">
+            <BaseInputButton
+              text="Submit"
+              onClick={() => handleSubmit()}
+            />
+          </div>
         </div>
       </BaseModal>
       <div className="flex flex-col gap-4">
