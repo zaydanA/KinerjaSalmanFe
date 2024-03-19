@@ -38,7 +38,7 @@ const DropdownInput: React.FC<DropdownInputType> = ({
             `
             rounded outline-none w-full p-3 transition-all ease-in-out text-sm placeholder-gray-300
             ${disabled 
-              ? "bg-white" 
+              ? "bg-gray-100 text-gray-400 shadow-input" 
               : (
                   error 
                   ? "shadow-input-error focus:shadow-input-focus-error" 

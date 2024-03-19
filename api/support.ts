@@ -35,7 +35,7 @@ export const support = () => {
       todaySelf: '/attendance/today/self',
       todayClocks: '/attendance/today/clocks',
       todayAll: '/attendance/today/all',
-      user: '/attendance'
+      user: '/attendance',
     },
 
     application: {

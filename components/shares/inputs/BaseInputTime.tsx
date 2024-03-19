@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react";
 import { PiWarningCircle } from "react-icons/pi";
 
-export type BaseInputDateType = {
+export type BaseInputTimeType = {
   id: string;
   label: string;
   required?: boolean;
@@ -10,7 +10,7 @@ export type BaseInputDateType = {
   setValue?: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
-const BaseInputDate: React.FC<BaseInputDateType> = ({
+const BaseInputTime: React.FC<BaseInputTimeType> = ({
   id,
   label,
   required = false,
@@ -29,7 +29,7 @@ const BaseInputDate: React.FC<BaseInputDateType> = ({
       <div>
         <input
           id={id}
-          type="date"
+          type="time"
           value={value}
           onChange={setValue}
           className={`rounded shadow-input outline-none w-full box-border p-3 transition-all ease-in-out bg-white text-sm placeholder-gray-300 ${
@@ -49,4 +49,4 @@ const BaseInputDate: React.FC<BaseInputDateType> = ({
   );
 };
 
-export default BaseInputDate;
+export default BaseInputTime;
