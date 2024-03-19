@@ -37,6 +37,7 @@ const auth = () => {
 
     return response.data;
   }
+  
   const employmentData = async (user_id:number) => {
     const response = await api.get<IApiBaseResponse<IUserEmploymentData>>(
       `${url.employmentData}/${user_id}`,{
