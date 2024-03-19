@@ -1,13 +1,14 @@
 import { IApiBaseResponse } from "@/types/http";
 import { api, support } from "./support";
-import { IApiBaseApplication } from "@/types/application";
+import { IApiBaseApplication, IApiApplicationResponse } from "@/types/application";
 
 const application = () => {
   const { apiUrl } = support();
 
   const url = {
     leave: apiUrl.application.applyLeave,
-    duty: apiUrl.application.applyDuty
+    duty: apiUrl.application.applyDuty,
+    getApplications: apiUrl.application.getApplications,
   };
 
   const createApplication = async ({
@@ -61,8 +62,24 @@ const application = () => {
     return response.data;
   };
 
+  const getApplications = async (isDuty: number, page: number, limit: number) => {
+    const response = await api.get<IApiBaseResponse<IApiApplicationResponse>>(url.getApplications, {
+      params: {
+        page,
+        limit,
+        isDuty,
+      },
+    });
+  
+    return {
+      data: response.data.data,
+    };
+  };
+  
+
   return {
     createApplication,
+    getApplications,
   };
 };
 
