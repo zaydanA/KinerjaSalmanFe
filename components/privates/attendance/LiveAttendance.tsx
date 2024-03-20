@@ -40,7 +40,7 @@ const LiveAttendance = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // My attendances
+        // Attendances
         const res = await apiBase().attendance().getTodaySelf();
 
         if (res.status === 'success') {
@@ -132,7 +132,7 @@ const LiveAttendance = () => {
                 <p className='font-semibold'>{attendanceData?.working_hours.message}</p>
                 <p className='text-sm'>{workingHours}</p>
 
-                <p className='text-sm mt-2'>Status: <b className='font-semibold'>{customLib.toLabelCase(attendanceData?.attendance.attendance_type ?? '', false)}</b></p>
+                <p className='text-sm mt-2'>Status: <b className='font-semibold'>{customLib.toLabelCase(attendanceData?.attendance ? attendanceData.attendance.attendance_type : 'Null', false)}</b></p>
 
                 <div className='mt-6 grid grid-cols-2 gap-6'>
                   <div className='col-span-2'>
