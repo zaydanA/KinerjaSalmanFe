@@ -41,7 +41,7 @@ export const support = () => {
     application: {
       applyLeave: "/application/apply-leave",
       applyDuty: "/application/apply-duty",
-      getApplications: "/application",
+      applications: "/application",
     },
   };
 

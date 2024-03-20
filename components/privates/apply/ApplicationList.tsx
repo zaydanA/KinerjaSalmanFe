@@ -29,18 +29,20 @@ const ApplicationList = () => {
     try {
       let response;
       if (activeTab === 'leave') {
-        response = await api.application().getApplications(0, page, 5);
+        response = await api.application().getApplications(0, page, 3);
       } else {
-        response = await api.application().getApplications(1, page, 5);
+        response = await api.application().getApplications(1, page, 3);
       }
 
       setApplications(response.data.data);
+      console.log("applications: ",applications);
       setPagination({
           total: response.data.total,
           current_page: response.data.current_page,
           last_page: response.data.last_page,
       });
     } catch (error) {
+      console.log("masuk 3");
       console.error("Error fetching applications:", error);
     }
   };
@@ -50,8 +52,9 @@ const ApplicationList = () => {
   };
 
   const handleTabChange = (tab: 'leave' | 'duty') => {
+    console.log("clicked");
     setActiveTab(tab);
-    fetchApplications(1); // Fetch applications for the first page when tab changes
+    fetchApplications(1);
   };
 
   return (
@@ -79,6 +82,7 @@ const ApplicationList = () => {
           <ApplicationContainer 
               key={application.user_id} 
               application={application} 
+              type={activeTab}
           />
         ))}
       </div>

@@ -1,4 +1,4 @@
-import { IUserPersonalData } from "./user";
+import { IUserEmploymentData, IUserPayrollData, IUserPersonalData } from "./user";
 
 export type IApiBaseApplication = {
   application_id: number;
@@ -7,7 +7,7 @@ export type IApiBaseApplication = {
   start_date: string;
   end_date: string;
   description: string;
-  status: boolean;
+  status: string;
 
   type?: string;
   event_name?: string;
@@ -15,14 +15,9 @@ export type IApiBaseApplication = {
   purpose?: string;
   image_url?: string;
 
-  user?: IUserPersonalData;
-  application?: IApiApplicationStatus;
+  user?: IUserPersonalData & IUserEmploymentData & IUserPayrollData;
 };
 
-export interface IApiApplicationStatus {
-  apply_status_id: number;
-  status: number;
-}
 
 export interface IApiApplicationResponse {
   total: number,

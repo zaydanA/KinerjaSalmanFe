@@ -8,7 +8,7 @@ const application = () => {
   const url = {
     leave: apiUrl.application.applyLeave,
     duty: apiUrl.application.applyDuty,
-    getApplications: apiUrl.application.getApplications,
+    applications: apiUrl.application.applications,
   };
 
   const createApplication = async ({
@@ -63,7 +63,7 @@ const application = () => {
   };
 
   const getApplications = async (isDuty: number, page: number, limit: number) => {
-    const response = await api.get<IApiBaseResponse<IApiApplicationResponse>>(url.getApplications, {
+    const response = await api.get<IApiBaseResponse<IApiApplicationResponse>>(url.applications, {
       params: {
         page,
         limit,
@@ -75,11 +75,31 @@ const application = () => {
       data: response.data.data,
     };
   };
+
+  const changeApplicationStatus = async(id: number, isDuty: number, status:string) => {
+    console.log("status : ", status);
+
+    const response = await api.put<IApiBaseResponse<IApiBaseApplication>>(
+      url.applications,
+      { status },
+      {
+        params: {
+          id,
+          isDuty,
+        }
+      }
+    )
+
+    
+
+    return response.data;
+  }
   
 
   return {
     createApplication,
     getApplications,
+    changeApplicationStatus
   };
 };
 
