@@ -150,10 +150,6 @@ const Attendance = (props:any) => {
     clock_out: string | null,
     notes?: string
   ) => {
-    if (!isHRDManagerOrDirector() && !isManager()) {
-      return;
-    }
-
     setFormData({
       date,
       attendance_type,
@@ -300,6 +296,17 @@ const Attendance = (props:any) => {
                         customLib.toHoursMinutes(e.clock_in) ?? '-',
                         customLib.toHoursMinutes(e.clock_out) ?? '-'
                       ];
+
+                      if (!isHRDManagerOrDirector() && !isManager()) {
+                        return (
+                          <TableData
+                            key={index}
+                            dataContent={dataContent}
+                            isProfile={false}
+                          />
+                        );
+                      }
+                      
                       return (
                         <TableData
                           key={index}
