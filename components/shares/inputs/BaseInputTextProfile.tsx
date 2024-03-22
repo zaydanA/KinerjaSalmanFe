@@ -35,7 +35,7 @@ export default function BaseInputText({
 
   return (
     <div className="flex flex-col">
-      <div className="relative">
+      <div className={`${error? "":"mb-4"} relative`}>
         <input
           id={id}
           type={
@@ -57,14 +57,14 @@ export default function BaseInputText({
               : (
                   error 
                   ? "shadow-input-error focus:shadow-input-focus-error" 
-                  : "border-1 border-clr-kinerja-gold hover:shadow-input-hover focus:shadow-input-focus"
+                  : "border-1 hover:shadow-input-hover focus:shadow-input-focus"
                 )
             }`
           }
         />
 
         {needEye && (
-          <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+          <div className="absolute inset-y-0 right-0 flex items-center pr-3 text-[--kinerja-gold]">
             <button
               type="button"
               onClick={togglePasswordVisibility}

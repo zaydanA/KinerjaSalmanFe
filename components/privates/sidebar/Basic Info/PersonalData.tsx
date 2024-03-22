@@ -1,7 +1,7 @@
 import {useState,useEffect,useMemo} from "react"
 import BaseInputText from '../../../shares/inputs/BaseInputTextProfile';
 import { useInput } from '@/hooks/useInput';
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Spinner, Switch, cn } from '@nextui-org/react';
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Spinner } from '@nextui-org/react';
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -17,7 +17,11 @@ const gender = ["M","F"];
 const MaritalStatus = ["SINGLE","MARRIED","WIDOW","WIDOWER"]
 const LastEducation = ["TIDAK_SEKOLAH","SD","SMP","SMA_SMK","D3","S1","S2","S3"]
 const BloodType = ["A","B","O","AB"]
-const PersonalData = (props:any)=>{
+const PersonalData = ({
+    employee
+    }:{
+    employee:IUserPersonalData
+    })=>{
     const {user} = useAuth();
     const [isEditPersonal,setIsEditPersonal] = useState<boolean>(false)
     const [fullName,setFullName] = useInput("");
@@ -65,12 +69,12 @@ const PersonalData = (props:any)=>{
             marital_status: selectedValueMarital,
             blood_type: selectedValueBloodType !== "-"? selectedValueBloodType : "",
             last_education: selectedValueEducation,
-            emergency_number: props.employee.emergency_number,
-            identity_number: props.employee.identity_number,
-            address: props.employee.address,
+            emergency_number: employee.emergency_number,
+            identity_number: employee.identity_number,
+            address: employee.address,
         }
         try {
-            const response = await apiBase().user().updatePersonalData(props.employee.user_id,personalData)
+            const response = await apiBase().user().updatePersonalData(employee.user_id,personalData)
             // console.log(response)
             setIsEditPersonal(false);
         } catch (error) {
@@ -79,31 +83,31 @@ const PersonalData = (props:any)=>{
     }
     // console.log(apiBase().error().getMessage());
 
-    const tempBirthdate = props.employee.date_of_birth &&  props.employee.date_of_birth.toString().split('T')[0];
+    const tempBirthdate = employee.date_of_birth &&  employee.date_of_birth.toString().split('T')[0];
     useEffect(()=>{
-        // props.employee.date_of_birth && setBirthdate(tempBirthdate);
-        props.employee.full_name && setFullName(props.employee.full_name)
-        props.employee.phone_number && setMobilePhone(props.employee.phone_number)
-        props.employee.email && setEmail(props.employee.email)
-        props.employee.place_of_birth && setPlaceOfBirth(props.employee.place_of_birth)
-        props.employee.gender && setSelectedKeysGender(new Set([props.employee.gender]))
-        props.employee.marital_status && setSelectedKeysMarital(new Set([props.employee.marital_status]));
-        props.employee.last_education && setSelectedKeysEducation(new Set([props.employee.last_education]));
-        props.employee.blood_type && setSelectedKeysBloodType(new Set([props.employee.blood_type]));
-        props.employee.date_of_birth && setBirthdate(tempBirthdate)
+        // employee.date_of_birth && setBirthdate(tempBirthdate);
+        employee.full_name && setFullName(employee.full_name)
+        employee.phone_number && setMobilePhone(employee.phone_number)
+        employee.email && setEmail(employee.email)
+        employee.place_of_birth && setPlaceOfBirth(employee.place_of_birth)
+        employee.gender && setSelectedKeysGender(new Set([employee.gender]))
+        employee.marital_status && setSelectedKeysMarital(new Set([employee.marital_status]));
+        employee.last_education && setSelectedKeysEducation(new Set([employee.last_education]));
+        employee.blood_type && setSelectedKeysBloodType(new Set([employee.blood_type]));
+        employee.date_of_birth && setBirthdate(tempBirthdate)
         // console.log(tempBirthdate);
-    },[props.employee])
+    },[employee])
 
     const CancelChange = ()=>{
-        props.employee.full_name && setFullName(props.employee.full_name)
-        props.employee.phone_number && setMobilePhone(props.employee.phone_number)
-        props.employee.email && setEmail(props.employee.email)
-        props.employee.place_of_birth && setPlaceOfBirth(props.employee.place_of_birth)
-        props.employee.gender && setSelectedKeysGender(new Set([props.employee.gender]))
-        props.employee.marital_status && setSelectedKeysMarital(new Set([props.employee.marital_status]));
-        props.employee.last_education && setSelectedKeysEducation(new Set([props.employee.last_education]));
-        props.employee.blood_type && setSelectedKeysBloodType(new Set([props.employee.blood_type]));
-        props.employee.date_of_birth && setBirthdate(tempBirthdate);
+        employee.full_name && setFullName(employee.full_name)
+        employee.phone_number && setMobilePhone(employee.phone_number)
+        employee.email && setEmail(employee.email)
+        employee.place_of_birth && setPlaceOfBirth(employee.place_of_birth)
+        employee.gender && setSelectedKeysGender(new Set([employee.gender]))
+        employee.marital_status && setSelectedKeysMarital(new Set([employee.marital_status]));
+        employee.last_education && setSelectedKeysEducation(new Set([employee.last_education]));
+        employee.blood_type && setSelectedKeysBloodType(new Set([employee.blood_type]));
+        employee.date_of_birth && setBirthdate(tempBirthdate);
 
         setBirthdateError("");
         apiBaseError.clear();
@@ -111,7 +115,7 @@ const PersonalData = (props:any)=>{
 
     return(
         <>
-        {props.employee.full_name !== undefined ? <div className="h-full flex flex-col items md:items-start md:flex-row w-full pt-5">
+        {employee.full_name !== undefined ? <div className="h-full flex flex-col items md:items-start md:flex-row w-full pt-5">
             <div className="flex flex-col md:w-1/6 border-b-1 md:border-b-0">
                 <h1 className="font-semibold ">
                     Personal Data

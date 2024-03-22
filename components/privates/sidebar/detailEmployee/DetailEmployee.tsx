@@ -86,7 +86,7 @@ const DetailEmployee: React.FC<DetailEmployeeType> = (props)=>{
     const router = useRouter();
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const apiBaseError = apiBase().error<IApiBaseError>();
-
+    
     useEffect(()=>{
         async function getEmployeeById(){
             try {

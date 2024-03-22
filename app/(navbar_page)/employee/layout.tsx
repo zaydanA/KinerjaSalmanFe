@@ -6,9 +6,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-    // const router = useRouter()
     return (
-      <div className="bg-white rounded-md border max-sm:p-2">
+      <div className="bg-white rounded-md border">
         {children}
       </div>
     );

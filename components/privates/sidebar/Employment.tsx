@@ -35,21 +35,20 @@ const Employment = (props:any) => {
 
     
     const pathname = usePathname().split("/")
+    
     useEffect(()=>{
         async function getEmployment(){
             try {
                 
-                const response:IApiBaseResponse<IUserEmploymentData> = await apiBase().user().employmentData(props.user?props.user.user_id:pathname[2])
+                const response:IApiBaseResponse<IUserEmploymentData> = await apiBase().user().employmentData(props.user?props.user.user_id:Number(pathname[2]))
                 const departementResponse:IApiBaseResponse<any> = await apiBase().department().getDepartment();
                 const positionResponse:IApiBaseResponse<any> = await apiBase().position().getPosition();
                 
                 setDepartementEnums(departementResponse.data);
                 setPositionEnums(positionResponse.data);
-    
+                
                 setEmploymentData(response.data);
-                console.log(positionResponse.data);
                 const employment = response.data;
-                console.log(employment)
                 
                 employment && setEmployeeID(employment.employee_id);
                 const foundDept = departementResponse.data.find((obj:any) => obj.dept_id === employment.dept_id);
@@ -102,7 +101,7 @@ const Employment = (props:any) => {
         }
         try {
 
-            const response = await apiBase().user().updateEmploymentData(props.user.user_id?props.user.user_id:user?.user_id,updateEmploymentData)
+            const response = await apiBase().user().updateEmploymentData(props.user?props.user.user_id:Number(pathname[2]),updateEmploymentData)
             console.log(response)
             setIsEditEmployment(false);
         } catch (error) {
@@ -258,7 +257,6 @@ const Employment = (props:any) => {
                         {<Switch isDisabled={!isEditEmployment} isSelected={status} 
                         onValueChange={()=>{
                             setStatus(!status)
-                            
                         }}
                         classNames={{
                             wrapper: cn("p-0 h-4 overflow-visible","group-data-[selected=true]:bg-[--kinerja-gold]"),
@@ -294,7 +292,7 @@ const Employment = (props:any) => {
                     </div>}
             </div>
             <div className="md:w-1/6 py-5 md:p-0">
-                {( !isEditEmployment && (user?.position.position_id == 1 || user?.position.position_id === 2) && (user?.dept.dept_id == 1 || user?.dept.dept_id || user.dept.dept_id === employmentData.dept_id) )   ? <button onClick={()=>{setIsEditEmployment(true)}} className="text-gray-500 border-2 rounded-lg font-mono hover:border-[--kinerja-gold-hover-border] px-2">Edit</button> : <></>}
+                {( !isEditEmployment && (user?.position.position_id == 1 || user?.position.position_id === 2) && (user?.dept.dept_id == 1 || user?.dept.dept_id == 2 || user.dept.dept_id === employmentData.dept_id))   ? <button onClick={()=>{setIsEditEmployment(true)}} className="text-gray-500 border-2 rounded-lg font-mono hover:border-[--kinerja-gold-hover-border] px-2">Edit</button> : <></>}
             </div>
         </div>
         </div>

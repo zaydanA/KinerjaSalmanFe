@@ -14,6 +14,7 @@ export interface IUserSelfData {
 }
 
 export interface IUserPersonalData {
+  user_id?:number,
   email: string
   full_name: string
   phone_number: string
@@ -39,4 +40,9 @@ export interface IUserEmploymentData {
 
 export interface IUserPayrollData {
   npwp_number: string
+}
+
+export interface ResetPassword {
+  user_id:number
+  password:string
 }

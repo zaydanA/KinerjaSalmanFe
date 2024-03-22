@@ -1,10 +1,10 @@
+"use client"
+import Account from "./Account";
 
 
 const page = ()=>{
     return (
-        <div className="flex w-full h-full bg-white">
-            dadwdwad
-        </div>
+        <Account></Account>
     )
 }
 export default page;

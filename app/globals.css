@@ -91,3 +91,8 @@ body {
 select {
   border-right: 10px solid transparent
 }
+
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}

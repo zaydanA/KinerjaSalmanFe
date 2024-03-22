@@ -22,6 +22,7 @@ export const support = () => {
       self: "/user/self",
       personalData: "/user/personal-data",
       employmentData: "/user/employment-data",
+      resetPassword:"/user/reset-password",
       delete: "/user/delete",
     },
 
