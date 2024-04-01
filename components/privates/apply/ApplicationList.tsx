@@ -19,11 +19,13 @@ const ApplicationList = () => {
     last_page: 1,
   });
   const [activeTab, setActiveTab] = useState<'leave' | 'duty'>('leave');
+  const isDuty = activeTab === 'leave' ? 0 : 1;
+
   const api = apiBase();
 
   useEffect(() => {
     fetchApplications(1);
-  }, []);
+  }, [activeTab]);
 
   const fetchApplications = async (page: number) => {
     try {
@@ -34,6 +36,7 @@ const ApplicationList = () => {
         response = await api.application().getApplications(1, page, 3);
       }
 
+      console.log(response.data.data)
       setApplications(response.data.data);
       console.log("applications: ",applications);
       setPagination({
@@ -42,7 +45,6 @@ const ApplicationList = () => {
           last_page: response.data.last_page,
       });
     } catch (error) {
-      console.log("masuk 3");
       console.error("Error fetching applications:", error);
     }
   };
@@ -52,9 +54,26 @@ const ApplicationList = () => {
   };
 
   const handleTabChange = (tab: 'leave' | 'duty') => {
-    console.log("clicked");
     setActiveTab(tab);
-    fetchApplications(1);
+  };
+
+  const handleAccept = async (application: IApiBaseApplication, isDuty: number) => {
+    try {
+      console.log("masuk");
+      const res = await apiBase().application().changeApplicationStatus(application.application_id, isDuty, "ACCEPTED");
+      fetchApplications(pagination.current_page);
+    } catch (error) {
+      console.log("Error accepting application");
+    }
+  };
+
+  const handleReject = async (application: IApiBaseApplication, isDuty: number) => {
+    try {
+      const res = await apiBase().application().changeApplicationStatus(application.application_id, isDuty, "REJECTED");
+      fetchApplications(pagination.current_page);
+    } catch (error) {
+      console.log("Error rejecting application");
+    }
   };
 
   return (
@@ -83,6 +102,8 @@ const ApplicationList = () => {
               key={application.user_id} 
               application={application} 
               type={activeTab}
+              handleAccept={() => handleAccept(application, isDuty)}
+              handleReject={() => handleReject(application, isDuty)}
           />
         ))}
       </div>
