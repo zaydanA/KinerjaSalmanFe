@@ -40,7 +40,7 @@ const LiveAttendance = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // My attendances
+        // Attendances
         const res = await apiBase().attendance().getTodaySelf();
 
         if (res.status === 'success') {
@@ -49,13 +49,17 @@ const LiveAttendance = () => {
 
         // Log
         if (user?.user_id) {
-          const res_log = await apiBase().attendance().getUserAttendance(user?.user_id);
+          const res_log = await apiBase().attendance().getUserAttendance(
+            user.user_id,
+            true
+          );
 
           if (res_log.status === 'success') {
-            setLogData(res_log.data);
+            setLogData(res_log.data.data);
           }
         }
 
+        setNotes(res.data.attendance.notes);
       } catch (error) {
         console.error(error);
       }
@@ -111,7 +115,7 @@ const LiveAttendance = () => {
   }
 
   return (
-   <>
+   <>    
     <div className="mx-auto">
       <h2 className="text-lg mb-1 text-gray-500">Attendance</h2>
       <h1 className="text-2xl font-bold mb-4">Live Attendance</h1>
@@ -128,6 +132,8 @@ const LiveAttendance = () => {
                 <p className='font-semibold'>{attendanceData?.working_hours.message}</p>
                 <p className='text-sm'>{workingHours}</p>
 
+                <p className='text-sm mt-2'>Status: <b className='font-semibold'>{customLib.toLabelCase(attendanceData?.attendance ? attendanceData.attendance.attendance_type : 'Null', false)}</b></p>
+
                 <div className='mt-6 grid grid-cols-2 gap-6'>
                   <div className='col-span-2'>
                     <BaseInputText
@@ -136,6 +142,7 @@ const LiveAttendance = () => {
                       placeholder="Place your notes here"
                       type="text"
                       required={false}
+                      disabled={!attendanceData?.can_clock_in && !attendanceData?.can_clock_out}
                       value={notes}
                       error={apiBaseError.getErrors('notes')?.[0].toString()}
                       setValue={(e) => setNotes(e.target.value)}
@@ -158,7 +165,7 @@ const LiveAttendance = () => {
           </BaseCard>
 
           <div>
-            <h3 className="text-md font-semibold mb-4">Attendance Log</h3>
+            <h3 className="text-md font-semibold mb-4">Attendance Log This Week</h3>
             <div className='max-h-5/6 overflow-y-auto'>
               {logData ? logData.map((logItem, index) => (
                 <div key={index}>
@@ -175,10 +182,10 @@ const LiveAttendance = () => {
                 <LuCalendarClock className='text-8xl text-[--kinerja-gold]'/>
                 <div className='flex flex-col items-center gap-1'>
                   <h3 className='font-semibold text-md'>
-                    No attenndance log today
+                    No attendance log this week
                   </h3>
                   <p className='text-sm text-gray-500'>
-                    Your Clock In/Out actiity will show up here.
+                    Your Clock In/Out activity will show up here.
                   </p>
                 </div>
               </div>

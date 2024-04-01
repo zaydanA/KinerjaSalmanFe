@@ -6,7 +6,7 @@ export const lib = () => {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = String(date.getFullYear());
   
-    return `${day} / ${month} / ${year}`;
+    return `${day}/${month}/${year}`;
   }
 
   const getDate = (today: Date, withYear = false) => {
@@ -49,7 +49,7 @@ export const lib = () => {
       .join(' ');
   }
 
-  const toHoursMinutes = (date: Date | string): string | null => {
+  const toHoursMinutes = (date: Date | string | null): string | null => {
     if (typeof date === 'string') {
       date = new Date(date);
     }
@@ -58,17 +58,31 @@ export const lib = () => {
       return null;
     }
 
-    const hours = date.getUTCHours().toString().padStart(2, '0');
-    const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
 
     return `${hours}:${minutes}`;
   }
+
+  const fromHoursMinutes = (timeString: string): string | null => {
+    const [hours, minutes] = timeString.split(':').map(Number);
+    
+    if (isNaN(hours) || isNaN(minutes) || hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
+      return null; // Invalid time format
+    }
+
+    const date = new Date();
+    date.setHours(hours, minutes, 0, 0);
+
+    return String(date);
+}
 
   return {
     formatDate,
     getDate,
     getTimeOfDay,
     toLabelCase,
-    toHoursMinutes
+    toHoursMinutes,
+    fromHoursMinutes
   }
 }
