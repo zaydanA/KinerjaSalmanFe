@@ -6,8 +6,8 @@ const application = () => {
   const { apiUrl } = support();
 
   const url = {
-    leave: apiUrl.application.applyLeave,
-    duty: apiUrl.application.applyDuty
+    leave: apiUrl.applications.applyLeave,
+    duty: apiUrl.applications.applyDuty
   };
 
   const createApplication = async ({

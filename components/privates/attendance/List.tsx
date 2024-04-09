@@ -20,6 +20,7 @@ import DropdownInput from "@/components/shares/inputs/DropdownInput";
 import { IApiBaseError } from "@/types/http";
 import BaseInputTime from "@/components/shares/inputs/BaseInputTime";
 import BaseInputTextArea from "@/components/shares/inputs/BaseInputTextArea";
+import { toast } from "react-toastify";
 
 const initialFormData: IApiUpdateAttendancePayload = {
   date: '',
@@ -165,6 +166,9 @@ const ListAttendance = () => {
         const res = await apiBase().attendance().updateUserAttendance(userOpen, formData);
 
         if (res.status === 'success') {
+          toast.success(res.message);
+          apiBaseError.clear();
+
           // Update
           const indexToUpdate = currentAttendances.findIndex(entry => entry.user_id === userOpen);
           
@@ -180,7 +184,7 @@ const ListAttendance = () => {
       }
     } catch (error) {
       apiBaseError.set(error);
-      //TODO: toast
+      toast.error(apiBaseError.getMessage());
     }
   }
   

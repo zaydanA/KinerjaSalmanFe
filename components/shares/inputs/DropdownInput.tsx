@@ -26,7 +26,7 @@ const DropdownInput: React.FC<DropdownInputType> = ({
   return (
     <div className="flex flex-col gap-2">
       <label htmlFor={id} className="text-sm font-medium block w-fit">
-        {label} {required ? "*" : ""}
+        {label} <span className="text-red-500">{required ? "*" : ""}</span>
       </label>
       <div>
         <select
@@ -36,7 +36,7 @@ const DropdownInput: React.FC<DropdownInputType> = ({
           disabled={disabled}
           className={
             `
-            rounded outline-none w-full p-3 transition-all ease-in-out text-sm placeholder-gray-300
+            rounded outline-none w-full py-[13px] px-3 transition-all ease-in-out text-sm placeholder-gray-300
             ${disabled 
               ? "bg-gray-100 text-gray-400 shadow-input" 
               : (
