@@ -6,12 +6,12 @@ const position = () => {
     const { apiUrl } = support();
 
     const url = {
-        getPosition: apiUrl.getPosition,
+        positions: apiUrl.positions,
     };
 
     const getPosition = async () => {
         const response = await api.get<IApiBaseResponse<IApiBasePosition[]>>(
-            url.getPosition,{
+            url.positions,{
                 headers: {
                   'Content-Type': 'application/json'
                 }

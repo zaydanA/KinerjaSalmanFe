@@ -11,6 +11,7 @@ import { IUserEmploymentData, IUserPayrollData, IUserPersonalData } from "@/type
 import BaseInputButton from "@/components/shares/buttons/BaseInputButton";
 import Finished from "./Finished";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const initialFormData: IApiAddEmployee = {
     personal_data: {
@@ -34,6 +35,15 @@ const initialFormData: IApiAddEmployee = {
     },
     payroll_data: {
         npwp_number: '',
+        basic_salary: undefined,
+        bank_id: -1,
+        bank_account_number: '',
+        bank_account_holder: '',
+        bpjs_ketenagakerjaan_number: '',
+        bpjs_ketenagakerjaan_date: '',
+        bpjs_kesehatan_number: '',
+        bpjs_kesehatan_date: '',
+        allowances: []
     }
 }
 
@@ -63,9 +73,12 @@ const AddEmployee = () => {
             const res = await apiBase().employee().validateAddEmployee(data, step);
             if (res.status === 'success') {
                 setStep(step + 1);
+
+                apiBaseError.clear();
             }
         } catch (error) {
-            apiBaseError.set(error)
+            apiBaseError.set(error);
+            toast.error(apiBaseError.getMessage());
         }
     };
 
@@ -75,10 +88,13 @@ const AddEmployee = () => {
         } else {
             setStep(step - 1);
         }
+        
+        apiBaseError.clear();
     };
 
     const router = useRouter();
     const handleBack = () => {
+        apiBaseError.clear();
         router.push('/employee')
     }
 
@@ -86,6 +102,7 @@ const AddEmployee = () => {
         // Reset all
         setStep(1);
         setFormData(initialFormData);
+        apiBaseError.clear();
     }
 
     const handleSubmit = async() => {
@@ -94,9 +111,12 @@ const AddEmployee = () => {
 
             if (res.status === 'success') {
                 setStep(4);
+                toast.success(res.message);
+                apiBaseError.clear();
             }
         } catch (error) {
             apiBaseError.set(error);
+            toast.error(apiBaseError.getMessage());
         }
     }
 
@@ -148,7 +168,15 @@ const AddEmployee = () => {
     // Disable next button if not checked
     const checkPayrollDataRequired = () => {
         const payrollDataRequired = [
-            "npwp_number"
+            "npwp_number",
+            "basic_salary",
+            "bank_id",
+            "bank_account_number",
+            "bank_account_holder",
+            "bpjs_ketenagakerjaan_number",
+            "bpjs_ketenagakerjaan_date",
+            "bpjs_kesehatan_number",
+            "bpjs_kesehatan_date"
         ];
 
         const isPayrollDataValid = payrollDataRequired.every(field => {
@@ -159,8 +187,45 @@ const AddEmployee = () => {
             return (typeof value === 'string' && value.trim() !== '') || (typeof value === 'number' && isFinite(value));
         });
 
-        return isPayrollDataValid;
+        // Check allowance
+        const isValidAllowances = formData.payroll_data.allowances.every(allowance => 
+            allowance.allowance_type_id !== -1 && allowance.amount !== undefined && isFinite(allowance.amount)
+        );
+
+        return isPayrollDataValid && isValidAllowances;
     }  
+
+    type ChangeHandler<T> = (changedData: Partial<T>) => void;
+
+    const handlePersonalDataChange: ChangeHandler<IUserPersonalData> = (changedData) => {
+        setFormData({
+            ...formData,
+            personal_data: {
+                ...formData.personal_data,
+                ...changedData
+            }
+        })
+    }
+
+    const handleEmploymentDataChange: ChangeHandler<IUserEmploymentData> = (changedData) => {
+        setFormData({
+            ...formData,
+            employment_data: {
+                ...formData.employment_data,
+                ...changedData
+            }
+        });           
+    }
+
+    const handlePayrollDataChange: ChangeHandler<IUserPayrollData> = (changedData) => {
+        setFormData({
+            ...formData,
+            payroll_data: {
+                ...formData.payroll_data,
+                ...changedData
+            }
+        });
+    };
 
     return (
         <div className="mx-auto">
@@ -222,17 +287,7 @@ const AddEmployee = () => {
                 { step === 1 && (
                     <PersonalDataForm
                         formData={formData.personal_data}
-                        handleChange={(data) => {
-                            setFormData(
-                            {
-                                ...formData,
-                                personal_data: {
-                                    ...formData.personal_data,
-                                    ...data
-                                }
-                            }
-                        )}
-                        }
+                        handleChange={handlePersonalDataChange}
                         apiBaseError={apiBaseError}
                     />
                 )}
@@ -240,17 +295,7 @@ const AddEmployee = () => {
                 { step === 2 && (
                     <EmployeeDataForm
                         formData={formData.employment_data}
-                        handleChange={(data) => {
-                            setFormData(
-                            {
-                                ...formData,
-                                employment_data: {
-                                    ...formData.employment_data,
-                                    ...data
-                                }
-                            }
-                        )}
-                        }
+                        handleChange={handleEmploymentDataChange}
                         apiBaseError={apiBaseError}
                     />
                 )}
@@ -258,17 +303,7 @@ const AddEmployee = () => {
                 { step === 3 && (
                     <PayrollDataForm
                         formData={formData.payroll_data}
-                        handleChange={(data) => {
-                            setFormData(
-                            {
-                                ...formData,
-                                payroll_data: {
-                                    ...formData.payroll_data,
-                                    ...data
-                                }
-                            }
-                        )}
-                        }
+                        handleChange={handlePayrollDataChange}
                         apiBaseError={apiBaseError}
                     />
                 )}

@@ -7,10 +7,10 @@ const auth = () => {
   const { apiUrl } = support();
 
   const url = {
-    self: apiUrl.user.self,
-    personalData: apiUrl.user.personalData,
-    delete: apiUrl.user.delete,
-    employmentData:apiUrl.user.employmentData
+    self: apiUrl.users.self,
+    personalData: apiUrl.users.personalData,
+    delete: apiUrl.users.delete,
+    employmentData:apiUrl.users.employmentData
   }
 
 

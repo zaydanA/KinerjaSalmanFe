@@ -10,6 +10,8 @@ import { IApiBaseError } from '@/types/http';
 import BaseInputButton from '@/components/shares/buttons/BaseInputButton';
 import { useAuth } from '@/contexts';
 import { LuCalendarClock } from "react-icons/lu";
+import { toast } from 'react-toastify';
+import BaseInputTextArea from '@/components/shares/inputs/BaseInputTextArea';
 const LiveAttendance = () => {
   const [attendanceData, setAttendanceData] = useState<IApiAttendancePayload>();
   const [logData, setLogData] = useState<IApiAttendanceData[]>();
@@ -61,7 +63,7 @@ const LiveAttendance = () => {
 
         setNotes(res.data.attendance.notes);
       } catch (error) {
-        console.error(error);
+        // console.error(error);
       }
     };
 
@@ -82,13 +84,13 @@ const LiveAttendance = () => {
           setLongitude(position.coords.longitude);
         },
         error => {
-          // setError(error.message);
-          // TODO: toast
+          apiBaseError.set(error);
+          toast.error(apiBaseError.getMessage());
+          apiBaseError.clear();
         }
       );
     } else {
-      // setError("Geolocation is not supported by this browser.");
-      // TODO: toast
+      toast.error("Geolocation is not supported by this browser.");
     }
   }, []);
 
@@ -104,13 +106,13 @@ const LiveAttendance = () => {
 
         if (res.status === "success") {
           setAttendanceData(res.data);
+          toast.success(res.message);
+          apiBaseError.clear();
         }
-      } else {
-        // TODO: toast
       }
     } catch (error) {
       apiBaseError.set(error);
-      // TODO: toast
+      toast.error(apiBaseError.getMessage());
     }
   }
 
@@ -136,11 +138,10 @@ const LiveAttendance = () => {
 
                 <div className='mt-6 grid grid-cols-2 gap-6'>
                   <div className='col-span-2'>
-                    <BaseInputText
+                    <BaseInputTextArea
                       id="notes"
                       label="Notes"
                       placeholder="Place your notes here"
-                      type="text"
                       required={false}
                       disabled={!attendanceData?.can_clock_in && !attendanceData?.can_clock_out}
                       value={notes}

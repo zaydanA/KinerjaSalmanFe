@@ -7,10 +7,10 @@ const attendance = () => {
   const { apiUrl } = support();
 
   const url = {
-    todaySelf: apiUrl.attendance.todaySelf,
-    todayClocks: apiUrl.attendance.todayClocks,
-    todayAll: apiUrl.attendance.todayAll,
-    user: apiUrl.attendance.user
+    todaySelf: apiUrl.attendances.todaySelf,
+    todayClocks: apiUrl.attendances.todayClocks,
+    todayAll: apiUrl.attendances.todayAll,
+    user: apiUrl.attendances.user
   }
 
   const getTodaySelf = async () => {
