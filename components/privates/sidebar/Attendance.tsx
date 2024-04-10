@@ -44,7 +44,7 @@ const Attendance = (props:any) => {
   const [attendanceData, setAttendanceData] = useState<IApiAttendanceData[]>([]);
   const customLib = lib();
   const pathname = usePathname().split("/")
-  const userId = props.user?props.user.user_id:pathname[2];
+  const userId = props.user ? props.user.user_id : pathname[2];
   const [userYears, setUserYears] = useState<number[]>([]);
   const { isHRDManagerOrDirector, isManager } = useAuth();
 
@@ -266,7 +266,12 @@ const Attendance = (props:any) => {
                   <div className="flex gap-5 max-md:gap-1 h-8">
                     <Filter
                       label="Attendance Type"
-                      filterContent={Object.values(AttendanceType)}
+                      filterContent={
+                        Object.keys(AttendanceType).map(attendance_type => ({
+                          value: attendance_type,
+                          label: customLib.toLabelCase(attendance_type, false)
+                        }))
+                      }
                       handler={handleFilterAttendanceType}
                     />
                     <FilterRadio

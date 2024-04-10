@@ -273,21 +273,28 @@ const ListAttendance = () => {
             <div className="flex gap-5 max-md:gap-1">
               <Filter
                 label="Attendance Type"
-                filterContent={Object.values(AttendanceType)}
+                filterContent={
+                  Object.keys(AttendanceType).map(attendance_type => ({
+                    value: attendance_type,
+                    label: customLib.toLabelCase(attendance_type, false)
+                  }))
+                }
                 handler={handleFilterAttendanceType}
               />
               <Filter
                 label="Department"
-                filterContent={currentDepartments.map((d) => {
-                  return d.dept_name;
-                })}
+                filterContent={currentDepartments.map((d) => ({
+                  label: d.dept_name,
+                  value: d.dept_name
+                }))}
                 handler={handleFilterDepartment}
               />
               <Filter
                 label="Position"
-                filterContent={currentPositions.map((p) => {
-                  return p.title;
-                })}
+                filterContent={currentPositions.map((p) => ({
+                  label: p.title,
+                  value: p.title
+                }))}
                 handler={handleFilterPosition}
               />
             </div>
