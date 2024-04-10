@@ -186,7 +186,7 @@ const PayrollDataForm = ({
             </div>
 
             <hr className='w-full border-1 mt-8 mb-6' />
-            <h3 className="text-lg mb-1 font-bold">Bank Data</h3>
+            <h3 className="text-lg mb-1 font-bold">Bank Information</h3>
             <p className="text-gray-500 text-sm">Data information related to employee&apos;s bank account</p>
             <div className="grid grid-cols-2 gap-y-4 gap-x-5 my-6">
                 <DropdownInput
