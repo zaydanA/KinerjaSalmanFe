@@ -18,6 +18,9 @@ const NavbarDataForManagerAndAbove = [{
 }, {
     title:"Live Attendance",
     path:"/live-attendance"
+}, {
+    title:"Applications",
+    path:"/applications"
 }];
 
 const NavbarDataForBelowManager = [{
@@ -29,6 +32,9 @@ const NavbarDataForBelowManager = [{
 }, {
     title:"Live Attendance",
     path:"/live-attendance"
+}, {
+    title:"Time-off",
+    path:"/apply"
 }];
 
 interface NavbarData {
