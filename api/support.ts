@@ -38,9 +38,10 @@ export const support = () => {
       user: '/attendances',
     },
 
-    applications: {
-      applyLeave: "/applications/apply-leave",
-      applyDuty: "/applications/apply-duty",
+    application: {
+      applyLeave: "/application/apply-leave",
+      applyDuty: "/application/apply-duty",
+      applications: "/application",
     },
 
     banks: "/banks",
