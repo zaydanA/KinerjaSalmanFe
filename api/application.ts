@@ -1,14 +1,16 @@
 import { IApiBaseResponse } from "@/types/http";
 import { api, support } from "./support";
-import { IApiBaseApplication, IApiApplicationResponse } from "@/types/application";
-import { ApplicationType } from "@/enums/enums";
+import {
+  IApiBaseApplication,
+  IApiBaseApplicationResponse,
+} from "@/types/application";
+import { ApplicationsStatus, ApplicationType } from "@/enums/enums";
 
 const application = () => {
   const { apiUrl } = support();
 
   const url = {
-    leave: apiUrl.application.applyLeave,
-    duty: apiUrl.application.applyDuty,
+    apply: apiUrl.application.apply,
     applications: apiUrl.application.applications,
   };
 
@@ -27,7 +29,7 @@ const application = () => {
     start_date: string;
     end_date: string;
     description: string;
-    type: ApplicationType;
+    type: string;
     leave_type?: string;
     event_name?: string;
     location?: string;
@@ -38,6 +40,7 @@ const application = () => {
     formData.append("start_date", start_date);
     formData.append("end_date", end_date);
     formData.append("description", description);
+    console.log(type);
     formData.append("type", type);
 
     // Time-off leave application
@@ -52,9 +55,12 @@ const application = () => {
     if (file_url instanceof FileList) {
       formData.append("file_url", file_url[0]);
     }
+    formData.forEach((element) => {
+      console.log(element);
+    });
 
     const response = await api.post<IApiBaseResponse<IApiBaseApplication>>(
-      applicationType ? url.leave : url.duty,
+      url.apply,
       formData,
       {
         headers: {
@@ -66,44 +72,47 @@ const application = () => {
     return response.data;
   };
 
-  const getApplications = async (isDuty: number, page: number, limit: number) => {
-    const response = await api.get<IApiBaseResponse<IApiApplicationResponse>>(url.applications, {
+  const getApplications = async (
+    type: ApplicationType,
+    page: number,
+    limit: number,
+  ) => {
+    const response = await api.get<
+      IApiBaseResponse<IApiBaseApplicationResponse>
+    >(url.applications, {
       params: {
-        page,
-        limit,
-        isDuty,
+        page: page,
+        limit: limit,
+        type: type,
       },
     });
-  
+
     return {
       data: response.data.data,
     };
   };
 
-  const changeApplicationStatus = async(id: number, isDuty: number, status:string) => {
-    console.log("status : ", status);
-
+  const updateApplicationStatus = async (
+    id: number,
+    status: ApplicationsStatus,
+  ) => {
     const response = await api.put<IApiBaseResponse<IApiBaseApplication>>(
       url.applications,
       { status },
       {
         params: {
           id,
-          isDuty,
-        }
-      }
-    )
-
-    
+        },
+      },
+    );
 
     return response.data;
-  }
-  
+  };
 
   return {
     createApplication,
     getApplications,
-    changeApplicationStatus
+    updateApplicationStatus,
   };
 };
 

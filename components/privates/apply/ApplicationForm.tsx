@@ -6,7 +6,7 @@ import BaseInputDate from "@/components/shares/inputs/BaseInputDate";
 import BaseInputFile from "@/components/shares/inputs/BaseInputFile";
 import BaseInputText from "@/components/shares/inputs/BaseInputText";
 import DropdownInput from "@/components/shares/inputs/DropdownInput";
-import { LeaveType } from "@/enums/enums";
+import { ApplicationType, LeaveType } from "@/enums/enums";
 import usePDFFile from "@/hooks/usePDFFile";
 import useImageFile from "@/hooks/usePDFFile";
 import { useInput } from "@/hooks/useInput";
@@ -50,19 +50,21 @@ const ApplicationForm = () => {
           applicationType: true,
           start_date: startDate,
           end_date: endDate,
+          type: ApplicationType.LEAVE,
           description: description,
-          type: leaveType,
-          image_file: pdfFile,
+          leave_type: leaveType,
+          file_url: pdfFile,
         });
       } else {
         response = await api.application().createApplication({
           applicationType: false,
           start_date: startDate,
           end_date: endDate,
+          type: ApplicationType.DUTY,
           description: description,
           event_name: eventName,
           location: eventLocation,
-          image_file: pdfFile,
+          file_url: pdfFile,
         });
       }
 

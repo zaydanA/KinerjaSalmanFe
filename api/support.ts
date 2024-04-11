@@ -26,27 +26,26 @@ export const support = () => {
     },
 
     analytics: {
-      genders: '/analytics/genders',
-      todaysAttendances: '/analytics/todays-attendances',
-      myAttendances: '/analytics/my-attendances'
+      genders: "/analytics/genders",
+      todaysAttendances: "/analytics/todays-attendances",
+      myAttendances: "/analytics/my-attendances",
     },
 
     attendances: {
-      todaySelf: '/attendances/today/self',
-      todayClocks: '/attendances/today/clocks',
-      todayAll: '/attendances/today/all',
-      user: '/attendances',
+      todaySelf: "/attendances/today/self",
+      todayClocks: "/attendances/today/clocks",
+      todayAll: "/attendances/today/all",
+      user: "/attendances",
     },
 
     application: {
-      applyLeave: "/application/apply-leave",
-      applyDuty: "/application/apply-duty",
-      applications: "/application",
+      apply: "/applications/apply",
+      applications: "/applications",
     },
 
     banks: "/banks",
     allowances: {
-      types: "/allowances/types"
+      types: "/allowances/types",
     },
   };
 

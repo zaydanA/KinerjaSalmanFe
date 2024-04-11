@@ -46,3 +46,14 @@ export enum LeaveType {
   STUDY = "STUDY",
   OTHER = "OTHER",
 }
+
+export enum ApplicationsStatus {
+  PENDING = "PENDING",
+  ACCEPTED = "ACCEPTED",
+  REJECTED = "REJECTED",
+}
+
+export enum ApplicationType {
+  LEAVE = "LEAVE",
+  DUTY = "DUTY",
+}
