@@ -1,3 +1,5 @@
+import { IUserEmploymentData, IUserPayrollData, IUserPersonalData } from "./user";
+
 export type IApiBaseApplication = {
   application_id: number;
   user_id: number;
