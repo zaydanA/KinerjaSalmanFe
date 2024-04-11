@@ -7,6 +7,8 @@ type BaseInputProps = {
   placeholder?: string;
   disabled?: boolean;
   required?: boolean;
+  maxLength?: number;
+  showLength?: boolean;
   value?: string;
   error?: string;
   setValue: (event: ChangeEvent<HTMLTextAreaElement>) => void;
@@ -18,6 +20,8 @@ export default function BaseInputTextArea({
   placeholder = "",
   disabled = false,
   required = false,
+  maxLength,
+  showLength,
   value,
   error = "",
   setValue,
@@ -28,7 +32,7 @@ export default function BaseInputTextArea({
         htmlFor={id}
         className="text-sm font-medium block w-fit text-black"
       >
-        {label} {required ? "*" : ""}
+        {label} <span className="text-red-500">{required ? "*" : ""}</span>
       </label>
 
       <div className="relative">
@@ -52,12 +56,21 @@ export default function BaseInputTextArea({
           }
         />
 
-        {error && (
-        <div className="flex gap-1 items-center mt-1">
-          <PiWarningCircle className="text-red-500 w-3.5" />
-          <p className="text-xs font-normal text-red-500">{error}</p>
+        <div className="flex gap-1 justify-between mt-0">
+          <div>
+            {error && (
+            <div className="flex gap-1 items-center">
+              <PiWarningCircle className="text-red-500 w-3.5" />
+              <p className="text-xs font-normal text-red-500">{error}</p>
+            </div>
+            )}
+          </div>
+          <div>
+            {showLength && (
+              <p className="text-xs font-normal text-gray-400">{String(value)?.length} / {maxLength || "∞"}</p>
+            )}
+          </div>
         </div>
-      )}
       </div>
     </div>
   );

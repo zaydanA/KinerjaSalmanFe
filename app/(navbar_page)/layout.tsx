@@ -1,5 +1,7 @@
 import Navbar from "@/components/shares/navbar/Navbar";
 import { useRouter } from "next/router";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function RootLayout({
   children,
@@ -9,6 +11,9 @@ export default function RootLayout({
     // const router = useRouter()
     return (
       <div className="bg-gray-100 flex flex-col min-h-screen">
+        <ToastContainer
+          autoClose={3000}
+        />
         <Navbar />
         <div className="bg-gray-100 pt-6 px-6 overflow-y-auto flex-grow">
           {children}

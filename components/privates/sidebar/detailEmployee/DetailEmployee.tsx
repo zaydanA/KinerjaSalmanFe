@@ -17,6 +17,7 @@ import { apiBase } from "@/api";
 import { useRouter } from "next/navigation";
 import { IApiBaseError } from "@/types/http";
 import Attendance from "../Attendance";
+import PayrollInfo from "../PayrollInfo";
 
 const SidebarData = [
     {
@@ -146,7 +147,7 @@ const DetailEmployee: React.FC<DetailEmployeeType> = (props)=>{
                         </p>
                         }
                     </div>
-                    <div className="flex flex-col h-fit w-full bg-white">
+                    <div className="flex flex-col h-fit w-full bg-white cursor-pointer">
                         <Sidebar SidebarData={SidebarData} activeComponent={activeComponent} setActiveComponent={setActiveComponent}></Sidebar>
                     </div>
                 </div>
@@ -176,6 +177,8 @@ const DetailEmployee: React.FC<DetailEmployeeType> = (props)=>{
                                     return <Employment user={props.user} />;
                                 case SidebarData[1].subNav[0].title:
                                     return <Attendance user={props.user} />;
+                                case SidebarData[2].subNav[0].title:
+                                    return <PayrollInfo user={props.user} />;
                                 default:
                                     return null;
                             }

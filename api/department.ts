@@ -6,12 +6,12 @@ const department = () => {
     const { apiUrl } = support();
 
     const url = {
-        getDepartment: apiUrl.getDepartment,
+        departments: apiUrl.departments,
     };
 
     const getDepartment = async () => {
         const response = await api.get<IApiBaseResponse<IApiBaseDepartment[]>>(
-            url.getDepartment,      {
+            url.departments, {
                 headers: {
                   'Content-Type': 'application/json'
                 }

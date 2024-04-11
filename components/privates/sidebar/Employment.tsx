@@ -70,8 +70,6 @@ const Employment = (props:any) => {
         getEmployment()
     },[])
 
-    const pos = [1,2];
-
     const CancelChange = ()=>{
         employmentData && setEmployeeID(employmentData.employee_id);
         const foundDept = departmentEnums && departmentEnums.find((obj:any) => obj.dept_id === employmentData.dept_id);

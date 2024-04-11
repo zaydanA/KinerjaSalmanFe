@@ -38,23 +38,30 @@ export default function APIProvider({ children }: APIProviderProps) {
       const decoded = jwtDecode<JwtPayload>(accessToken);
 
       const expirationTime = decoded.exp ? dayjs.unix(decoded.exp) : undefined;
-      const isExpired = expirationTime ? expirationTime.diff(dayjs(), 'second') < 0 : true;
+      const isExpired = expirationTime ? expirationTime.diff(dayjs(), 'second') <= 1 : true;
 
       if (!isExpired) return config;
 
-      const res = await axios.post<IApiBaseResponse<IApiBaseAuthRefreshToken>>(
-        `${url}/refresh-token`,
-        {},
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          withCredentials: true
+      // Expired token
+      while (isExpired) {
+        const res = await axios.post<IApiBaseResponse<IApiBaseAuthRefreshToken>>(
+          `${url}/refresh-token`,
+          {},
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            withCredentials: true
+          }
+        );
+
+        if (res.data.status === 'success') {
+          config.headers.Authorization = `Bearer ${res.data.data.token}`;
+          setToken(res.data.data.token);
+          break; // Exit the loop if token refresh is successful
+        } else {
+          await new Promise(resolve => setTimeout(resolve, 500));
         }
-      );
-      if (res.data.status === 'success') {
-        config.headers.Authorization = `Bearer ${res.data.data.token}`;
-        setToken(res.data.data.token);
       }
 
       return config;

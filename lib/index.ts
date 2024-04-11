@@ -49,7 +49,7 @@ export const lib = () => {
       .join(' ');
   }
 
-  const toHoursMinutes = (date: Date | string | null): string | null => {
+  const toHoursMinutes = (date: Date | string | null): string | null => {    
     if (typeof date === 'string') {
       date = new Date(date);
     }
@@ -58,8 +58,8 @@ export const lib = () => {
       return null;
     }
 
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const hours = date.getUTCHours().toString().padStart(2, '0');
+    const minutes = date.getUTCMinutes().toString().padStart(2, '0');
 
     return `${hours}:${minutes}`;
   }
@@ -72,10 +72,10 @@ export const lib = () => {
     }
 
     const date = new Date();
-    date.setHours(hours, minutes, 0, 0);
+    date.setUTCHours(hours, minutes, 0, 0);
 
     return String(date);
-}
+  }
 
   return {
     formatDate,

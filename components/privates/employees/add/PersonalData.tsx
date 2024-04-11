@@ -6,6 +6,7 @@ import DropdownInput from '@/components/shares/inputs/DropdownInput';
 import { IUserPersonalData } from '@/types/user';
 import { IApiError } from '@/types/http';
 import { lib } from '@/lib';
+import BaseInputTextArea from '@/components/shares/inputs/BaseInputTextArea';
 
 type ChangeHandler<T> = (data: Partial<T>) => void;
 type PersonalDataFormProps = {
@@ -19,9 +20,15 @@ const PersonalDataForm = ({
     handleChange, 
     apiBaseError 
 }: PersonalDataFormProps) => {
-    const handlePersonalDataChange = (name: keyof IUserPersonalData, value: any) => {        
+    const handlePersonalDataChange = (name: keyof IUserPersonalData, value: any) => {                
+        let parsedValue: any = value;
+        
+        if (name === "identity_number") {
+            parsedValue = value.replace(/\s/g, "");
+        }
+        
         handleChange({
-            [name]: value
+            [name]: parsedValue
         });
     }
 
@@ -36,6 +43,7 @@ const PersonalDataForm = ({
                     <BaseInputText
                         id="full_name"
                         label="Full Name"
+                        maxLength={255}
                         placeholder="Full Name"
                         type="text"
                         required={true}
@@ -49,6 +57,7 @@ const PersonalDataForm = ({
                         id="email"
                         label="Email"
                         placeholder="Email"
+                        maxLength={255}
                         type="text"
                         required={true}
                         value={formData.email}
@@ -60,7 +69,9 @@ const PersonalDataForm = ({
                     id="phone_number"
                     label="Phone Number"
                     placeholder="Phone Number"
-                    type="text"
+                    type="number"
+                    maxLength={15}
+                    showLength={true}
                     required={true}
                     value={formData.phone_number}
                     error={apiBaseError.getErrors('phone_number')?.[0].toString()}
@@ -70,28 +81,19 @@ const PersonalDataForm = ({
                     id="emergency_number"
                     label="Emergency Number"
                     placeholder="Emergency Number"
-                    type="text"
+                    type="number"
+                    maxLength={15}
+                    showLength={true}
                     required={true}
                     value={formData.emergency_number}
                     error={apiBaseError.getErrors('emergency_number')?.[0].toString()}
                     setValue={(e) => handlePersonalDataChange('emergency_number', e.target.value)}
                 />
-                <div className="col-span-2">
-                    <BaseInputText
-                        id="address"
-                        label="Address"
-                        placeholder="Address"
-                        type="text"
-                        required={true}
-                        value={formData.address}
-                        error={apiBaseError.getErrors('address')?.[0].toString()}
-                        setValue={(e) => handlePersonalDataChange('address', e.target.value)}
-                    />
-                </div>
                 <BaseInputText
                     id="place_of_birth"
                     label="Place of Birth"
                     placeholder="Place of Birth"
+                    maxLength={50}
                     type="text"
                     value={formData.place_of_birth}
                     error={apiBaseError.getErrors('place_of_birth')?.[0].toString()}
@@ -100,20 +102,11 @@ const PersonalDataForm = ({
                 <BaseInputDate
                     id="date_of_birth"
                     label="Date of Birth"
+                    maxToday={true}
                     required={true}
                     value={String(formData.date_of_birth)}
                     error={apiBaseError.getErrors('date_of_birth')?.[0].toString()}
                     setValue={(e) => handlePersonalDataChange('date_of_birth', e.target.value)}
-                />
-                <BaseInputText
-                    id="identity_number"
-                    label="Identity Number"
-                    placeholder="Identity Number"
-                    type="text"
-                    required={true}
-                    value={String(formData.identity_number)}
-                    error={apiBaseError.getErrors('identity_number')?.[0].toString()}
-                    setValue={(e) => handlePersonalDataChange('identity_number', e.target.value)}
                 />
                 <DropdownInput
                     id="gender"
@@ -125,6 +118,15 @@ const PersonalDataForm = ({
                     onChange={(e) => handlePersonalDataChange('gender', e.target.value)}
                 />
                 <DropdownInput
+                    id="marital_status"
+                    label="Marital Status"
+                    required={true}
+                    options={Object.keys(MaritalStatus).map(marital_status => ({ value: marital_status, label: customLib.toLabelCase(marital_status, false) }))}
+                    selectedValue={formData.marital_status}
+                    error={apiBaseError.getErrors('marital_status')?.[0].toString()}
+                    onChange={(e) => handlePersonalDataChange('marital_status', e.target.value)}
+                />
+                <DropdownInput
                     id="blood_type"
                     label="Blood Type"
                     required={false}
@@ -133,14 +135,22 @@ const PersonalDataForm = ({
                     error={apiBaseError.getErrors('blood_type')?.[0].toString()}
                     onChange={(e) => handlePersonalDataChange('blood_type', e.target.value)}
                 />
-                <DropdownInput
-                    id="marital_status"
-                    label="Marital Status"
+            </div>
+            <hr className='w-full border-1 mt-8 mb-6' />
+            <h3 className="text-lg mb-1 font-bold"> Identity & Address </h3>
+            <p className="text-gray-500 text-sm"> Employee identity information </p>
+            <div className="grid grid-cols-2 gap-y-4 gap-x-5 my-6">
+                <BaseInputText
+                    id="identity_number"
+                    label="Identity Number"
+                    fixedLength={16}
+                    format="#### #### #### ####"
+                    placeholder="0000 0000 0000 0000"
+                    type="text"
                     required={true}
-                    options={Object.keys(MaritalStatus).map(marital_status => ({ value: marital_status, label: customLib.toLabelCase(marital_status, false) }))}
-                    selectedValue={formData.marital_status}
-                    error={apiBaseError.getErrors('marital_status')?.[0].toString()}
-                    onChange={(e) => handlePersonalDataChange('marital_status', e.target.value)}
+                    value={String(formData.identity_number)}
+                    error={apiBaseError.getErrors('identity_number')?.[0].toString()}
+                    setValue={(e) => handlePersonalDataChange('identity_number', e.target.value)}
                 />
                 <DropdownInput
                     id="last_education"
@@ -151,6 +161,19 @@ const PersonalDataForm = ({
                     error={apiBaseError.getErrors('last_education')?.[0].toString()}
                     onChange={(e) => handlePersonalDataChange('last_education', e.target.value)}
                 />
+                <div className="col-span-2">
+                    <BaseInputTextArea
+                        id="address"
+                        label="Address"
+                        maxLength={255}
+                        showLength={true}
+                        placeholder="Address"
+                        required={true}
+                        value={formData.address}
+                        error={apiBaseError.getErrors('address')?.[0].toString()}
+                        setValue={(e) => handlePersonalDataChange('address', e.target.value)}
+                    />
+                </div>
             </div>
         </div>
     )

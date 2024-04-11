@@ -20,6 +20,7 @@ import DropdownInput from "@/components/shares/inputs/DropdownInput";
 import { IApiBaseError } from "@/types/http";
 import BaseInputTime from "@/components/shares/inputs/BaseInputTime";
 import BaseInputTextArea from "@/components/shares/inputs/BaseInputTextArea";
+import { toast } from "react-toastify";
 
 const initialFormData: IApiUpdateAttendancePayload = {
   date: '',
@@ -165,6 +166,9 @@ const ListAttendance = () => {
         const res = await apiBase().attendance().updateUserAttendance(userOpen, formData);
 
         if (res.status === 'success') {
+          toast.success(res.message);
+          apiBaseError.clear();
+
           // Update
           const indexToUpdate = currentAttendances.findIndex(entry => entry.user_id === userOpen);
           
@@ -180,7 +184,7 @@ const ListAttendance = () => {
       }
     } catch (error) {
       apiBaseError.set(error);
-      //TODO: toast
+      toast.error(apiBaseError.getMessage());
     }
   }
   
@@ -269,21 +273,28 @@ const ListAttendance = () => {
             <div className="flex gap-5 max-md:gap-1">
               <Filter
                 label="Attendance Type"
-                filterContent={Object.values(AttendanceType)}
+                filterContent={
+                  Object.keys(AttendanceType).map(attendance_type => ({
+                    value: attendance_type,
+                    label: customLib.toLabelCase(attendance_type, false)
+                  }))
+                }
                 handler={handleFilterAttendanceType}
               />
               <Filter
                 label="Department"
-                filterContent={currentDepartments.map((d) => {
-                  return d.dept_name;
-                })}
+                filterContent={currentDepartments.map((d) => ({
+                  label: d.dept_name,
+                  value: d.dept_name
+                }))}
                 handler={handleFilterDepartment}
               />
               <Filter
                 label="Position"
-                filterContent={currentPositions.map((p) => {
-                  return p.title;
-                })}
+                filterContent={currentPositions.map((p) => ({
+                  label: p.title,
+                  value: p.title
+                }))}
                 handler={handleFilterPosition}
               />
             </div>

@@ -13,16 +13,16 @@ export const support = () => {
     logout: "/logout",
     self: "/self",
 
-    getPosition: "/position",
-    getDepartment: "/department",
+    positions: "/positions",
+    departments: "/departments",
 
-    employee: "/employee",
+    employees: "/employees",
 
-    user: {
-      self: "/user/self",
-      personalData: "/user/personal-data",
-      employmentData: "/user/employment-data",
-      delete: "/user/delete",
+    users: {
+      self: "/users/self",
+      personalData: "/users/personal-data",
+      employmentData: "/users/employment-data",
+      delete: "/users/delete",
     },
 
     analytics: {
@@ -31,17 +31,22 @@ export const support = () => {
       myAttendances: '/analytics/my-attendances'
     },
 
-    attendance: {
-      todaySelf: '/attendance/today/self',
-      todayClocks: '/attendance/today/clocks',
-      todayAll: '/attendance/today/all',
-      user: '/attendance',
+    attendances: {
+      todaySelf: '/attendances/today/self',
+      todayClocks: '/attendances/today/clocks',
+      todayAll: '/attendances/today/all',
+      user: '/attendances',
     },
 
     application: {
       applyLeave: "/application/apply-leave",
       applyDuty: "/application/apply-duty",
       applications: "/application",
+    },
+
+    banks: "/banks",
+    allowances: {
+      types: "/allowances/types"
     },
   };
 
