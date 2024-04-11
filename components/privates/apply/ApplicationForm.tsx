@@ -12,7 +12,7 @@ import useImageFile from "@/hooks/usePDFFile";
 import { useInput } from "@/hooks/useInput";
 import { lib } from "@/lib";
 import { IApiBaseError } from "@/types/http";
-import { Switch } from "@nextui-org/react";
+import { Radio, Switch } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
@@ -74,7 +74,7 @@ const ApplicationForm = () => {
     }
   };
 
-  console.log(pdfFile);
+  // console.log(pdfFile);
   return (
     <div className="mx-auto">
       <h2 className="mb-1 text-lg text-gray-500">Application Form</h2>
@@ -83,10 +83,31 @@ const ApplicationForm = () => {
         <h3 className="mb-1 text-lg font-bold"> Application Data </h3>
         <p className="text-sm text-gray-500"> Fill application data</p>
         <div className="my-6 grid grid-cols-2 gap-x-5 gap-y-4">
-          <div className="col-span-2">
-            <Switch isSelected={isSelected} onValueChange={handleSwitch}>
-              {isSelected ? "Time-off Leave" : "Duty Leave"}
-            </Switch>
+          <div className="col-span-2 flex gap-5">
+
+            <div className="flex gap-1">
+              <input
+                type="radio"
+                id="timeOff"
+                name="leaveType"
+                value="timeOff"
+                checked={isSelected}
+                onChange={() => handleSwitch()}
+              />
+              <label htmlFor="timeOff">Time-off Leave</label>
+            </div>
+
+            <div className="flex gap-1">
+              <input
+                type="radio"
+                id="dutyLeave"
+                name="leaveType"
+                value="dutyLeave"
+                checked={!isSelected}
+                onChange={() => handleSwitch()}
+              />
+              <label htmlFor="dutyLeave">Duty Leave</label>
+            </div>
           </div>
           <BaseInputDate
             id="start_date"
