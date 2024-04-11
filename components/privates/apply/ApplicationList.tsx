@@ -1,9 +1,11 @@
-"use client"
-import React, { useState, useEffect } from 'react';
-import Pagination from '@/components/shares/pagination/Pagination';
-import ApplicationContainer from './ApplicationContainer';
+"use client";
+import React, { useState, useEffect } from "react";
+import Pagination from "@/components/shares/pagination/Pagination";
+import ApplicationContainer from "./ApplicationContainer";
 import { apiBase } from "@/api";
-import { IApiBaseApplication } from '@/types/application';
+import { IApiBaseApplication } from "@/types/application";
+import { ApplicationsStatus, ApplicationType } from "@/enums/enums";
+import BaseModal from "@/components/shares/modals/BaseModal";
 
 interface Pagination {
   total: number;
@@ -18,31 +20,34 @@ const ApplicationList = () => {
     current_page: 1,
     last_page: 1,
   });
-  const [activeTab, setActiveTab] = useState<'leave' | 'duty'>('leave');
-  const isDuty = activeTab === 'leave' ? 0 : 1;
+  const [activeTab, setActiveTab] = useState<"leave" | "duty">("leave");
 
   const api = apiBase();
 
   useEffect(() => {
     fetchApplications(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
 
   const fetchApplications = async (page: number) => {
     try {
       let response;
-      if (activeTab === 'leave') {
-        response = await api.application().getApplications(0, page, 3);
+      if (activeTab === "leave") {
+        response = await api
+          .application()
+          .getApplications(ApplicationType.LEAVE, page, 5);
       } else {
-        response = await api.application().getApplications(1, page, 3);
+        response = await api
+          .application()
+          .getApplications(ApplicationType.DUTY, page, 5);
       }
 
-      console.log(response.data.data)
       setApplications(response.data.data);
-      console.log("applications: ",applications);
+
       setPagination({
-          total: response.data.total,
-          current_page: response.data.current_page,
-          last_page: response.data.last_page,
+        total: response.data.total,
+        current_page: response.data.current_page,
+        last_page: response.data.last_page,
       });
     } catch (error) {
       console.error("Error fetching applications:", error);
@@ -53,23 +58,33 @@ const ApplicationList = () => {
     fetchApplications(page);
   };
 
-  const handleTabChange = (tab: 'leave' | 'duty') => {
+  const handleTabChange = (tab: "leave" | "duty") => {
     setActiveTab(tab);
   };
 
-  const handleAccept = async (application: IApiBaseApplication, isDuty: number) => {
+  const handleAccept = async (application: IApiBaseApplication) => {
     try {
       console.log("masuk");
-      const res = await apiBase().application().changeApplicationStatus(application.application_id, isDuty, "ACCEPTED");
+      await apiBase()
+        .application()
+        .updateApplicationStatus(
+          application.application_id,
+          ApplicationsStatus.ACCEPTED,
+        );
       fetchApplications(pagination.current_page);
     } catch (error) {
       console.log("Error accepting application");
     }
   };
 
-  const handleReject = async (application: IApiBaseApplication, isDuty: number) => {
+  const handleReject = async (application: IApiBaseApplication) => {
     try {
-      const res = await apiBase().application().changeApplicationStatus(application.application_id, isDuty, "REJECTED");
+      await apiBase()
+        .application()
+        .updateApplicationStatus(
+          application.application_id,
+          ApplicationsStatus.REJECTED,
+        );
       fetchApplications(pagination.current_page);
     } catch (error) {
       console.log("Error rejecting application");
@@ -78,36 +93,36 @@ const ApplicationList = () => {
 
   return (
     <div className="mx-auto">
-      <h2 className="text-lg mb-1 text-gray-500"> Application </h2>
-      <h1 className="text-2xl font-bold mb-4"> Applications List </h1>
+      <h2 className="mb-1 text-lg text-gray-500"> Application </h2>
+      <h1 className="mb-4 text-2xl font-bold"> Applications List </h1>
       <button
-        className={`px-4 py-2 rounded ${
-          activeTab === 'leave' ? 'bg-gray-300' : 'bg-gray-100'
+        className={`rounded px-4 py-2 ${
+          activeTab === "leave" ? "bg-gray-300" : "bg-gray-100"
         }`}
-        onClick={() => handleTabChange('leave')}
+        onClick={() => handleTabChange("leave")}
       >
         Leave
       </button>
       <button
-        className={`px-4 py-2 rounded ${
-          activeTab === 'duty' ? 'bg-gray-300' : 'bg-gray-100'
+        className={`rounded px-4 py-2 ${
+          activeTab === "duty" ? "bg-gray-300" : "bg-gray-100"
         }`}
-        onClick={() => handleTabChange('duty')}
+        onClick={() => handleTabChange("duty")}
       >
         Duty
-      </button> 
+      </button>
       <div className="mb-2">
-        {applications.map((application) => (
-          <ApplicationContainer 
-              key={application.user_id} 
-              application={application} 
-              type={activeTab}
-              handleAccept={() => handleAccept(application, isDuty)}
-              handleReject={() => handleReject(application, isDuty)}
+        {applications.map((application, index) => (
+          <ApplicationContainer
+            key={index}
+            application={application}
+            type={activeTab}
+            handleAccept={() => handleAccept(application)}
+            handleReject={() => handleReject(application)}
           />
         ))}
       </div>
-      
+
       <Pagination
         currentPage={pagination.current_page}
         totalPage={pagination.last_page}
