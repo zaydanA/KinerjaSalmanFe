@@ -4,12 +4,13 @@ export type IApiBaseApplication = {
   user_head_id: number;
   start_date: string;
   end_date: string;
+  type: string;
   description: string;
-  status: boolean;
+  file_url?: string;
+  hr_status: boolean;
+  manager_status: boolean;
 
-  type?: string;
+  leave_type?: string;
   event_name?: string;
   location?: string;
-  purpose?: string;
-  image_url?: string;
 };

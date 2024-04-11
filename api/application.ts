@@ -1,6 +1,7 @@
 import { IApiBaseResponse } from "@/types/http";
 import { api, support } from "./support";
 import { IApiBaseApplication } from "@/types/application";
+import { ApplicationType } from "@/enums/enums";
 
 const application = () => {
   const { apiUrl } = support();
@@ -16,36 +17,39 @@ const application = () => {
     end_date,
     description,
     type,
+    leave_type,
     event_name,
     location,
-    image_file,
+    file_url,
   }: {
     applicationType: boolean;
     start_date: string;
     end_date: string;
     description: string;
-    type?: string;
+    type: ApplicationType;
+    leave_type?: string;
     event_name?: string;
     location?: string;
-    image_file?: FileList | null;
+    file_url?: FileList | null;
   }) => {
     const formData = new FormData();
 
     formData.append("start_date", start_date);
     formData.append("end_date", end_date);
     formData.append("description", description);
+    formData.append("type", type);
 
     // Time-off leave application
     if (applicationType) {
-      formData.append("type", type ?? "");
+      formData.append("leave_type", leave_type ?? "");
     } else {
       // Duty leave application
       formData.append("event_name", event_name ?? "");
       formData.append("location", location ?? "");
     }
 
-    if (image_file instanceof FileList) {
-      formData.append("image_file", image_file[0]);
+    if (file_url instanceof FileList) {
+      formData.append("file_url", file_url[0]);
     }
 
     const response = await api.post<IApiBaseResponse<IApiBaseApplication>>(
