@@ -19,6 +19,18 @@ export const lib = () => {
     return `${year}-${month}-${day}`;
   }
 
+  const getYearAndMonthDate = (dateString: string) => {
+    const date = new Date(dateString);
+    
+    const month = date.toLocaleString('default', { month: 'long' });
+    const year = String(date.getFullYear());
+  
+    return {
+      month, 
+      year
+    };
+  }
+
   const getDate = (today: Date, withYear = false) => {
     let options;
 
@@ -87,13 +99,22 @@ export const lib = () => {
     return String(date);
   }
 
+  const formatCurrency = (num: number) => {
+    return num.toLocaleString('id-ID', {
+      style: 'currency',
+      currency: 'IDR'
+    });
+  }
+
   return {
     formatDate,
     formatDateInput,
+    getYearAndMonthDate,
     getDate,
     getTimeOfDay,
     toLabelCase,
     toHoursMinutes,
-    fromHoursMinutes
+    fromHoursMinutes,
+    formatCurrency
   }
 }
