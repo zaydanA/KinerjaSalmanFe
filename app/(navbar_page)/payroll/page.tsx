@@ -1,10 +1,9 @@
+import ListPayroll from "@/components/privates/payroll/List";
 
 
 const page = ()=>{
     return (
-        <div className="w-full">
-        
-        </div>
+        <ListPayroll />
     )
 }
 export default page;

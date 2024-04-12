@@ -3,7 +3,7 @@
 import Pagination from "@/components/shares/pagination/Pagination";
 import Search from "@/components/shares/search/Search";
 import TableData from "@/components/shares/tables/TableData";
-import Filter from "../employees/Filter";
+import Filter from "../../shares/filters/Filter";
 import BaseInputButton from "@/components/shares/buttons/BaseInputButton";
 import { useEffect, useRef, useState } from "react";
 import { apiBase } from "@/api";

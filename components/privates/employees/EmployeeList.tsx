@@ -8,7 +8,7 @@ import Search from "@/components/shares/search/Search";
 import { IApiBaseDepartment } from "@/types/department";
 import { IApiBasePosition } from "@/types/position";
 import { lib } from "@/lib";
-import Filter from "./Filter";
+import Filter from "../../shares/filters/Filter";
 import Pagination from "@/components/shares/pagination/Pagination";
 import { useRouter } from "next/navigation";
 import { CiCirclePlus } from "react-icons/ci";

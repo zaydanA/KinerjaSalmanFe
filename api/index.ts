@@ -9,6 +9,7 @@ import attendance from "./attendance";
 import application from "./application";
 import bank from "./bank";
 import allowance from "./allowance";
+import payrollItem from "./payroll.item";
 
 export const apiBase = () => {
   return {
@@ -22,6 +23,7 @@ export const apiBase = () => {
     attendance,
     application,
     bank,
-    allowance
+    allowance,
+    payrollItem
   }
 }

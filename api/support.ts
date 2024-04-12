@@ -48,6 +48,10 @@ export const support = () => {
     allowances: {
       types: "/allowances/types",
     },
+
+    payrollItems: {
+      user: "/payroll-items"
+    }
   };
 
   return { apiUrl };

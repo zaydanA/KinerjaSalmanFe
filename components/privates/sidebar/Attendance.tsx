@@ -8,7 +8,6 @@ import { IApiBaseError, IApiBaseResponse } from "@/types/http";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { LuCalendarClock } from "react-icons/lu";
-import Filter from "../employees/Filter";
 import BaseInputButton from "@/components/shares/buttons/BaseInputButton";
 import BaseInputTextArea from "@/components/shares/inputs/BaseInputTextArea";
 import BaseInputTime from "@/components/shares/inputs/BaseInputTime";
@@ -16,10 +15,11 @@ import DropdownInput from "@/components/shares/inputs/DropdownInput";
 import BaseInputText from "@/components/shares/inputs/BaseInputText";
 import { AttendanceType } from "@/enums/enums";
 import Pagination from "@/components/shares/pagination/Pagination";
-import FilterRadio from "../attendance/FilterRadio";
 import { useAuth } from "@/contexts";
 import { toast } from "react-toastify";
 import { Spinner } from "@nextui-org/react";
+import Filter from "@/components/shares/filters/Filter";
+import FilterRadio from "@/components/shares/filters/FilterRadio";
 
 const initialFormData: IApiUpdateAttendancePayload = {
   date: '',

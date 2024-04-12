@@ -484,7 +484,7 @@ const PayrollInfo = (props:any) => {
                     <BaseInputDate
                       id="bpjs_ketenagakerjaan_date"
                       label=""                      
-                      value={customLib.formatDateInput(payrollData.bpjs_ketenagakerjaan_date)}
+                      value={customLib.formatDate(payrollData.bpjs_ketenagakerjaan_date)}
                       error={apiBaseError.getErrors('bpjs_ketenagakerjaan_date')?.[0].toString()}
                       setValue={(e) => setPayrollData({
                         ...payrollData,

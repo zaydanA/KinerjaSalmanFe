@@ -45,6 +45,7 @@ const BaseInputDate: React.FC<BaseInputDateType> = ({
           id={id}
           type="date"
           value={value}
+          disabled={disabled}
           max={maxToday ? setMaxDate() : undefined}
           onChange={setValue}
           className={
