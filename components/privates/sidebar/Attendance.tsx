@@ -18,6 +18,8 @@ import { AttendanceType } from "@/enums/enums";
 import Pagination from "@/components/shares/pagination/Pagination";
 import FilterRadio from "../attendance/FilterRadio";
 import { useAuth } from "@/contexts";
+import { toast } from "react-toastify";
+import { Spinner } from "@nextui-org/react";
 
 const initialFormData: IApiUpdateAttendancePayload = {
   date: '',
@@ -51,17 +53,6 @@ const Attendance = (props:any) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // My attendances
-        const res = await apiBase().attendance().getUserAttendance(
-          userId
-        );
-
-        if (res.status === 'success') {
-          setAttendanceData(res.data.data);
-          setTotalPage(res.data.last_page);
-          setCurrentPage(res.data.current_page);
-        }
-
         // Years
         const res_year = await apiBase().attendance().getUserAttendanceYear(
           userId
@@ -71,6 +62,18 @@ const Attendance = (props:any) => {
           setUserYears(res_year.data);
         }
 
+        // My attendances
+        const res = await apiBase().attendance().getUserAttendance(
+          userId
+        );
+
+        if (res.status === 'success') {
+          setAttendanceData(res.data.data);
+          setTotalPage(res.data.last_page);
+          setCurrentPage(res.data.current_page);
+
+          setIsLoading(false);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -178,12 +181,16 @@ const Attendance = (props:any) => {
         
         setModalOpen(false);
         setSelectedDate(null);
+
+        toast.success(res.message);
       }
     } catch (error) {
       apiBaseError.set(error);
-      //TODO: toast
+      toast.error(apiBaseError.getMessage());
     }
   }
+
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   return(
       <>
@@ -201,6 +208,10 @@ const Attendance = (props:any) => {
                 type="text"
                 disabled={true}
                 value={customLib.formatDate(formData.date)}
+                setValue={(e) => setFormData({
+                  ...formData,
+                  date: e.target.value
+                })}
                 error={apiBaseError.getErrors('date')?.[0].toString()}
               />
               <DropdownInput
@@ -258,6 +269,7 @@ const Attendance = (props:any) => {
             </div>
           </div>
         </BaseModal>
+        {!isLoading ?
         <div>
           <div className='max-h-5/6 overflow-y-auto'>
             <div className="flex flex-col gap-4">
@@ -339,7 +351,10 @@ const Attendance = (props:any) => {
               </div>
             </div>
           </div>
-        </div>
+        </div> : 
+        <div className='flex w-full h-[50%] justify-center items-center'>
+          <Spinner color="default" size="lg"/>
+        </div>}
       </>
   );
 }

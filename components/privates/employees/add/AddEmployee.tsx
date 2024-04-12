@@ -48,7 +48,7 @@ const initialFormData: IApiAddEmployee = {
 }
 
 const AddEmployee = () => {
-    const [step, setStep] = useState(1);
+    const [step, setStep] = useState(3);
     const [formData, setFormData] = useState<IApiAddEmployee>(initialFormData);
 
     const apiBaseError = apiBase().error<IApiBaseError>();

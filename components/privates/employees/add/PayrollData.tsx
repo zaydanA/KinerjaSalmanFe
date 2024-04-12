@@ -28,8 +28,9 @@ const PayrollDataForm = ({
 
     const fetchBanks = async () => {
         try {
-            const banks = await apiBase().bank().getBank();
-            setBanks(banks.data);
+            const response = await apiBase().bank().getBank();
+            if (response.status === "success")
+                setBanks(response.data);
         } catch (error) {
             console.error(error);
         }
@@ -37,8 +38,9 @@ const PayrollDataForm = ({
 
     const fetchAllowanceTypes = async () => {
         try {
-            const allowanceTypes = await apiBase().allowance().getAllowanceTypes();
-            setAllowanceTypes(allowanceTypes.data);
+            const response = await apiBase().allowance().getAllowanceTypes();
+            if (response.status === "success")
+                setAllowanceTypes(response.data);
         } catch (error) {
             console.error(error);
         }
@@ -148,7 +150,7 @@ const PayrollDataForm = ({
                                 required={true}
                                 options= {allowanceTypes.map(type => ({ value: type.allowance_type_id, label: type.name }))}
                                 selectedValue={allowance.allowance_type_id}
-                                error={apiBaseError.getErrors('allowanceTypesid')?.[0].toString()}
+                                error={apiBaseError.getErrors('allowance_type_id')?.[0].toString()}
                                 onChange={(e) => handleAllowancesDataChange(index, 'allowance_type_id', parseInt(e.target.value))}
                             />
                         </div>
