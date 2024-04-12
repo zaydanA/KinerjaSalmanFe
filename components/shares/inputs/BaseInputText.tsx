@@ -18,7 +18,7 @@ type BaseInputProps = {
   toUppercase?: boolean;
   value?: string | number;
   error?: string;
-  setValue?: (event: ChangeEvent<HTMLInputElement>) => void;
+  setValue: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
 export default function BaseInputText({

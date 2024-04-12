@@ -137,8 +137,6 @@ const EmployeeList = () => {
     "Gender",
   ];
 
-  // const isAuthenticated = isHRDManagerOrDirector() || isManager(); // Udah dihandle di protected route
-
   return (
     <div className="flex flex-col gap-4 py-10 px-12">
       <div className="flex flex-col gap-6">

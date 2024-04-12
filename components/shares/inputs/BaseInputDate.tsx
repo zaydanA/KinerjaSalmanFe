@@ -6,6 +6,7 @@ export type BaseInputDateType = {
   label: string;
   required?: boolean;
   maxToday?: boolean;
+  disabled?: boolean;
   value: string;
   error?: string;
   setValue?: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -16,6 +17,7 @@ const BaseInputDate: React.FC<BaseInputDateType> = ({
   label,
   required = false,
   maxToday = false,
+  disabled = false,
   value,
   error = "",
   setValue,
@@ -45,11 +47,16 @@ const BaseInputDate: React.FC<BaseInputDateType> = ({
           value={value}
           max={maxToday ? setMaxDate() : undefined}
           onChange={setValue}
-          className={`rounded shadow-input outline-none w-full box-border px-3 py-[11px] transition-all ease-in-out bg-white text-sm placeholder-gray-300 ${
-            error
+          className={
+            `
+            rounded outline-none w-full p-3 transition-all ease-in-out text-sm placeholder-gray-300
+            ${disabled
+              ? "bg-gray-100 text-gray-400 shadow-input"
+              : error
               ? "shadow-input-error focus:shadow-input-focus-error"
-              : "hover:shadow-input-hover focus:shadow-input-focus"
-          }`}
+              : "shadow-input hover:shadow-input-hover focus:shadow-input-focus"
+            }`
+          }
         />
         {error && (
           <div className="flex gap-1 items-center mt-1">

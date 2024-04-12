@@ -1,5 +1,5 @@
 // import { IApiBaseUserSelf } from "@/types/user";
-import { IUserEmploymentData, IUserPersonalData, IUserSelfData } from "@/types/user";
+import { IUserEmploymentData, IUserPayrollData, IUserPersonalData, IUserSelfData } from "@/types/user";
 import { api, support } from "./support";
 import { IApiBaseResponse } from "@/types/http";
 
@@ -9,10 +9,10 @@ const auth = () => {
   const url = {
     self: apiUrl.users.self,
     personalData: apiUrl.users.personalData,
+    employmentData: apiUrl.users.employmentData,
+    payrollData: apiUrl.users.payrollData,
     delete: apiUrl.users.delete,
-    employmentData:apiUrl.users.employmentData
   }
-
 
   const self = async () => {
     const response = await api.get<IApiBaseResponse<IUserSelfData>>(
@@ -50,6 +50,18 @@ const auth = () => {
     return response.data;
   }
 
+  const payrollData = async (user_id:number) => {
+    const response = await api.get<IApiBaseResponse<IUserPayrollData>>(
+      `${url.payrollData}/${user_id}`,{
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+
+    return response.data;
+  }
+
   const updatePersonalData = async (userid:number,data:IUserPersonalData) => {
     const response = await api.put<IApiBaseResponse<IUserPersonalData>>(
       `${url.personalData}/${userid}`,data,        
@@ -62,9 +74,23 @@ const auth = () => {
     
     return response.data;
   }
+  
   const updateEmploymentData = async (userid:number,data:IUserEmploymentData) => {
     const response = await api.put<IApiBaseResponse<IUserEmploymentData>>(
       `${url.employmentData}/${userid}`,data,        
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+    
+    return response.data;
+  }
+
+  const updatePayrollData = async (userid:number,data:IUserPayrollData) => {
+    const response = await api.put<IApiBaseResponse<IUserPayrollData>>(
+      `${url.payrollData}/${userid}`,data,        
       {
         headers: {
           'Content-Type': 'application/json'
@@ -79,8 +105,11 @@ const auth = () => {
     self,
     personalData,
     employmentData,
+    payrollData,
+
     updatePersonalData,
     updateEmploymentData,
+    updatePayrollData,
   }
 }
 
