@@ -1,4 +1,4 @@
-import { IApiBasePayrollItemPagination } from '@/types/payroll.item';
+import { IApiBaseEmployeesPayrollItemList, IApiBaseEmployeesReviewPayrollItemPagination, IApiBasePayrollItemPagination } from '@/types/payroll.item';
 import { api, support } from './support';
 import { IApiBaseResponse } from '@/types/http';
 
@@ -6,14 +6,18 @@ const payrollItem = () => {
   const { apiUrl } = support();
 
   const url = {
-    user: apiUrl.payrollItems.user
+    user: apiUrl.payrollItems.user,
+    employees: apiUrl.payrollItems.employees,
+    run: apiUrl.payrollItems.employeesRun,
+    review: apiUrl.payrollItems.employeesReview,
   }
 
   const getUserPayrollItems = async (
     user_id: number, 
     page?: number,
     limit?: number,
-    year?: number
+    year?: number,
+    month?: number
   ) => {
     const response = await api.get<IApiBaseResponse<IApiBasePayrollItemPagination>>(
       `${url.user}/${user_id}`,
@@ -22,6 +26,7 @@ const payrollItem = () => {
           page: page,
           limit: limit,
           year: year,
+          month: month
         },
       }
     )
@@ -40,9 +45,64 @@ const payrollItem = () => {
     return response.data;
   }
 
+  const getEmployeesPayrollItems = async (
+    year: number,
+  ) => {
+    const response = await api.get<IApiBaseResponse<IApiBaseEmployeesPayrollItemList[]>>(
+      `${url.employees}/${year}`,
+      {}
+    )
+
+    return response.data;
+  }
+
+  const runEmployeesPayrollItems = async (
+    period: string
+  ) => {
+    const response = await api.post<IApiBaseResponse<null>>(
+      `${url.run}`,
+      {
+        "period": period
+      }
+    )
+
+    return response.data;
+  }
+
+  const getEmployeesReviewPayrollItems = async (
+    period: string,
+    page?: number, 
+    limit?: number, 
+    q?: string, 
+    status?: number[], 
+    department?: number[], 
+    position?: number[]
+  ) => {
+    const response = await api.get<IApiBaseResponse<IApiBaseEmployeesReviewPayrollItemPagination>>(
+      url.review,
+      {
+        params: {
+          period: period,
+          page: page,
+          limit: limit,
+          search: q,
+          status: status,
+          department: department,
+          position: position,
+        },
+      }
+    );
+
+    return response.data
+  }
+
   return {
     getUserPayrollItems,
     getUserPayrollItemsYear,
+    getEmployeesPayrollItems,
+    runEmployeesPayrollItems,
+
+    getEmployeesReviewPayrollItems
   };
 };
 

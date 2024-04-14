@@ -1,7 +1,6 @@
-"use client"
 import React from "react";
-import AddEmployee from "../../../../components/privates/employees/add/AddEmployee";
 import ProtectedRoute from "@/app/Rbac";
+import AddEmployee from "@/components/privates/employees/add/AddEmployee";
 
 const page = () => {
     return (

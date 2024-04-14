@@ -1,10 +1,10 @@
 import ProtectedRoute from "@/app/Rbac";
-import ListPayroll from "@/components/privates/payroll/List";
+import ListReviewPayroll from "@/components/privates/payroll/ListReview";
 
 const page = ()=>{
     return (
         <ProtectedRoute allowedDept={[1, 2]} allowedPos={[1, 2]}>
-            <ListPayroll />
+            <ListReviewPayroll />
         </ProtectedRoute>
     )
 }

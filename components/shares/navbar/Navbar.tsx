@@ -13,9 +13,12 @@ const NavbarDataForManagerAndAbove = [{
     title: "Employee",
     path: "/employee"
 },{
-    title:"Payroll",
-    path:"/payroll"
-}, {
+    title:"My Payroll",
+    path:"/my-payroll"
+},{
+    title: "Payroll",
+    path: "/payroll"
+},{
     title:"Live Attendance",
     path:"/live-attendance"
 }, {
@@ -27,9 +30,9 @@ const NavbarDataForBelowManager = [{
     title:"Dashboard",
     path:"/dashboard"
 },{
-    title:"Payroll",
-    path:"/payroll"
-}, {
+    title:"My Payroll",
+    path:"/my-payroll"
+},{
     title:"Live Attendance",
     path:"/live-attendance"
 }, {

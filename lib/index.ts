@@ -19,16 +19,13 @@ export const lib = () => {
     return `${year}-${month}-${day}`;
   }
 
-  const getYearAndMonthDate = (dateString: string) => {
+  const formatYearMonthDate = (dateString: string) => {
     const date = new Date(dateString);
     
-    const month = date.toLocaleString('default', { month: 'long' });
+    const month = date.toLocaleString('default', { month: 'short' });
     const year = String(date.getFullYear());
   
-    return {
-      month, 
-      year
-    };
+    return `${month} ${year}`;
   }
 
   const getDate = (today: Date, withYear = false) => {
@@ -106,15 +103,29 @@ export const lib = () => {
     });
   }
 
+  const generateMonthOptions = () => {
+    const months = [
+      "January", "February", "March", "April",
+      "May", "June", "July", "August",
+      "September", "October", "November", "December"
+    ];
+
+    return months.map((month, index) => ({
+      label: month,
+      value: index + 1
+    }));
+  }
+
   return {
     formatDate,
     formatDateInput,
-    getYearAndMonthDate,
+    formatYearMonthDate,
     getDate,
     getTimeOfDay,
     toLabelCase,
     toHoursMinutes,
     fromHoursMinutes,
-    formatCurrency
+    formatCurrency,
+    generateMonthOptions
   }
 }

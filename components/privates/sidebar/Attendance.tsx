@@ -29,19 +29,6 @@ const initialFormData: IApiUpdateAttendancePayload = {
   notes : ''
 }
 
-function generateMonthOptions() {
-  const months = [
-    "January", "February", "March", "April",
-    "May", "June", "July", "August",
-    "September", "October", "November", "December"
-  ];
-
-  return months.map((month, index) => ({
-    label: month,
-    value: index + 1
-  }));
-}
-
 const Attendance = (props:any) => {
   const [attendanceData, setAttendanceData] = useState<IApiAttendanceData[]>([]);
   const customLib = lib();
@@ -125,7 +112,7 @@ const Attendance = (props:any) => {
     fetchList({ page: 1 });
   };
 
-  const handleFilterMonth = (m?: number | undefined) => {
+  const handleFilterMonth = (m?: number) => {
     selectMonth.current = m;
     fetchList({ page: 1 });
   };
@@ -288,7 +275,7 @@ const Attendance = (props:any) => {
                     />
                     <FilterRadio
                       label="Month"
-                      filterContent={generateMonthOptions()}
+                      filterContent={customLib.generateMonthOptions()}
                       handler={handleFilterMonth}
                     />
                     <FilterRadio

@@ -2,34 +2,32 @@
 import TableData from "@/components/shares/tables/TableData";
 import TableHeader from "@/components/shares/tables/TableHeader";
 import { apiBase } from "@/api";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IApiBaseEmployee } from "@/types/employee";
 import Search from "@/components/shares/search/Search";
 import { IApiBaseDepartment } from "@/types/department";
 import { IApiBasePosition } from "@/types/position";
 import { lib } from "@/lib";
 import Pagination from "@/components/shares/pagination/Pagination";
-import { useRouter } from "next/navigation";
-import { CiCirclePlus } from "react-icons/ci";
+import { usePathname, useRouter } from "next/navigation";
 import BaseInputButton from "@/components/shares/buttons/BaseInputButton";
-import { useAuth } from "@/contexts";
 import Filter from "@/components/shares/filters/Filter";
+import { IApiBaseEmployeesReviewPayrollItemList } from "@/types/payroll.item";
 
-const EmployeeList = () => {
+const statusEnums = [
+  "Not Paid",
+  "Paid"
+]
+
+const ListReviewPayroll = () => {
   const api = apiBase();
   const customLib = lib();
   const router = useRouter();
-  // const { user } = useAuth();
+  const pathname = usePathname().split("/");
 
-  const [currentEmployees, setCurrentEmployees] = useState<IApiBaseEmployee[]>(
-    [],
-  );
-  const [currentDepartments, setCurrentDepartments] = useState<
-    IApiBaseDepartment[]
-  >([]);
-  const [currentPositions, setCurrentPositions] = useState<IApiBasePosition[]>(
-    [],
-  );
+  const [payrollReviewData, setPayrollReviewData] = useState<IApiBaseEmployeesReviewPayrollItemList[]>([]);
+  const [currentDepartments, setCurrentDepartments] = useState<IApiBaseDepartment[]>([]);
+  const [currentPositions, setCurrentPositions] = useState<IApiBasePosition[]>([]);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState<number>(0);
@@ -45,10 +43,12 @@ const EmployeeList = () => {
       try {
         const departments = await api.department().getDepartment();
         const positions = await api.position().getPosition();
-        const employees = await api.employee().getEmployee();
+        const payrollReviewData = await api.payrollItem().getEmployeesReviewPayrollItems(
+          pathname[2]
+        );
 
-        setCurrentEmployees(employees.data.data);
-        setTotalPage(employees.data.last_page);
+        setPayrollReviewData(payrollReviewData.data.data);
+        setTotalPage(payrollReviewData.data.last_page);
         setCurrentDepartments(departments.data);
         setCurrentPositions(positions.data);
       } catch (error) {
@@ -69,29 +69,26 @@ const EmployeeList = () => {
     filterDepartment?: number[];
     filterPosition?: number[];
   }) => {
-    const employees = await api
-      .employee()
-      .getEmployee(
-        page,
-        10,
-        searchValue.current,
-        selectStatus.current,
-        selectDepartment.current,
-        selectPosition.current,
-      );
+    const payrollReviewData = await api.payrollItem().getEmployeesReviewPayrollItems(
+      pathname[2],
+      page,
+      10,
+      searchValue.current,
+      selectStatus.current,
+      selectDepartment.current,
+      selectPosition.current,
+    );
 
     // return employees;
     setCurrentPage(page);
-    setCurrentEmployees(employees.data.data);
-    setTotalPage(employees.data.last_page);
+    setPayrollReviewData(payrollReviewData.data.data);
+    setTotalPage(payrollReviewData.data.last_page);
   };
 
   const handleSearch = (s: string) => {
     searchValue.current = s;
     fetchList({ page: 1 });
-    // fetchList({ search: s, page: 1 });
   };
-  
   const handleFilterStatus = (s?: string[]) => {
     const numbers = s?.map(Number);
     selectStatus.current = numbers;
@@ -118,12 +115,8 @@ const EmployeeList = () => {
     "Employee",
     "Department",
     "Position",
-    "Employment Status",
-    "Join Date",
-    "Resign Date",
-    "Birth Date",
-    "Phone",
-    "Gender",
+    "Payroll Status",
+    "Net Salary"
   ];
 
   return (
@@ -131,19 +124,15 @@ const EmployeeList = () => {
       <div className="flex flex-col gap-6">
         <div className="flex justify-between items-end">
           <div>
-            <h2 className="text-lg mb-1 text-gray-500">Employee</h2>
-            <h1 className="text-2xl font-bold">List of Employees</h1>
+            <h2 className="text-lg mb-1 text-gray-500">Payroll Review</h2>
+            <h1 className="text-2xl font-bold">{customLib.formatYearMonthDate(pathname[2])}</h1>
           </div>
-          <BaseInputButton
-            text="Add employee"
-            onClick={() => router.push("employee/add")}
-          />
         </div>
         <div className="flex w-full justify-between max-md:gap-2 max-sm:flex-col">
           <div className="flex gap-5 max-md:gap-1">
             <Filter
               label="Employment Status"
-              filterContent={["Unactive", "Active"].map((val, index) => ({
+              filterContent={["Not Paid", "Paid"].map((val, index) => ({
                 label: val,
                 value: index
               }))}
@@ -176,31 +165,25 @@ const EmployeeList = () => {
         <table className=" w-full">
           <TableHeader headers={header} action={true} />
           <tbody>
-            {currentEmployees.map((e, index) => {
+            {payrollReviewData.map((e, index) => {
               const dataContent = [
                 "https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png",
-                e.full_name,
-                e.email,
-                currentDepartments.find((d) => d.dept_id == e.dept_id)
+                e.payroll.user.full_name,
+                e.payroll.user.email,
+                currentDepartments.find((d) => d.dept_id == e.payroll.user.dept_id)
                   ?.dept_name,
-                currentPositions.find((p) => p.position_id == e.position_id)
+                currentPositions.find((p) => p.position_id == e.payroll.user.position_id)
                   ?.title,
-                e.status == 1 ? "Active" : "Inactive",
-                customLib.formatDate(String(e.join_date)),
-                e.resign_date
-                  ? customLib.formatDate(String(e.resign_date))
-                  : "-",
-                customLib.formatDate(String(e.date_of_birth)),
-                e.phone_number,
-                e.gender,
+                statusEnums[e.status],
+                customLib.formatCurrency(e.net_salary),
               ];
               return (
                 <TableData
                   key={index}
                   dataContent={dataContent}
-                  onClickEdit={() => {
-                    window.open(`employee/${e.user_id}`, '_blank');
-                  }}
+                  // onClickEdit={() => {
+                  //   window.open(`employee/${e.user_id}`, '_blank');
+                  // }}
                   isProfile={true}
                 />
               );
@@ -219,4 +202,4 @@ const EmployeeList = () => {
   );
 };
 
-export default EmployeeList;
+export default ListReviewPayroll;

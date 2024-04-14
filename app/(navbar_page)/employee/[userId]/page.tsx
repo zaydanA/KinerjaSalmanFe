@@ -6,9 +6,7 @@ import ProtectedRoute from '@/app/Rbac';
 const page = ()=>{
 
     return (
-        <ProtectedRoute>
-            <DetailEmployee user={undefined}></DetailEmployee>
-        </ProtectedRoute>
+        <DetailEmployee user={undefined}></DetailEmployee>
     )
 }
 
