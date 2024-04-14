@@ -1,4 +1,5 @@
 import axios from "axios";
+import employee from "./employee";
 
 export const url = process.env.API_BASE_URL;
 export const api = axios.create({
@@ -50,7 +51,10 @@ export const support = () => {
     },
 
     payrollItems: {
-      user: "/payroll-items"
+      user: "/payroll-items",
+      employees: "/payroll-items/employees",
+      employeesRun: "/payroll-items/employees/run",
+      employeesReview: "/payroll-items/employees/review",
     }
   };
 

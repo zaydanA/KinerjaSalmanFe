@@ -7,6 +7,7 @@ export type BaseInputDateType = {
   required?: boolean;
   maxToday?: boolean;
   disabled?: boolean;
+  type?: "date" | "month";
   value: string;
   error?: string;
   setValue?: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -18,6 +19,7 @@ const BaseInputDate: React.FC<BaseInputDateType> = ({
   required = false,
   maxToday = false,
   disabled = false,
+  type = "date",
   value,
   error = "",
   setValue,
@@ -43,7 +45,7 @@ const BaseInputDate: React.FC<BaseInputDateType> = ({
       <div>
         <input
           id={id}
-          type="date"
+          type={type}
           value={value}
           disabled={disabled}
           max={maxToday ? setMaxDate() : undefined}

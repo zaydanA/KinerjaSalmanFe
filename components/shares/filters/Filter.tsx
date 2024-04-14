@@ -13,7 +13,7 @@ const Filter = ({
   handler,
 }: {
   label: string;
-  filterContent: { label: string; value: string }[];
+  filterContent: { label: string; value: string | number }[];
   handler: (p: string[]) => void;
 }) => {
   const [checkedValues, setCheckedValues] = useState<string[]>([]);
@@ -52,8 +52,8 @@ const Filter = ({
                 <input
                   type="checkbox"
                   className="cursor-pointer"
-                  onChange={(e) => handleCheckboxChange(e, f.value)}
-                  checked={checkedValues.includes(f.value)}
+                  onChange={(e) => handleCheckboxChange(e, String(f.value))}
+                  checked={checkedValues.includes(String(f.value))}
                 />
               </div>
             </DropdownItem>

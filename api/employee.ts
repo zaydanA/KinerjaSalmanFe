@@ -13,7 +13,7 @@ const employee = () => {
 
   }
 
-  const getEmployee = async (page?: number, limit?: number, q?: string, status?: string[], department?: number[], position?: number[]) => {
+  const getEmployee = async (page?: number, limit?: number, q?: string, status?: number[], department?: number[], position?: number[]) => {
     const response = await api.get<IApiBaseResponse<IApiEmployeeResponse>>(
       url.employees,
       {

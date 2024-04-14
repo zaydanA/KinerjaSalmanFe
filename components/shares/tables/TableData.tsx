@@ -2,15 +2,18 @@
 import React, { useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import { AiFillDelete } from "react-icons/ai";
+import { MdOpenInNew } from "react-icons/md";
 
 const TableData = ({
   dataContent,
   onClickEdit,
+  onClickOpen,
   onClickDelete,
   isProfile,
 }: {
   dataContent: (string | number | undefined)[];
   onClickEdit?: () => void;
+  onClickOpen?: () => void;
   onClickDelete?: () => void;
   isProfile: boolean;
 }) => {
@@ -60,6 +63,11 @@ const TableData = ({
           {onClickEdit && (
             <button onClick={onClickEdit} aria-label="Edit">
               <FiEdit />
+            </button>
+          )}
+          {onClickOpen && (
+            <button onClick={onClickOpen} aria-label="Open">
+              <MdOpenInNew />
             </button>
           )}
           {onClickDelete && (

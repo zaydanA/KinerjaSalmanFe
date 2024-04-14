@@ -293,21 +293,21 @@ const PayrollInfo = (props:any) => {
                         </div>
                       </div>
                     ))}
-
-                    <div className={`${payrollData.allowances.length > 0 ? 'mt-2' : ''} ${isEditPayrollData ? 'block' : 'hidden'}`}>
-                      <BaseInputButton
-                        text="Add Allowance"
-                        type="outlined"
-                        onClick={handleAddAllowance}
-                      />
-                    </div>
                   </>
                 ) : (
                   <p className="text-xs">No additional allowance</p>
                 )}
                 
                 {isEditPayrollData && 
-                <div className='flex gap-1 justify-end'>
+                <>
+                  <div className={`${payrollData.allowances.length > 0 ? 'mt-2' : ''} ${isEditPayrollData ? 'block' : 'hidden'}`}>
+                    <BaseInputButton
+                      text="Add Allowance"
+                      type="outlined"
+                      onClick={handleAddAllowance}
+                    />
+                  </div>
+                  <div className='flex gap-1 justify-end'>
                   <button className="text-gray-500 border-2 rounded-lg font-mono hover:bg-gray-100 py-1 px-3" 
                     onClick={()=>{
                       cancelChange();
@@ -321,7 +321,9 @@ const PayrollInfo = (props:any) => {
                   }} className="border-2 rounded-lg font-mono bg-[--kinerja-gold] hover:bg-[--kinerja-gold-hover] text-white px-0 md:px-3">
                     Save Changes
                   </button>
-                </div>}
+                </div>
+                </>
+                }
               </div>
               <div className="md:w-1/6 py-5 md:p-0">
                 {( !isEditPayrollData && canEdit ) ? <button onClick={()=>{setIsEditPayrollData(true)}} className="text-gray-500 border-2 rounded-lg font-mono hover:border-[--kinerja-gold-hover-border] px-2">Edit</button> : <></>}
