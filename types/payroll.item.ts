@@ -15,6 +15,7 @@ export interface IApiBasePayrollItemList {
 export interface IApiBaseEmployeesPayrollItemList {
   period: string
   total_employees: number
+  total_disbursed: number
   total_expenses: number
 }
 
@@ -35,7 +36,11 @@ export interface IApiBaseEmployeesReviewPayrollItemList {
       employee_id: string
       dept_id: number
       position_id: number
-    }
+    },
+    npwp_number: string,
+    bank_id: number,
+    bank_account_number: string,
+    bank_account_holder: string
   }
 
   status: number

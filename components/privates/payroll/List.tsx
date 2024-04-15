@@ -18,11 +18,6 @@ import BaseInputDate from "@/components/shares/inputs/BaseInputDate";
 import { useInput } from "@/hooks/useInput";
 import { toast } from "react-toastify";
 
-const statusEnums = [
-  "Paid",
-  "Not Paid"
-]
-
 const ListPayroll = () => {
   const [payrollData, setPayrollData] = useState<IApiBaseEmployeesPayrollItemList[]>([]);
   const customLib = lib();
@@ -83,7 +78,8 @@ const ListPayroll = () => {
   const header = [
     "Period",
     "Total Employees",
-    "Total Expense",
+    "Total Disbursed",
+    "Total Expenses",
   ];
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -93,21 +89,7 @@ const ListPayroll = () => {
   const [period, setPeriod] = useInput("");
 
   const handleModalOpen = (
-    // date: string,
-    // attendance_type: string,
-    // clock_in: string | null,
-    // clock_out: string | null,
-    // notes?: string
   ) => {
-    // setFormData({
-    //   date,
-    //   attendance_type,
-    //   clock_in,
-    //   clock_out,
-    //   notes: notes ?? ''
-    // });
-
-    // setSelectedDate(date);
     setModalOpen(true);
   }
 
@@ -187,6 +169,7 @@ const ListPayroll = () => {
                   const dataContent = [
                     customLib.formatYearMonthDate(e.period),
                     e.total_employees,
+                    customLib.formatCurrency(e.total_disbursed),
                     customLib.formatCurrency(e.total_expenses)
                   ];
 
