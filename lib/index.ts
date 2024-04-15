@@ -19,10 +19,10 @@ export const lib = () => {
     return `${year}-${month}-${day}`;
   }
 
-  const formatYearMonthDate = (dateString: string) => {
+  const formatYearMonthDate = (dateString: string, long?: boolean) => {
     const date = new Date(dateString);
     
-    const month = date.toLocaleString('default', { month: 'short' });
+    const month = date.toLocaleString('default', { month: long ? 'long' : 'short' });
     const year = String(date.getFullYear());
   
     return `${month} ${year}`;

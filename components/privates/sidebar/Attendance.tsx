@@ -195,10 +195,6 @@ const Attendance = (props:any) => {
                 type="text"
                 disabled={true}
                 value={customLib.formatDate(formData.date)}
-                setValue={(e) => setFormData({
-                  ...formData,
-                  date: e.target.value
-                })}
                 error={apiBaseError.getErrors('date')?.[0].toString()}
               />
               <DropdownInput
