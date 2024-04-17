@@ -1,5 +1,7 @@
 // import { IApiBaseUserSelf } from "@/types/user";
-import { IUserEmploymentData, IUserPersonalData, IUserSelfData, ResetPassword } from "@/types/user";
+
+import { IUserEmploymentData, IUserPayrollData, IUserPersonalData, IUserSelfData } from "@/types/user";
+
 import { api, support } from "./support";
 import { IApiBaseResponse } from "@/types/http";
 
@@ -7,13 +9,14 @@ const auth = () => {
   const { apiUrl } = support();
 
   const url = {
-    self: apiUrl.user.self,
-    personalData: apiUrl.user.personalData,
-    delete: apiUrl.user.delete,
-    employmentData:apiUrl.user.employmentData,
-    resetPassword:apiUrl.user.resetPassword
-  }
 
+    self: apiUrl.users.self,
+    personalData: apiUrl.users.personalData,
+    employmentData: apiUrl.users.employmentData,
+    payrollData: apiUrl.users.payrollData,
+    delete: apiUrl.users.delete,
+    resetPassword: apiUrl.users.resetPassword,
+  }
 
   const self = async () => {
     const response = await api.get<IApiBaseResponse<IUserSelfData>>(
@@ -38,7 +41,9 @@ const auth = () => {
 
     return response.data;
   }
-  const employmentData = async (user_id:number|undefined) => {
+
+  
+  const employmentData = async (user_id:number) => {
     const response = await api.get<IApiBaseResponse<IUserEmploymentData>>(
       `${url.employmentData}/${user_id}`,{
         headers: {
@@ -50,7 +55,21 @@ const auth = () => {
     return response.data;
   }
 
-  const updatePersonalData = async (userid:number|undefined,data:IUserPersonalData) => {
+
+  const payrollData = async (user_id:number) => {
+    const response = await api.get<IApiBaseResponse<IUserPayrollData>>(
+      `${url.payrollData}/${user_id}`,{
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+
+    return response.data;
+  }
+
+  const updatePersonalData = async (userid:number,data:IUserPersonalData) => {
+
     const response = await api.put<IApiBaseResponse<IUserPersonalData>>(
       `${url.personalData}/${userid}`,data,        
       {
@@ -62,7 +81,9 @@ const auth = () => {
     
     return response.data;
   }
-  const updateEmploymentData = async (userid:number|undefined,data:IUserEmploymentData) => {
+
+  
+  const updateEmploymentData = async (userid:number,data:IUserEmploymentData) => {
     const response = await api.put<IApiBaseResponse<IUserEmploymentData>>(
       `${url.employmentData}/${userid}`,data,        
       {
@@ -89,13 +110,31 @@ const auth = () => {
     return response.data;
   }
 
+  const updatePayrollData = async (userid:number,data:IUserPayrollData) => {
+    const response = await api.put<IApiBaseResponse<IUserPayrollData>>(
+      `${url.payrollData}/${userid}`,data,        
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+    
+    return response.data;
+  }
+
   return {
     self,
     personalData,
     employmentData,
+    payrollData,
+
     updatePersonalData,
     updateEmploymentData,
     resetPassword,
+
+    updatePayrollData,
+
   }
 }
 

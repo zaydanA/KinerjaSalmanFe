@@ -1,4 +1,5 @@
 import axios from "axios";
+import employee from "./employee";
 
 export const url = process.env.API_BASE_URL;
 export const api = axios.create({
@@ -13,36 +14,50 @@ export const support = () => {
     logout: "/logout",
     self: "/self",
 
-    getPosition: "/position",
-    getDepartment: "/department",
+    positions: "/positions",
+    departments: "/departments",
 
-    employee: "/employee",
+    employees: "/employees",
 
-    user: {
-      self: "/user/self",
-      personalData: "/user/personal-data",
-      employmentData: "/user/employment-data",
-      resetPassword:"/user/reset-password",
-      delete: "/user/delete",
+
+    users: {
+      self: "/users/self",
+      personalData: "/users/personal-data",
+      employmentData: "/users/employment-data",
+      payrollData: "/users/payroll-data",
+      delete: "/users/delete",
+      resetPassword:"/users/reset-password",
     },
 
     analytics: {
-      genders: '/analytics/genders',
-      todaysAttendances: '/analytics/todays-attendances',
-      myAttendances: '/analytics/my-attendances'
+      genders: "/analytics/genders",
+      todaysAttendances: "/analytics/todays-attendances",
+      myAttendances: "/analytics/my-attendances",
     },
 
-    attendance: {
-      todaySelf: '/attendance/today/self',
-      todayClocks: '/attendance/today/clocks',
-      todayAll: '/attendance/today/all',
-      user: '/attendance'
+    attendances: {
+      todaySelf: "/attendances/today/self",
+      todayClocks: "/attendances/today/clocks",
+      todayAll: "/attendances/today/all",
+      user: "/attendances",
     },
 
     application: {
-      applyLeave: "/application/apply-leave",
-      applyDuty: "/application/apply-duty",
+      apply: "/applications/apply",
+      applications: "/applications",
     },
+
+    banks: "/banks",
+    allowances: {
+      types: "/allowances/types",
+    },
+
+    payrollItems: {
+      user: "/payroll-items",
+      employees: "/payroll-items/employees",
+      employeesRun: "/payroll-items/employees/run",
+      employeesReview: "/payroll-items/employees/review",
+    }
   };
 
   return { apiUrl };

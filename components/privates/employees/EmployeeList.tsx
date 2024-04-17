@@ -8,12 +8,12 @@ import Search from "@/components/shares/search/Search";
 import { IApiBaseDepartment } from "@/types/department";
 import { IApiBasePosition } from "@/types/position";
 import { lib } from "@/lib";
-import Filter from "./Filter";
 import Pagination from "@/components/shares/pagination/Pagination";
 import { useRouter } from "next/navigation";
 import { CiCirclePlus } from "react-icons/ci";
 import BaseInputButton from "@/components/shares/buttons/BaseInputButton";
 import { useAuth } from "@/contexts";
+import Filter from "@/components/shares/filters/Filter";
 
 const EmployeeList = () => {
   const api = apiBase();
@@ -36,7 +36,7 @@ const EmployeeList = () => {
 
   const selectDepartment = useRef<number[] | undefined>();
   const selectPosition = useRef<number[] | undefined>();
-  const selectStatus = useRef<string[] | undefined>();
+  const selectStatus = useRef<number[] | undefined>();
   const searchValue = useRef<string | undefined>();
 
   // This only called once when the page rendered
@@ -65,7 +65,7 @@ const EmployeeList = () => {
   }: {
     search?: string;
     page: number;
-    filterStatus?: string[];
+    filterStatus?: number[];
     filterDepartment?: number[];
     filterPosition?: number[];
   }) => {
@@ -91,34 +91,23 @@ const EmployeeList = () => {
     fetchList({ page: 1 });
     // fetchList({ search: s, page: 1 });
   };
+  
   const handleFilterStatus = (s?: string[]) => {
-    selectStatus.current = s;
+    const numbers = s?.map(Number);
+    selectStatus.current = numbers;
     fetchList({ page: 1 });
-    // fetchList({ filterStatus: s, page: 1 });
   };
 
   const handleFilterDepartment = (d?: string[]) => {
-    // setSelectDepartment(d)
-    selectDepartment.current =
-      d &&
-      currentDepartments
-        .filter((dept) => d.includes(dept.dept_name))
-        .map((dept) => dept.dept_id);
-
+    const numbers = d?.map(Number);
+    selectDepartment.current = numbers;
     fetchList({ page: 1 });
-    // fetchList({ filterDepartment: deptIds, page: 1 });
   };
 
   const handleFilterPosition = (p?: string[]) => {
-    // setSelectPosition(p)
-    selectPosition.current =
-      p &&
-      currentPositions
-        .filter((post) => p.includes(post.title))
-        .map((post) => post.position_id);
-
+    const numbers = p?.map(Number);
+    selectPosition.current = numbers;
     fetchList({ page: 1 });
-    // fetchList({ filterPosition: posIds, page: 1 });
   };
 
   const onPageChange = (pageNumber: number) => {
@@ -137,8 +126,6 @@ const EmployeeList = () => {
     "Gender",
   ];
 
-  // const isAuthenticated = isHRDManagerOrDirector() || isManager(); // Udah dihandle di protected route
-
   return (
     <div className="flex flex-col gap-4 py-10 px-12">
       <div className="flex flex-col gap-6">
@@ -156,21 +143,26 @@ const EmployeeList = () => {
           <div className="flex gap-5 max-md:gap-1">
             <Filter
               label="Employment Status"
-              filterContent={["Active", "Unactive"]}
+              filterContent={["Unactive", "Active"].map((val, index) => ({
+                label: val,
+                value: index
+              }))}
               handler={handleFilterStatus}
             />
             <Filter
               label="Department"
-              filterContent={currentDepartments.map((d) => {
-                return d.dept_name;
-              })}
+              filterContent={currentDepartments.map((d) => ({
+                label: d.dept_name,
+                value: d.dept_id
+              }))}
               handler={handleFilterDepartment}
             />
             <Filter
               label="Position"
-              filterContent={currentPositions.map((p) => {
-                return p.title;
-              })}
+              filterContent={currentPositions.map((p) => ({
+                label: p.title,
+                value: p.position_id
+              }))}
               handler={handleFilterPosition}
             />
           </div>
@@ -207,7 +199,7 @@ const EmployeeList = () => {
                   key={index}
                   dataContent={dataContent}
                   onClickEdit={() => {
-                    router.push(`employee/${e.user_id}`);
+                    window.open(`employee/${e.user_id}`, '_blank');
                   }}
                   isProfile={true}
                 />

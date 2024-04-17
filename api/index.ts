@@ -7,6 +7,9 @@ import department from "./department";
 import analytics from "./analytics";
 import attendance from "./attendance";
 import application from "./application";
+import bank from "./bank";
+import allowance from "./allowance";
+import payrollItem from "./payroll.item";
 
 export const apiBase = () => {
   return {
@@ -19,5 +22,8 @@ export const apiBase = () => {
     analytics,
     attendance,
     application,
+    bank,
+    allowance,
+    payrollItem
   }
 }

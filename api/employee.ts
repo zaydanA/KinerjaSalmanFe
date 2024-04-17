@@ -2,24 +2,20 @@ import { api, support } from './support';
 import { IApiBaseResponse } from '@/types/http';
 import { IApiAddEmployee } from '@/types/employee';
 import { IApiEmployeeResponse } from '@/types/employee'
-import department from './department';
-import position from './position';
-
-
 
 const employee = () => {
   const { apiUrl } = support();
 
   const url = {
-    employee: apiUrl.employee,
-    addEmployee: apiUrl.employee,
-    validateAddEmployee: `${apiUrl.employee}/validate-add`,
+    employees: apiUrl.employees,
+    addEmployee: apiUrl.employees,
+    validateAddEmployee: `${apiUrl.employees}/validate-add`,
 
   }
 
-  const getEmployee = async (page?: number, limit?: number, q?: string, status?: string[], department?: number[], position?: number[]) => {
+  const getEmployee = async (page?: number, limit?: number, q?: string, status?: number[], department?: number[], position?: number[]) => {
     const response = await api.get<IApiBaseResponse<IApiEmployeeResponse>>(
-      url.employee,
+      url.employees,
       {
         params: {
           page: page,

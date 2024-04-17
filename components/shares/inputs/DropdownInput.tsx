@@ -7,7 +7,7 @@ export type DropdownInputType = {
   label: string;
   options: Array<{ value: string | number; label: string }>;
   selectedValue: string | number;
-  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   disabled?: boolean;
   required?: boolean;
   error?: string;
@@ -26,7 +26,7 @@ const DropdownInput: React.FC<DropdownInputType> = ({
   return (
     <div className="flex flex-col gap-2">
       <label htmlFor={id} className="text-sm font-medium block w-fit">
-        {label} {required ? "*" : ""}
+        {label} <span className="text-red-500">{required ? "*" : ""}</span>
       </label>
       <div>
         <select
@@ -36,9 +36,9 @@ const DropdownInput: React.FC<DropdownInputType> = ({
           disabled={disabled}
           className={
             `
-            rounded outline-none w-full p-3 transition-all ease-in-out text-sm placeholder-gray-300
+            rounded outline-none w-full py-[13px] px-3 transition-all ease-in-out text-sm placeholder-gray-300
             ${disabled 
-              ? "bg-white" 
+              ? "bg-gray-100 text-gray-400 shadow-input" 
               : (
                   error 
                   ? "shadow-input-error focus:shadow-input-focus-error" 
@@ -56,30 +56,6 @@ const DropdownInput: React.FC<DropdownInputType> = ({
             </option>
           ))}
         </select>
-        {/* <Dropdown>
-          <DropdownTrigger className='rounded outline-none w-full p-3 transition-all ease-in-out text-sm placeholder-gray-300 shadow-input box-border hover:shadow-input-hover focus:shadow-input-focus'>
-            <Button 
-              variant="flat" 
-              className="bg-white"
-            >
-              {`Select ${label}`}
-            </Button>
-          </DropdownTrigger>
-          <DropdownMenu 
-              aria-label="Single selection example"
-              variant="flat"
-              disallowEmptySelection
-              selectionMode="single"
-              selectedKeys={selectedValue}
-              onSelectionChange={onChange}
-              >
-              {options.map((option)=>(
-                <DropdownItem key={option.value}>
-                  {option.label}
-                </DropdownItem>
-              ))}
-        </DropdownMenu>
-      </Dropdown> */}
 
         {error && (
           <div className="flex gap-1 items-center mt-1">

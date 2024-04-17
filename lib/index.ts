@@ -6,7 +6,26 @@ export const lib = () => {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = String(date.getFullYear());
   
-    return `${day} / ${month} / ${year}`;
+    return `${day}/${month}/${year}`;
+  }
+
+  const formatDateInput = (dateString: string) => {
+    const date = new Date(dateString);
+    
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = String(date.getFullYear());
+  
+    return `${year}-${month}-${day}`;
+  }
+
+  const formatYearMonthDate = (dateString: string, long?: boolean) => {
+    const date = new Date(dateString);
+    
+    const month = date.toLocaleString('default', { month: long ? 'long' : 'short' });
+    const year = String(date.getFullYear());
+  
+    return `${month} ${year}`;
   }
 
   const getDate = (today: Date, withYear = false) => {
@@ -49,7 +68,7 @@ export const lib = () => {
       .join(' ');
   }
 
-  const toHoursMinutes = (date: Date | string): string | null => {
+  const toHoursMinutes = (date: Date | string | null): string | null => {    
     if (typeof date === 'string') {
       date = new Date(date);
     }
@@ -64,11 +83,49 @@ export const lib = () => {
     return `${hours}:${minutes}`;
   }
 
+  const fromHoursMinutes = (timeString: string): string | null => {
+    const [hours, minutes] = timeString.split(':').map(Number);
+    
+    if (isNaN(hours) || isNaN(minutes) || hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
+      return null; // Invalid time format
+    }
+
+    const date = new Date();
+    date.setUTCHours(hours, minutes, 0, 0);
+
+    return String(date);
+  }
+
+  const formatCurrency = (num: number) => {
+    return num.toLocaleString('id-ID', {
+      style: 'currency',
+      currency: 'IDR'
+    });
+  }
+
+  const generateMonthOptions = () => {
+    const months = [
+      "January", "February", "March", "April",
+      "May", "June", "July", "August",
+      "September", "October", "November", "December"
+    ];
+
+    return months.map((month, index) => ({
+      label: month,
+      value: index + 1
+    }));
+  }
+
   return {
     formatDate,
+    formatDateInput,
+    formatYearMonthDate,
     getDate,
     getTimeOfDay,
     toLabelCase,
-    toHoursMinutes
+    toHoursMinutes,
+    fromHoursMinutes,
+    formatCurrency,
+    generateMonthOptions
   }
 }

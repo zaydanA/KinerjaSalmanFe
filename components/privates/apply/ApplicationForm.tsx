@@ -6,13 +6,13 @@ import BaseInputDate from "@/components/shares/inputs/BaseInputDate";
 import BaseInputFile from "@/components/shares/inputs/BaseInputFile";
 import BaseInputText from "@/components/shares/inputs/BaseInputText";
 import DropdownInput from "@/components/shares/inputs/DropdownInput";
-import { LeaveType } from "@/enums/enums";
+import { ApplicationType, LeaveType } from "@/enums/enums";
 import usePDFFile from "@/hooks/usePDFFile";
 import useImageFile from "@/hooks/usePDFFile";
 import { useInput } from "@/hooks/useInput";
 import { lib } from "@/lib";
 import { IApiBaseError } from "@/types/http";
-import { Switch } from "@nextui-org/react";
+import { Radio, Switch } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
@@ -50,19 +50,21 @@ const ApplicationForm = () => {
           applicationType: true,
           start_date: startDate,
           end_date: endDate,
+          type: ApplicationType.LEAVE,
           description: description,
-          type: leaveType,
-          image_file: pdfFile,
+          leave_type: leaveType,
+          file_url: pdfFile,
         });
       } else {
         response = await api.application().createApplication({
           applicationType: false,
           start_date: startDate,
           end_date: endDate,
+          type: ApplicationType.DUTY,
           description: description,
           event_name: eventName,
           location: eventLocation,
-          image_file: pdfFile,
+          file_url: pdfFile,
         });
       }
 
@@ -72,7 +74,7 @@ const ApplicationForm = () => {
     }
   };
 
-  console.log(pdfFile);
+  // console.log(pdfFile);
   return (
     <div className="mx-auto">
       <h2 className="mb-1 text-lg text-gray-500">Application Form</h2>
@@ -81,10 +83,31 @@ const ApplicationForm = () => {
         <h3 className="mb-1 text-lg font-bold"> Application Data </h3>
         <p className="text-sm text-gray-500"> Fill application data</p>
         <div className="my-6 grid grid-cols-2 gap-x-5 gap-y-4">
-          <div className="col-span-2">
-            <Switch isSelected={isSelected} onValueChange={handleSwitch}>
-              {isSelected ? "Time-off Leave" : "Duty Leave"}
-            </Switch>
+          <div className="col-span-2 flex gap-5">
+
+            <div className="flex gap-1">
+              <input
+                type="radio"
+                id="timeOff"
+                name="leaveType"
+                value="timeOff"
+                checked={isSelected}
+                onChange={() => handleSwitch()}
+              />
+              <label htmlFor="timeOff">Time-off Leave</label>
+            </div>
+
+            <div className="flex gap-1">
+              <input
+                type="radio"
+                id="dutyLeave"
+                name="leaveType"
+                value="dutyLeave"
+                checked={!isSelected}
+                onChange={() => handleSwitch()}
+              />
+              <label htmlFor="dutyLeave">Duty Leave</label>
+            </div>
           </div>
           <BaseInputDate
             id="start_date"

@@ -13,7 +13,7 @@ const Filter = ({
   handler,
 }: {
   label: string;
-  filterContent: string[];
+  filterContent: { label: string; value: string | number }[];
   handler: (p: string[]) => void;
 }) => {
   const [checkedValues, setCheckedValues] = useState<string[]>([]);
@@ -46,14 +46,14 @@ const Filter = ({
           className="text-sm"
         >
           {filterContent.map((f, index) => (
-            <DropdownItem key={f} className="cursor-default" textValue={f}>
+            <DropdownItem key={f.value} className="cursor-default" textValue={f.label}>
               <div className="flex justify-between">
-                <label htmlFor={f}>{f}</label>
+                <label htmlFor={f.label}>{f.label}</label>
                 <input
                   type="checkbox"
                   className="cursor-pointer"
-                  onChange={(e) => handleCheckboxChange(e, f)}
-                  checked={checkedValues.includes(f)}
+                  onChange={(e) => handleCheckboxChange(e, String(f.value))}
+                  checked={checkedValues.includes(String(f.value))}
                 />
               </div>
             </DropdownItem>

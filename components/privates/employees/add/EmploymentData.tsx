@@ -34,7 +34,7 @@ const EmploymentDataForm = ({
             }
             setPositions(filteredPositions);
         } catch (error) {
-            throw error;
+            console.error(error);
         }
     }
 
@@ -49,7 +49,7 @@ const EmploymentDataForm = ({
             }
             setDepartments(filteredDepartments);
         } catch (error) {
-            throw error;
+            console.error(error);
         }
     }
 

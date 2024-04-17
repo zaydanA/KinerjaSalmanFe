@@ -5,6 +5,7 @@ import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
 import { CiUser } from "react-icons/ci";
 import { useEffect, useState } from 'react';
 import { PiCalculatorThin } from "react-icons/pi";
+import { CiTimer } from "react-icons/ci";
 import React from "react";
 import {Breadcrumbs, BreadcrumbItem} from "@nextui-org/react";
 import { IoMenuOutline,IoCloseOutline } from "react-icons/io5";
@@ -15,6 +16,8 @@ import { usePathname } from "next/navigation";
 import { apiBase } from "@/api";
 import { useRouter } from "next/navigation";
 import { IApiBaseError } from "@/types/http";
+import Attendance from "../Attendance";
+import PayrollInfo from "../PayrollInfo";
 
 const SidebarData = [
     {
@@ -36,7 +39,17 @@ const SidebarData = [
             title:"Additional Info"
             },
         ]
-    
+    },
+    {
+        title: "Time Management",
+        icon: <CiTimer />,
+        iconOpened:<RiArrowDropUpLine className="h-full text-3xl text-[--kinerja-gold]"/>,
+        iconClosed:<RiArrowDropDownLine className="h-full text-3xl text-[--kinerja-gold]"/>,
+        subNav:[
+            {
+                title:"Attendance"
+            },
+        ]
     },
     {
         title:"Payroll",
@@ -134,7 +147,7 @@ const DetailEmployee: React.FC<DetailEmployeeType> = (props)=>{
                         </p>
                         }
                     </div>
-                    <div className="flex flex-col h-fit w-full bg-white">
+                    <div className="flex flex-col h-fit w-full bg-white cursor-pointer">
                         <Sidebar SidebarData={SidebarData} activeComponent={activeComponent} setActiveComponent={setActiveComponent}></Sidebar>
                     </div>
                 </div>
@@ -152,8 +165,24 @@ const DetailEmployee: React.FC<DetailEmployeeType> = (props)=>{
                     </h1>
                 </div>
                 <div className="h-full flex flex-col ">
-                    {
+                    {/* {
                        activeComponent == SidebarData[0].subNav[0].title? <Personal employee={employee} activeComponentNavbar={activeComponentNavbar} NavbarComponentData={NavbarComponentData} setActiveComponentNavbar={setActiveComponentNavbar}></Personal>: (activeComponent == SidebarData[0].subNav[1].title? <Employment user={props.user}></Employment> : null)
+                    } */}
+                    {
+                        (() => {
+                            switch (activeComponent) {
+                                case SidebarData[0].subNav[0].title:
+                                    return <Personal employee={employee} activeComponentNavbar={activeComponentNavbar} NavbarComponentData={NavbarComponentData} setActiveComponentNavbar={setActiveComponentNavbar} />;
+                                case SidebarData[0].subNav[1].title:
+                                    return <Employment user={props.user} />;
+                                case SidebarData[1].subNav[0].title:
+                                    return <Attendance user={props.user} />;
+                                case SidebarData[2].subNav[0].title:
+                                    return <PayrollInfo user={props.user} />;
+                                default:
+                                    return null;
+                            }
+                        })()
                     }
                 </div>
             </div>

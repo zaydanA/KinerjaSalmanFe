@@ -1,3 +1,5 @@
+import { IApiBaseAllowance } from "./allowance"
+
 export interface IUserSelfData {
   user_id: number
   email: string
@@ -39,7 +41,22 @@ export interface IUserEmploymentData {
 }
 
 export interface IUserPayrollData {
+  payroll_id?: number
+  user_id?: number
+
   npwp_number: string
+  basic_salary?: number
+
+  bank_id: number
+  bank_account_number: string
+  bank_account_holder: string
+
+  bpjs_ketenagakerjaan_number: string
+  bpjs_ketenagakerjaan_date: string
+  bpjs_kesehatan_number: string
+  bpjs_kesehatan_date: string
+
+  allowances: IApiBaseAllowance[]
 }
 
 export interface ResetPassword {
