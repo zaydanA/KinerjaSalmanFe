@@ -1,19 +1,21 @@
-import { apiBase } from "@/api"
+import { IUserPersonalData } from "@/types/user";
 import IdentityAddress from "./IdentityAddress"
 import PersonalData from "./PersonalData"
-import { useEffect,useState } from "react"
-import { useAuth } from "@/contexts"
 
-const BasicInfo = (props:any)=>{
+const BasicInfo = ({
+        employee
+        }:{
+        employee:IUserPersonalData
+        })=>{
 
 
     return(
         <>
                 <div className="flex min-h-fit pb-10 border-b-1">
-                        <PersonalData employee={props.employee}></PersonalData>
+                        <PersonalData employee={employee}></PersonalData>
                 </div>
                 <div className="flex min-h-fit pb-10 border-b-1">
-                        <IdentityAddress employee={props.employee}></IdentityAddress>
+                        <IdentityAddress employee={employee}></IdentityAddress>
                 </div>
         </>
     )

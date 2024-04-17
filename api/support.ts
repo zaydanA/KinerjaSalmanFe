@@ -19,12 +19,14 @@ export const support = () => {
 
     employees: "/employees",
 
+
     users: {
       self: "/users/self",
       personalData: "/users/personal-data",
       employmentData: "/users/employment-data",
       payrollData: "/users/payroll-data",
       delete: "/users/delete",
+      resetPassword:"/users/reset-password",
     },
 
     analytics: {

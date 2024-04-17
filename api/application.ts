@@ -36,7 +36,7 @@ const application = () => {
     file_url?: FileList | null;
   }) => {
     const formData = new FormData();
-
+    
     formData.append("start_date", start_date);
     formData.append("end_date", end_date);
     formData.append("description", description);
@@ -55,6 +55,7 @@ const application = () => {
     if (file_url instanceof FileList) {
       formData.append("file_url", file_url[0]);
     }
+
     formData.forEach((element) => {
       console.log(element);
     });
@@ -87,6 +88,7 @@ const application = () => {
       },
     });
 
+    console.log(response.data);
     return {
       data: response.data.data,
     };

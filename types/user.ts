@@ -16,6 +16,7 @@ export interface IUserSelfData {
 }
 
 export interface IUserPersonalData {
+  user_id?:number,
   email: string
   full_name: string
   phone_number: string
@@ -56,4 +57,9 @@ export interface IUserPayrollData {
   bpjs_kesehatan_date: string
 
   allowances: IApiBaseAllowance[]
+}
+
+export interface ResetPassword {
+  user_id:number
+  password:string
 }
