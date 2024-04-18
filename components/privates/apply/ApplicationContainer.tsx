@@ -78,13 +78,13 @@ const ApplicationContainer: React.FC<ApplicationContainerProps> = ({
             // Display buttons for HR approval
             <div className="center mt-2 flex">
               <button
-                className="accept-button mr-2 w-20 rounded bg-green-500 px-4 py-2 text-white"
+                className="accept-button w-fit rounded bg-green-500 px-4 py-2 text-white"
                 onClick={() => toggleModal(true)}
               >
                 Accept
               </button>
               <button
-                className="reject-button w-20 rounded bg-red-500 px-4 py-2 text-white"
+                className="reject-button w-20 rounded bg-white px-4 py-2 text-black"
                 onClick={() => toggleModal(false)}
               >
                 Reject
@@ -117,7 +117,7 @@ const ApplicationContainer: React.FC<ApplicationContainerProps> = ({
                 Approve
               </button>
               <button
-                className="reject-button w-20 rounded bg-white border-gray-300 px-4 py-2 text-black border-2"
+                className="reject-button w-20 rounded bg-white px-4 py-2 text-black"
                 onClick={() => toggleModal(false)}
               >
                 Reject
