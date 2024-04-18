@@ -64,11 +64,11 @@ const ApplicationList = () => {
 
   const handleAccept = async (application: IApiBaseApplication) => {
     try {
-      console.log("masuk");
       await apiBase()
         .application()
         .updateApplicationStatus(
           application.application_id,
+          application.file_url,
           ApplicationsStatus.ACCEPTED,
         );
       fetchApplications(pagination.current_page);
@@ -83,6 +83,7 @@ const ApplicationList = () => {
         .application()
         .updateApplicationStatus(
           application.application_id,
+          application.file_url,
           ApplicationsStatus.REJECTED,
         );
       fetchApplications(pagination.current_page);
@@ -96,16 +97,16 @@ const ApplicationList = () => {
       <h2 className="mb-1 text-lg text-gray-500"> Application </h2>
       <h1 className="mb-4 text-2xl font-bold"> Applications List </h1>
       <button
-        className={`rounded px-4 py-2 ${
-          activeTab === "leave" ? "bg-gray-300" : "bg-gray-100"
+        className={`rounded-l-lg px-4 py-2 ${
+          activeTab === "leave" ? "bg-[--kinerja-gold] hover:bg-[--kinerja-gold-hover] text-white" : "bg-gray-200 hover:bg-gray-300"
         }`}
         onClick={() => handleTabChange("leave")}
       >
         Leave
       </button>
       <button
-        className={`rounded px-4 py-2 ${
-          activeTab === "duty" ? "bg-gray-300" : "bg-gray-100"
+        className={`rounded-r-lg px-4 py-2 ${
+          activeTab === "duty" ? "bg-[--kinerja-gold] hover:bg-[--kinerja-gold-hover] text-white" : "bg-gray-200 hover:bg-gray-300"
         }`}
         onClick={() => handleTabChange("duty")}
       >

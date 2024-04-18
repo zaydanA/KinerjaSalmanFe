@@ -28,12 +28,13 @@ const ProfileDropdown = () => {
                     <DropdownTrigger>
                         <div className="flex items-center" onClick={()=>{setIsDropdownActive(!isDropdownActive)}}>
                             <Avatar
+                                showFallback
                                 isBordered
                                 size="sm"
                                 as="button"
                                 className="transition-transform ring-[--kinerja-gold]"
-                                src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
                                 />
+
                             <RiArrowDropDownLine className="h-full text-3xl text-[--kinerja-gold]"/>
                         </div>
                     </DropdownTrigger>

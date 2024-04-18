@@ -4,6 +4,7 @@ import { useAuth } from "@/contexts";
 import { useInput } from "@/hooks/useInput";
 import { Button, Checkbox } from "@nextui-org/react";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const ChangePassword = ()=>{
 
@@ -39,9 +40,16 @@ const ChangePassword = ()=>{
 
     const resetPassword = async ()=>{
         if(minCharPass && passwordMatch){
-
-            const res = await apiBase().user().resetPassword(newPassword);
-            
+            try {
+                const res = await apiBase().user().resetPassword(newPassword);
+                setNewPassword("");
+                setConfirmPassword("");
+                toast.success("Password changed")
+                
+            } catch (error) {
+                
+                toast.error("Request Failed")
+            }
         }
     }
     return(
