@@ -81,7 +81,7 @@ const ApplicationContainer: React.FC<ApplicationContainerProps> = ({
                 className="accept-button w-fit rounded bg-green-500 px-4 py-2 text-white"
                 onClick={() => toggleModal(true)}
               >
-                Accept
+                Approve
               </button>
               <button
                 className="reject-button w-20 rounded bg-white px-4 py-2 text-black"
