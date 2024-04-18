@@ -100,7 +100,7 @@ const Employment = (props:any) => {
         try {
 
             const response = await apiBase().user().updateEmploymentData(props.user?props.user.user_id:Number(pathname[2]),updateEmploymentData)
-            console.log(response)
+
             setIsEditEmployment(false);
         } catch (error) {
             console.log(error);

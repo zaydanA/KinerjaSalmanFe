@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IApiBaseApplication } from "@/types/application";
 import { useAuth } from "@/contexts";
 import BaseModal from "@/components/shares/modals/BaseModal";
+import { FaFilePdf } from "react-icons/fa6";
+import { IoMdDownload } from "react-icons/io";
+import { apiBase } from "@/api";
+import { Spinner } from "@nextui-org/react";
+import Link from "next/link";
+import { ApplicationsStatus } from "@/enums/enums";
 
 interface ApplicationContainerProps {
   application: IApiBaseApplication;
@@ -19,8 +25,8 @@ const ApplicationContainer: React.FC<ApplicationContainerProps> = ({
   const [showModal, setShowModal] = useState(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [modalOption, setModalOption] = useState<boolean>(false); // true: Accept, false: Reject
+  const [fileUrl,setFileUrl] = useState('');
   const { isHRDManagerOrDirector, isManager } = useAuth();
-  console.log(isManager());
 
   const startDate = new Date(application.start_date).toLocaleString("en-US", {
     timeZone: "America/New_York",
@@ -37,20 +43,31 @@ const ApplicationContainer: React.FC<ApplicationContainerProps> = ({
     setModalOpen(!modalOpen);
   };
 
+  useEffect(()=>{
+    async function generateFileUrl(){
+
+      if(showModal && (application.file_url && application.hr_status == ApplicationsStatus.PENDING && application.manager_status != ApplicationsStatus.REJECTED)){
+        const response = await apiBase().application().generateFileUrlApplication(application.file_url)
+        setFileUrl(response.data);
+      }
+
+    }
+  generateFileUrl()
+  },[showModal])
+
   return (
-    <div className="mb-2 mt-3 rounded border p-4  hover:shadow-md">
-      <div className="flex items-center justify-between">
-        <div>
+    <div className="mb-2 mt-3 rounded-md border-1 border-gray-400 py-2 px-4 hover:shadow-md"  >
+      <div className="flex items-center justify-between" >
+        <div className="w-full" onClick={() => setShowModal(!showModal)}>
           <div className=" w-fit">
             <h3
-              className="mb-2 text-lg font-bold hover:cursor-pointer hover:underline"
-              onClick={() => setShowModal(!showModal)}
+              className="text-lg font-bold hover:cursor-pointer hover:underline"
             >
               {application.user.full_name}
             </h3>
           </div>
-          <p className="text-md mb-2">
-            Application ID: {application.application_id}
+          <p className="text-md">
+            {application.leave_type}
           </p>
           <p className="text-sm">
             Date: {startDate} - {endDate}
@@ -92,15 +109,15 @@ const ApplicationContainer: React.FC<ApplicationContainerProps> = ({
           isManager() &&
           (application.manager_status === "PENDING" ? (
             // Display buttons for Manager approval
-            <div className="center mt-2 flex">
+            <div className="center flex gap-2">
               <button
-                className="accept-button mr-2 w-20 rounded bg-green-500 px-4 py-2 text-white"
+                className="accept-button w-fit rounded bg-green-500 px-4 py-2 text-white"
                 onClick={() => toggleModal(true)}
               >
-                Accept
+                Approve
               </button>
               <button
-                className="reject-button w-20 rounded bg-red-500 px-4 py-2 text-white"
+                className="reject-button w-20 rounded bg-white border-gray-300 px-4 py-2 text-black border-2"
                 onClick={() => toggleModal(false)}
               >
                 Reject
@@ -130,7 +147,7 @@ const ApplicationContainer: React.FC<ApplicationContainerProps> = ({
             <div>
               <h2 className="mb-4 text-2xl font-bold">Application Details</h2>
             </div>
-            <div>
+            <div className="flex flex-col gap-2">
               <p>
                 <strong>Application ID:</strong> {application.application_id}
               </p>
@@ -167,10 +184,18 @@ const ApplicationContainer: React.FC<ApplicationContainerProps> = ({
                 </p>
               )) ??
                 null}
+              {(application.file_url && application.hr_status == ApplicationsStatus.PENDING && application.manager_status != ApplicationsStatus.REJECTED)? (fileUrl != '' ? <Link className="h-full w-full border-1 border-gray-300 rounded-lg px-5 py-4 flex flex-row items-center justify-between" href={fileUrl} target="_blank">
+                  <div className="flex flex-row text-sm justify-end text-right gap-2">
+                    <FaFilePdf className="text-[--kinerja-gold] text-xl"></FaFilePdf> 
+                      {application.file_url}
+                  </div>
+                  <IoMdDownload className="text-[--kinerja-gold]"></IoMdDownload>
+              </Link> : <Spinner color="default" size="sm"></Spinner>)
+              :null}
             </div>
             <div>
               <button
-                className="w-full rounded bg-red-500 px-4 py-2 text-white"
+                className="w-full rounded bg-[--kinerja-gold] px-4 py-2 text-white"
                 onClick={() => setShowModal(false)}
               >
                 Close

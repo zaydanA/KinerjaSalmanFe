@@ -45,6 +45,7 @@ export const support = () => {
     application: {
       apply: "/applications/apply",
       applications: "/applications",
+      generateFileUrl:"/applications/generate-file-url"
     },
 
     banks: "/banks",

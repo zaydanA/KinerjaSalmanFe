@@ -74,8 +74,7 @@ const PersonalData = ({
             address: employee.address,
         }
         try {
-            const response = await apiBase().user().updatePersonalData(employee.user_id,personalData)
-            // console.log(response)
+            const response = employee.user_id &&  await apiBase().user().updatePersonalData(employee.user_id,personalData)
             setIsEditPersonal(false);
         } catch (error) {
             apiBaseError.set(error)
