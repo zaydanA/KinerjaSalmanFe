@@ -9,7 +9,7 @@ type BaseInputProps = {
   label: string;
   placeholder?: string;
   disabled?: boolean;
-  type?: "number" | "currencies" | "text" | "password" | "password-no-eye" | "date";
+  type?: "number" | "currencies" | "text" | "password" | "password-no-eye" | "date" | "tel";
   required?: boolean;
   maxLength?: number;
   fixedLength?: number;

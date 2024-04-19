@@ -101,6 +101,8 @@ const ListPayroll = () => {
         setModalOpen(false);
         fetchList();
         toast.success(res.message);
+
+        apiBaseError.clear();
       }
     } catch (error) {
       apiBaseError.set(error);
@@ -179,11 +181,7 @@ const ListPayroll = () => {
                       dataContent={dataContent}
                       isProfile={false}
                       onClickOpen={() => {
-                        const date = new Date(e.period);
-                        const year = date.getFullYear();
-                        const month = String(date.getMonth() + 1).padStart(2, '0');
-                        const formattedDate = `${year}-${month}`;
-                        window.open(`payroll/${formattedDate}`, '_blank');
+                        window.open(`payroll/${customLib.formatYearMonthDateURL(e.period)}`, '_blank');
                       }}
                     />
                   );

@@ -1,4 +1,4 @@
-import { IApiBaseEmployeesPayrollItemList, IApiBaseEmployeesReviewPayrollItemPagination, IApiBasePayrollItemList, IApiBasePayrollItemPagination } from '@/types/payroll.item';
+import { IApiBaseEmployeesPayrollItemList, IApiBaseEmployeesReviewPayrollItemPagination, IApiBasePayrollItemDetails, IApiBasePayrollItemList, IApiBasePayrollItemPagination } from '@/types/payroll.item';
 import { api, support } from './support';
 import { IApiBaseResponse } from '@/types/http';
 
@@ -112,6 +112,18 @@ const payrollItem = () => {
     return response.data
   }
 
+  const getUserPayrollItemsDetails = async (
+    user_id: number,
+    period: string
+  ) => {
+    const response = await api.get<IApiBaseResponse<IApiBasePayrollItemDetails>>(
+      `${url.user}/${user_id}/items/${period}`,
+      {}
+    )
+
+    return response.data;
+  }
+
   return {
     getUserPayrollItems,
     getUserPayrollItemsYear,
@@ -119,7 +131,9 @@ const payrollItem = () => {
     runEmployeesPayrollItems,
 
     getEmployeesReviewPayrollItems,
-    updateEmployeesReviewPayrollItems
+    updateEmployeesReviewPayrollItems,
+
+    getUserPayrollItemsDetails
   };
 };
 

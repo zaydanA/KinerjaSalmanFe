@@ -207,7 +207,7 @@ const PayrollDataForm = ({
                     required={true}
                     maxLength={16}
                     placeholder="Bank Account Number"
-                    type="number"
+                    type="tel"
                     value={formData.bank_account_number}
                     error={apiBaseError.getErrors('bank_account_number')?.[0].toString()}
                     setValue={(e) => handlePayrollDataChange('bank_account_number', e.target.value)}

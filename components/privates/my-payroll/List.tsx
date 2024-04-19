@@ -150,7 +150,7 @@ const ListMyPayroll = () => {
                       dataContent={dataContent}
                       isProfile={false}
                       onClickOpen={() => {
-                        window.open(`payroll/${e.payroll_id}`, '_blank');
+                        window.open(`/my-payroll/${e.payroll_id}/items/${customLib.formatYearMonthDateURL(e.date)}`, '_blank');
                       }}
                     />
                   );

@@ -54,11 +54,7 @@ const TableData = ({
       )}
       <td className="-border-b--clr-table-border whitespace-nowrap border-b-1 border-l-1 border-solid bg-clr-blackground-table-body p-4 px-3.5 text-start max-lg:text-sm max-md:px-4 max-md:text-xs max-sm:text-[10px] min-[320px]:sticky min-[320px]:right-0">
         <div
-          className={
-            onClickEdit && onClickDelete
-              ? "flex gap-5"
-              : "flex items-center justify-center"
-          }
+          className="flex items-center justify-center gap-5"
         >
           {onClickEdit && (
             <button onClick={onClickEdit} aria-label="Edit">

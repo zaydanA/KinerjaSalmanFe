@@ -28,6 +28,13 @@ export const lib = () => {
     return `${month} ${year}`;
   }
 
+  const formatYearMonthDateURL = (period: string) => {
+    const date = new Date(period);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    return `${year}-${month}`;
+  }
+
   const getDate = (today: Date, withYear = false) => {
     let options;
 
@@ -116,16 +123,52 @@ export const lib = () => {
     }));
   }
 
+  function getDateDifference(dateString1: string, dateString2: string) {
+    const date1 = new Date(dateString1);
+    const date2 = new Date(dateString2);
+
+    // Calculate the difference in milliseconds
+    const differenceMs = Math.abs(date2.getTime() - date1.getTime());
+
+    // Convert milliseconds to days, months, and years
+    const millisecondsInDay = 1000 * 60 * 60 * 24;
+    const days = Math.floor(differenceMs / millisecondsInDay);
+    const months = Math.floor(days / 30); // Approximate number of days in a month
+    const years = Math.floor(months / 12); // Approximate number of months in a year
+
+    // Calculate the remaining months and days
+    const remainingMonths = months % 12;
+    const remainingDays = days % 30; // Approximate number of days in a month
+
+    // Construct the result string
+    let result = '';
+    if (years > 0) {
+      result += years + ' year' + (years > 1 ? 's' : '');
+    }
+    if (remainingMonths > 0) {
+      result += (result ? ' ' : '') + remainingMonths + ' month' + (remainingMonths > 1 ? 's' : '');
+    }
+    if (remainingDays > 0) {
+      result += (result ? ' ' : '') + remainingDays + ' day' + (remainingDays > 1 ? 's' : '');
+    }
+
+    return result;
+  }
+
   return {
     formatDate,
     formatDateInput,
     formatYearMonthDate,
+    formatYearMonthDateURL,
+
     getDate,
     getTimeOfDay,
     toLabelCase,
     toHoursMinutes,
     fromHoursMinutes,
     formatCurrency,
-    generateMonthOptions
+    generateMonthOptions,
+
+    getDateDifference
   }
 }
