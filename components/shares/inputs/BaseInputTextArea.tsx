@@ -40,6 +40,7 @@ export default function BaseInputTextArea({
           id={id}
           placeholder={placeholder}
           value={value}
+          maxLength={maxLength}
           onChange={setValue}
           disabled={disabled}
           className={

@@ -387,6 +387,9 @@ const ListReviewPayroll = () => {
                       e.net_salary,
                       e.payroll_id
                     )}
+                    onClickOpen={() => {
+                      window.open(`/my-payroll/${e.payroll_id}/items/${pathname[2]}`, '_blank');
+                    }}
                     isProfile={true}
                   />
                 );
