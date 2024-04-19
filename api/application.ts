@@ -12,6 +12,7 @@ const application = () => {
   const url = {
     apply: apiUrl.application.apply,
     applications: apiUrl.application.applications,
+    generateFileUrl:apiUrl.application.generateFileUrl
   };
 
   const createApplication = async ({
@@ -36,11 +37,10 @@ const application = () => {
     file_url?: FileList | null;
   }) => {
     const formData = new FormData();
-
+    
     formData.append("start_date", start_date);
     formData.append("end_date", end_date);
     formData.append("description", description);
-    console.log(type);
     formData.append("type", type);
 
     // Time-off leave application
@@ -55,9 +55,7 @@ const application = () => {
     if (file_url instanceof FileList) {
       formData.append("file_url", file_url[0]);
     }
-    formData.forEach((element) => {
-      console.log(element);
-    });
+
 
     const response = await api.post<IApiBaseResponse<IApiBaseApplication>>(
       url.apply,
@@ -94,11 +92,12 @@ const application = () => {
 
   const updateApplicationStatus = async (
     id: number,
+    fileID: string | undefined,
     status: ApplicationsStatus,
   ) => {
     const response = await api.put<IApiBaseResponse<IApiBaseApplication>>(
       url.applications,
-      { status },
+      { status,fileID },
       {
         params: {
           id,
@@ -109,10 +108,26 @@ const application = () => {
     return response.data;
   };
 
+  const generateFileUrlApplication = async (
+    fileID:string,
+    )=>{
+    const response = await api.post<IApiBaseResponse<string>>(
+      url.generateFileUrl
+    ,{
+      fileID:fileID,
+    },
+    {
+
+    })
+
+    return response.data;
+  }
+
   return {
     createApplication,
     getApplications,
     updateApplicationStatus,
+    generateFileUrlApplication
   };
 };
 

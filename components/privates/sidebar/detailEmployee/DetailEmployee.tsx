@@ -99,7 +99,7 @@ const DetailEmployee: React.FC<DetailEmployeeType> = (props)=>{
     const router = useRouter();
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const apiBaseError = apiBase().error<IApiBaseError>();
-
+    
     useEffect(()=>{
         async function getEmployeeById(){
             try {
@@ -133,7 +133,7 @@ const DetailEmployee: React.FC<DetailEmployeeType> = (props)=>{
                 </div>
                 <div className={`flex-col h-full flex-col items-center p-2 ease-in-out duration-300 ${isSidebarOpen?"min-w-[236px] bg-white rounded-l-lg":"hidden"}`}>
                     <div className={`flex flex-col items-center h-[197px] m-3 border-b-1 pb-2 `}>
-                        <Avatar src="https://i.pravatar.cc/150?u=a04258114e29026708c" className="w-[80px] h-[80px] mb-2"/>
+                        <Avatar showFallback className="w-[80px] h-[80px] mb-2"/>
                         <h1 className="text-center font-semibold my-2 text-lg">
                             {employee?.full_name}
                         </h1>

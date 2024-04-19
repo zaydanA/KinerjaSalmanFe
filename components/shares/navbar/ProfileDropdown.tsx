@@ -1,7 +1,7 @@
 "use client"
 import React, { FormEvent, useState } from "react";
-import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Avatar, User} from "@nextui-org/react";
-import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
+import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Avatar} from "@nextui-org/react";
+import { RiArrowDropDownLine } from "react-icons/ri";
 import Link from "next/link";
 import { IoSettingsOutline } from "react-icons/io5";
 import { GoSignOut } from "react-icons/go";
@@ -28,12 +28,13 @@ const ProfileDropdown = () => {
                     <DropdownTrigger>
                         <div className="flex items-center" onClick={()=>{setIsDropdownActive(!isDropdownActive)}}>
                             <Avatar
+                                showFallback
                                 isBordered
                                 size="sm"
                                 as="button"
                                 className="transition-transform ring-[--kinerja-gold]"
-                                src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
                                 />
+
                             <RiArrowDropDownLine className="h-full text-3xl text-[--kinerja-gold]"/>
                         </div>
                     </DropdownTrigger>

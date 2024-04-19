@@ -48,6 +48,7 @@ export default function BaseInputTextProfile({
 
   return (
     <div className="flex flex-col">
+
       <div className="relative">
         {type === "currencies" ? (
           <NumericFormat
@@ -117,7 +118,7 @@ export default function BaseInputTextProfile({
                   : (
                       error 
                       ? "shadow-input-error focus:shadow-input-focus-error" 
-                      : "border-1 border-clr-kinerja-gold hover:shadow-input-hover focus:shadow-input-focus"
+                      : "border-1 border-gray-300 hover:shadow-input-hover focus:shadow-input-focus"
                     )
                 }`
               }
@@ -126,7 +127,7 @@ export default function BaseInputTextProfile({
         )}
 
         {needEye && (
-          <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+          <div className="absolute inset-y-0 right-0 flex items-center pr-3 text-[--kinerja-gold]">
             <button
               type="button"
               onClick={togglePasswordVisibility}

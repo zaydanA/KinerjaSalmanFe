@@ -92,6 +92,12 @@ select {
   border-right: 10px solid transparent
 }
 
+
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
+
 /* Arrow in input type=number */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

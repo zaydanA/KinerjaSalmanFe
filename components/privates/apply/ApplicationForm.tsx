@@ -74,7 +74,6 @@ const ApplicationForm = () => {
     }
   };
 
-  // console.log(pdfFile);
   return (
     <div className="mx-auto">
       <h2 className="mb-1 text-lg text-gray-500">Application Form</h2>
