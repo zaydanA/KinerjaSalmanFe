@@ -15,6 +15,7 @@ import { IApiBaseError } from "@/types/http";
 import { Radio, Switch } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 const ApplicationForm = () => {
   const customLib = lib();
@@ -68,9 +69,13 @@ const ApplicationForm = () => {
         });
       }
 
-      router.push("/dashboard");
+      if (response.status === "success") {
+        toast.success(response.message);
+        router.push("/dashboard");
+      }
     } catch (error) {
-      console.error(error);
+      apiBaseError.set(error);
+      toast.error(apiBaseError.getMessage());
     }
   };
 

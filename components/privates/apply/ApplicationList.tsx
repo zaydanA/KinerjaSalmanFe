@@ -6,6 +6,8 @@ import { apiBase } from "@/api";
 import { IApiBaseApplication } from "@/types/application";
 import { ApplicationsStatus, ApplicationType } from "@/enums/enums";
 import BaseModal from "@/components/shares/modals/BaseModal";
+import { toast } from "react-toastify";
+import { IApiBaseError } from "@/types/http";
 
 interface Pagination {
   total: number;
@@ -62,18 +64,24 @@ const ApplicationList = () => {
     setActiveTab(tab);
   };
 
+  const apiBaseError = api.error<IApiBaseError>();
+
   const handleAccept = async (application: IApiBaseApplication) => {
     try {
-      await apiBase()
+      const response = await apiBase()
         .application()
         .updateApplicationStatus(
           application.application_id,
           application.file_url,
           ApplicationsStatus.ACCEPTED,
         );
-      fetchApplications(pagination.current_page);
+      if (response.status === "success") {
+        toast.success(response.message);
+        fetchApplications(pagination.current_page);
+      }
     } catch (error) {
-      console.log("Error accepting application");
+      apiBaseError.set(error);
+      toast.error(apiBaseError.getMessage());
     }
   };
 
