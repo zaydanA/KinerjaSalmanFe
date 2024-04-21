@@ -8,6 +8,7 @@ import { apiBase } from "@/api";
 import { Spinner } from "@nextui-org/react";
 import Link from "next/link";
 import { ApplicationsStatus } from "@/enums/enums";
+import { lib } from "@/lib";
 
 interface ApplicationContainerProps {
   application: IApiBaseApplication;
@@ -27,16 +28,10 @@ const ApplicationContainer: React.FC<ApplicationContainerProps> = ({
   const [modalOption, setModalOption] = useState<boolean>(false); // true: Accept, false: Reject
   const [fileUrl,setFileUrl] = useState('');
   const { isHRDManagerOrDirector, isManager } = useAuth();
+  const customLib = lib();
 
-  const startDate = new Date(application.start_date).toLocaleString("en-US", {
-    timeZone: "America/New_York",
-    dateStyle: "long",
-  });
-
-  const endDate = new Date(application.end_date).toLocaleString("en-US", {
-    timeZone: "America/New_York",
-    dateStyle: "long",
-  });
+  const startDate = customLib.getDate(new Date(application.start_date), true);
+  const endDate = customLib.getDate(new Date(application.end_date), true);
 
   const toggleModal = (modalType?: boolean) => {
     setModalOption(modalType ?? true);
