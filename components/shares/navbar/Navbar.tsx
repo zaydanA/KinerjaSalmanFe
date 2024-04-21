@@ -24,6 +24,9 @@ const NavbarDataForManagerAndAbove = [{
 }, {
     title:"Applications",
     path:"/applications"
+}, {
+    title:"Time-off",
+    path:"/apply"
 }];
 
 const NavbarDataForBelowManager = [{
