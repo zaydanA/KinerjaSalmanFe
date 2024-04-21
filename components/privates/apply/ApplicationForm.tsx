@@ -142,6 +142,7 @@ const ApplicationForm = () => {
                   }))}
                   selectedValue={leaveType}
                   onChange={(e) => setLeaveType(e.target.value)}
+                  error={apiBaseError.getErrors("leave_type")?.[0].toString()}
                 />
               </div>
               <div className="col-span-2">
