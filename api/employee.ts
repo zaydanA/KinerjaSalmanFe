@@ -10,7 +10,7 @@ const employee = () => {
     employees: apiUrl.employees,
     addEmployee: apiUrl.employees,
     validateAddEmployee: `${apiUrl.employees}/validate-add`,
-
+    employeesReview : `${apiUrl.employees}/review`,
   }
 
   const getEmployee = async (page?: number, limit?: number, q?: string, status?: number[], department?: number[], position?: number[]) => {
@@ -62,10 +62,27 @@ const employee = () => {
     return response.data;
   }
 
+  const getEmployeesForReview = async (page?: number, limit?: number) => {
+    const response = await api.get<IApiBaseResponse<IApiEmployeeResponse>>(
+      url.employeesReview,
+      {
+        params: {
+          page: page,
+          limit: limit,
+        },
+      }
+    );
+
+    console.log("response nya:", response.data)
+
+    return response.data;
+  };
+
   return {
     getEmployee,
     addEmployee,
     validateAddEmployee,
+    getEmployeesForReview,
   };
 };
 
