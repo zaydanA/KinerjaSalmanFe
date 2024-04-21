@@ -58,7 +58,9 @@ export const support = () => {
       employees: "/payroll-items/employees",
       employeesRun: "/payroll-items/employees/run",
       employeesReview: "/payroll-items/employees/review",
-    }
+    },
+
+    kpi: "/kpi-evaluation",
   };
 
   return { apiUrl };

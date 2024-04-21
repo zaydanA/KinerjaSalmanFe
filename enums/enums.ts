@@ -57,3 +57,9 @@ export enum ApplicationType {
   LEAVE = "LEAVE",
   DUTY = "DUTY",
 }
+
+export enum KPIType {
+  AKTIVITAS = "AKTIVITAS",
+  PROYEKSI = "PROYEKSI",
+  HASIL = "HASIL",
+}

@@ -10,6 +10,7 @@ import application from "./application";
 import bank from "./bank";
 import allowance from "./allowance";
 import payrollItem from "./payroll.item";
+import kpi from "./kpi"
 
 export const apiBase = () => {
   return {
@@ -24,6 +25,7 @@ export const apiBase = () => {
     application,
     bank,
     allowance,
-    payrollItem
+    payrollItem, 
+    kpi,
   }
 }
