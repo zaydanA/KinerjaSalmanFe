@@ -27,7 +27,11 @@ const NavbarDataForManagerAndAbove = [{
 }, {
     title:"Time-off",
     path:"/apply"
-}];
+}, {
+    title:"Evaluation",
+    path:"/evaluation"
+}
+];
 
 const NavbarDataForBelowManager = [{
     title:"Dashboard",
@@ -66,7 +70,7 @@ const Navbar =  (props: any) => {
 
     return (
         <div className="sticky top-0 z-50 w-full h-[60px] bg-white shadow-md md:px-5 font-medium text-gray-500 flex flex-row items-center justify-between border-b-1">
-            <div className='flex items-center w-5/6 h-full md:gap-6 font-mono'>
+            <div className='flex items-center w-[75%] sm:w-[80%] md:w-[90%] h-full md:gap-6 font-mono'>
                 <Link className='h-full flex' href="/">
                     <Image
                     src="/LogoSalman.svg"
@@ -94,7 +98,7 @@ const Navbar =  (props: any) => {
                     ))}
                 </div>
             </div>
-            <div className='pl-2 w-1/6 h-full'>
+            <div className='w-[25%] sm:w-[20%] md:w-[10%] h-full'>
                 <ProfileDropdown></ProfileDropdown>
             </div>
             
