@@ -1,17 +1,33 @@
 import { api, support } from './support';
 import { IApiBaseResponse } from '@/types/http';
-import { IKPI } from "@/types/kpi";
+import { IApiKPIResponse, IKPI } from "@/types/kpi";
 
 const kpi = () => {
   const { apiUrl } = support();
 
   const url = {
+    getKPI: apiUrl.kpi,
     createKPI: apiUrl.kpi,
   }
 
+  const getKPI = async (page?: number, limit?: number): Promise<IApiBaseResponse<IApiKPIResponse>> => {
+    try {
+      const response = await api.get<IApiBaseResponse<IApiKPIResponse>>(
+        url.getKPI, {
+          params: {
+            page: page,
+            limit: limit,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   const createKPI = async (data: IKPI): Promise<IApiBaseResponse<IKPI>> => {
     try {
-      console.log("data kpi:", data)
       const response = await api.post<IApiBaseResponse<IKPI>>(url.createKPI, data);
       return response.data;
     } catch (error) {
@@ -20,6 +36,7 @@ const kpi = () => {
   };
 
   return {
+    getKPI,
     createKPI,
   };
 };

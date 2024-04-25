@@ -16,6 +16,7 @@ const EmployeeContainer: React.FC<EmployeeContainerProps> = ({ employee, onRevie
       <div>
       <div className="font-bold text-lg">{employee.full_name}</div>
         <div>position ID:{employee.position_id}</div>
+        <div>department ID:{employee.dept_id}</div>
       </div>
       <button
         onClick={handleReviewClick}

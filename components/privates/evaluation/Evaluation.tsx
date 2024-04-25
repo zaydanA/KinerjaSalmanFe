@@ -67,11 +67,11 @@ const Evaluation: React.FC<EvaluationProps> = ({ employeeId, onBackToEvaluationE
   };
 
   const handleConfirmSubmit = async () => {
-    setIsModalOpen(false); // Tutup modal setelah submit
+    setIsModalOpen(false); 
     try {
       await apiBase().kpi().createKPI(kpi);
       toast.success('KPI submitted successfully.');
-      console.log("successs");
+      onBackToEvaluationEmployee();
     } catch (error) {
       apiBaseError.set(error);
       toast.error(apiBaseError.getMessage());
@@ -144,19 +144,19 @@ const Evaluation: React.FC<EvaluationProps> = ({ employeeId, onBackToEvaluationE
             </button>
           </div>
         </BaseModal>
-      }
-      { isConfirmationModalOpen && <BaseModal open={isConfirmationModalOpen} setOpen={setIsConfirmationModalOpen}>
-          <div className="text-center">
-            <p className="mb-4">Are you sure you want to go back? All unsaved changes will be lost.</p>
-            <button className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600" onClick={handleConfirmBack}>
-              Yes, Go Back
-            </button>
-            <button className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 ml-4" onClick={() => setIsConfirmationModalOpen(false)}>
-              Cancel
-            </button>
-          </div>
-        </BaseModal>
-      }
+        }
+        { isConfirmationModalOpen && <BaseModal open={isConfirmationModalOpen} setOpen={setIsConfirmationModalOpen}>
+            <div className="text-center">
+              <p className="mb-4">Are you sure you want to go back? All unsaved changes will be lost.</p>
+              <button className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600" onClick={handleConfirmBack}>
+                Yes, Go Back
+              </button>
+              <button className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 ml-4" onClick={() => setIsConfirmationModalOpen(false)}>
+                Cancel
+              </button>
+            </div>
+          </BaseModal>
+        }
       </form>
     </div>
   );

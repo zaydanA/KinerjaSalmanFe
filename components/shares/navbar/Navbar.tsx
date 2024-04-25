@@ -27,6 +27,9 @@ const NavbarDataForManagerAndAbove = [{
 }, {
     title:"Time-off",
     path:"/apply"
+}, {
+    title:"Evaluation",
+    path:"/evaluation"
 }];
 
 const NavbarDataForBelowManager = [{
