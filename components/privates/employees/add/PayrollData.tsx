@@ -9,6 +9,7 @@ import BaseInputDate from "@/components/shares/inputs/BaseInputDate";
 import BaseInputButton from "@/components/shares/buttons/BaseInputButton";
 import { IApiBaseAllowance, IApiBaseAllowanceType } from "@/types/allowance";
 import { IoClose } from "react-icons/io5";
+import { cn, Switch } from "@nextui-org/react";
 
 
 type ChangeHandler<T> = (data: Partial<T>) => void;
@@ -231,51 +232,77 @@ const PayrollDataForm = ({
             <hr className='w-full border-1 mt-8 mb-6' />
             <h3 className="text-lg mb-1 font-bold">BPJS</h3>
             <p className="text-gray-500 text-sm">BPJS data information</p>
-            <div className="grid grid-cols-2 gap-y-4 gap-x-5 my-6">
-                <BaseInputText
-                    id="bpjs_ketenagakerjaan_number"
-                    label="BPJS Ketenagakerjaan Number"
-                    required={true}
-                    fixedLength={16}
-                    format="#### #### #### ####"
-                    placeholder="0000 0000 0000 0000"
-                    type="text"
-                    value={formData.bpjs_ketenagakerjaan_number}
-                    error={apiBaseError.getErrors('bpjs_ketenagakerjaan_number')?.[0].toString()}
-                    setValue={(e) => handlePayrollDataChange('bpjs_ketenagakerjaan_number', e.target.value)}
-                />
-                
-                <BaseInputDate
-                    id="bpjs_ketenagakerjaan_date"
-                    label="BPJS Ketenagakerjaan Date"
-                    required={true}
-                    value={formData.bpjs_ketenagakerjaan_date}
-                    error={apiBaseError.getErrors('bpjs_ketenagakerjaan_date')?.[0].toString()}
-                    setValue={(e) => handlePayrollDataChange('bpjs_ketenagakerjaan_date', e.target.value)}
-                />
-
-                <BaseInputText
-                    id="bpjs_kesehatan_number"
-                    label="BPJS Kesehatan Number"
-                    required={true}
-                    fixedLength={13}
-                    format="#### #### #### #"
-                    placeholder="0000 0000 0000 0"
-                    type="text"
-                    value={formData.bpjs_kesehatan_number}
-                    error={apiBaseError.getErrors('bpjs_kesehatan_number')?.[0].toString()}
-                    setValue={(e) => handlePayrollDataChange('bpjs_kesehatan_number', e.target.value)}
-                />
-
-                <BaseInputDate
-                    id="bpjs_kesehatan_date"
-                    label="BPJS Kesehatan Date"
-                    required={true}
-                    value={formData.bpjs_kesehatan_date}
-                    error={apiBaseError.getErrors('bpjs_kesehatan_date')?.[0].toString()}
-                    setValue={(e) => handlePayrollDataChange('bpjs_kesehatan_date', e.target.value)}
-                />
+            <div className="flex flex-row my-6 gap-2">
+                <Switch 
+                    isSelected={formData.use_bpjs} 
+                    onValueChange={()=>{
+                        handlePayrollDataChange('use_bpjs', !formData.use_bpjs)
+                    }}
+                    classNames={{
+                        wrapper: cn("p-0 h-4 overflow-visible","group-data-[selected=true]:bg-[--kinerja-gold]"),
+                        thumb: cn("w-6 h-6 border-2 shadow-lg",
+                            "group-data-[hover=true]:border-[--kinerja-gold]",
+                            //selected
+                            "group-data-[selected=true]:border-[--kinerja-gold]",
+                            "group-data-[selected=true]:ml-6",
+                            // pressed
+                            "group-data-[pressed=true]:w-7",
+                            "group-data-[selected]:group-data-[pressed]:ml-4",
+                        ),
+                        }}
+                    >
+                </Switch>
+                <p className="text-sm">
+                    Use BPJS
+                </p>
             </div>
+            {formData.use_bpjs && (
+                <div className="grid grid-cols-2 gap-y-4 gap-x-5 my-6">
+                    <BaseInputText
+                        id="bpjs_ketenagakerjaan_number"
+                        label="BPJS Ketenagakerjaan Number"
+                        required={true}
+                        fixedLength={16}
+                        format="#### #### #### ####"
+                        placeholder="0000 0000 0000 0000"
+                        type="text"
+                        value={formData.bpjs_ketenagakerjaan_number}
+                        error={apiBaseError.getErrors('bpjs_ketenagakerjaan_number')?.[0].toString()}
+                        setValue={(e) => handlePayrollDataChange('bpjs_ketenagakerjaan_number', e.target.value)}
+                    />
+                    
+                    <BaseInputDate
+                        id="bpjs_ketenagakerjaan_date"
+                        label="BPJS Ketenagakerjaan Date"
+                        required={true}
+                        value={formData.bpjs_ketenagakerjaan_date}
+                        error={apiBaseError.getErrors('bpjs_ketenagakerjaan_date')?.[0].toString()}
+                        setValue={(e) => handlePayrollDataChange('bpjs_ketenagakerjaan_date', e.target.value)}
+                    />
+
+                    <BaseInputText
+                        id="bpjs_kesehatan_number"
+                        label="BPJS Kesehatan Number"
+                        required={true}
+                        fixedLength={13}
+                        format="#### #### #### #"
+                        placeholder="0000 0000 0000 0"
+                        type="text"
+                        value={formData.bpjs_kesehatan_number}
+                        error={apiBaseError.getErrors('bpjs_kesehatan_number')?.[0].toString()}
+                        setValue={(e) => handlePayrollDataChange('bpjs_kesehatan_number', e.target.value)}
+                    />
+
+                    <BaseInputDate
+                        id="bpjs_kesehatan_date"
+                        label="BPJS Kesehatan Date"
+                        required={true}
+                        value={formData.bpjs_kesehatan_date}
+                        error={apiBaseError.getErrors('bpjs_kesehatan_date')?.[0].toString()}
+                        setValue={(e) => handlePayrollDataChange('bpjs_kesehatan_date', e.target.value)}
+                    />
+                </div>
+            )}
         </div>
     )
 }

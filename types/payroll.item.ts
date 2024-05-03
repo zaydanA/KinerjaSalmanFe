@@ -38,6 +38,7 @@ export interface IApiBasePayrollItemDetails {
   }
 
   payroll: {
+    use_bpjs: boolean
     user: {
       full_name: string
       employee_id: string

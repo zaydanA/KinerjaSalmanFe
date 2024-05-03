@@ -8,7 +8,7 @@ export type BaseInputDateType = {
   maxToday?: boolean;
   disabled?: boolean;
   type?: "date" | "month";
-  value: string;
+  value?: string;
   error?: string;
   setValue?: (event: ChangeEvent<HTMLInputElement>) => void;
 };
