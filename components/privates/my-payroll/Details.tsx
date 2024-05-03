@@ -82,8 +82,8 @@ const PayrollDetails = () => {
                   <div className="col-span-1">: {payrollDetails?.payroll.user.status == 1 ? "Active" : "Inactive"}</div>
                   <div className="col-span-1">PTKP Status</div>
                   <div className="col-span-1">: {payrollDetails?.details?.ptkp_status}</div>
-                  <div className="col-span-1">Join Date</div>
-                  <div className="col-span-1">: {customLib.formatDate(payrollDetails?.payroll.user.join_date ?? '')}</div>
+                  <div className="col-span-1">Dengan BPJS</div>
+                  <div className="col-span-1">: {payrollDetails?.payroll.use_bpjs ? "Iya" : "Tidak"}</div>
                   <div className="col-span-1">Length of Service</div>
                   <div className="col-span-1">: {customLib.getDateDifference(new Date().toString(), payrollDetails?.payroll.user.join_date ?? '')}</div>
                 </div>
@@ -104,7 +104,7 @@ const PayrollDetails = () => {
 
               <tr><td className="w-2/3 align-top p-2 border-black border font-semibold bg-gray-200">Penghasilan Bruto</td><td className="w-1/3 align-top p-2 border-black border font-semibold bg-gray-200">{customLib.formatCurrency(payrollDetails?.details?.gross_income ?? 0)}</td></tr>
               
-              <tr><td className="w-2/3 align-top p-2 border-black border-t-1 border-x-1">Dikurangi: </td><td className="w-1/3 align-top p-2 border-black border-t-1 border-x-1"></td></tr>
+              <tr><td className="w-2/3 align-top p-2 border-black border-t-1 border-x-1">Dikurangi: </td><td className="w-1/3 align-top p-2 border-black border-t-1 border-x-1">{payrollDetails?.details?.income?.allowances?.length ?? 0 > 0 ? '' : customLib.formatCurrency(0)}</td></tr>
               {payrollDetails?.details?.deductions && payrollDetails.details.deductions.map((deduction) => (
                 <tr key={deduction.name}>
                   <td className="w-2/3 align-top p-2 border-black border-x-1">{deduction.name} {deduction.ket ? `(${deduction.ket})` : ""}</td>
@@ -119,7 +119,7 @@ const PayrollDetails = () => {
               <tr><td className="w-2/3 align-top p-2 border-black border-x-1">Penghasilan Tidak Kena Pajak (PTKP) {payrollDetails?.details?.ptkp_status}</td><td className="w-1/3 align-top p-2 border-black border-x-1">{customLib.formatCurrency(payrollDetails?.details?.ptkp ?? 0)}</td></tr>
 
               <tr><td className="w-2/3 align-top p-2 border-black border font-semibold bg-gray-200">Penghasilan Kena Pajak (PKP)</td><td className="w-1/3 align-top p-2 border-black border font-semibold bg-gray-200">{customLib.formatCurrency(payrollDetails?.details?.pkp ?? 0)}</td></tr>
-              <tr><td className="w-2/3 align-top p-2 border-black border-x-1">PPH 21 Terutang Setahun</td><td className="w-1/3 align-top p-2 border-black border-x-1">{payrollDetails?.details?.pph21_yearly_details ? '' : customLib.formatCurrency(payrollDetails?.details?.pph21_yearly ?? 0)}</td></tr>
+              <tr><td className="w-2/3 align-top p-2 border-black border-x-1">PPH 21 Terutang Setahun</td><td className="w-1/3 align-top p-2 border-black border-x-1">{payrollDetails?.details?.pph21_yearly_details?.length ?? 0 > 0 ? '' : customLib.formatCurrency(payrollDetails?.details?.pph21_yearly ?? 0)}</td></tr>
               {payrollDetails?.details?.pph21_yearly_details && payrollDetails.details.pph21_yearly_details.map((details, idx) => (
                 <tr key={details.name}>
                   <td className="w-2/3 align-top p-2 border-black border-x-1">{details.ket}</td>

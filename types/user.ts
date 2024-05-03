@@ -51,10 +51,11 @@ export interface IUserPayrollData {
   bank_account_number: string
   bank_account_holder: string
 
-  bpjs_ketenagakerjaan_number: string
-  bpjs_ketenagakerjaan_date: string
-  bpjs_kesehatan_number: string
-  bpjs_kesehatan_date: string
+  use_bpjs: boolean
+  bpjs_ketenagakerjaan_number?: string
+  bpjs_ketenagakerjaan_date?: string
+  bpjs_kesehatan_number?: string
+  bpjs_kesehatan_date?: string
 
   allowances: IApiBaseAllowance[]
 }
