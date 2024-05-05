@@ -3,9 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Tree, TreeNode } from "react-organizational-chart";
 import { FaUserTie } from "react-icons/fa6";
 import { apiBase } from "@/api";
-import { MdEmail, MdFileDownload } from "react-icons/md";
-import { Button } from "@nextui-org/react";
-import { useToSvg } from '@hugocxl/react-to-image'
+import { MdEmail } from "react-icons/md";
 const OrganizationStructure = () => {
 
     const [data,setData] = useState();
@@ -18,7 +16,7 @@ const OrganizationStructure = () => {
         getEmployeeHierarchy()
     },[])
     return(
-    <div id="employeeHierarchy">        
+    <>        
         <div className="flex flex-row justify-between items-center px-10">
             <div className="w-fit">
                 <h1 className=" text-[--kinerja-gold] font-bold text-3xl font-mono">
@@ -43,7 +41,7 @@ const OrganizationStructure = () => {
                 }
             </Tree>:<div></div>
         }
-    </div>
+    </>
         )
 
 };
