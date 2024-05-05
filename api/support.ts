@@ -19,6 +19,8 @@ export const support = () => {
 
     employees: "/employees",
 
+    employeeHierarchy: "/employees/employeeHierarchy",
+
 
     users: {
       self: "/users/self",

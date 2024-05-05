@@ -13,6 +13,9 @@ const NavbarDataForManagerAndAbove = [{
     title: "Employee",
     path: "/employee"
 },{
+    title:"Employee Hierarchy",
+    path:"/organizationstructure"
+},{
     title:"My Payroll",
     path:"/my-payroll"
 },{
@@ -30,12 +33,15 @@ const NavbarDataForManagerAndAbove = [{
 }, {
     title:"Evaluation",
     path:"/evaluation"
-}
+},
 ];
 
 const NavbarDataForBelowManager = [{
     title:"Dashboard",
     path:"/dashboard"
+},{
+    title:"Employee Hierarchy",
+    path:"/organizationstructure"
 },{
     title:"My Payroll",
     path:"/my-payroll"
@@ -45,7 +51,8 @@ const NavbarDataForBelowManager = [{
 }, {
     title:"Time-off",
     path:"/apply"
-}];
+}
+];
 
 interface NavbarData {
     title: string

@@ -11,6 +11,7 @@ const employee = () => {
     addEmployee: apiUrl.employees,
     validateAddEmployee: `${apiUrl.employees}/validate-add`,
     employeesReview : `${apiUrl.employees}/review`,
+    getEmployeeHierarchy : apiUrl.employeeHierarchy,
   }
 
   const getEmployee = async (page?: number, limit?: number, q?: string, status?: number[], department?: number[], position?: number[]) => {
@@ -78,11 +79,23 @@ const employee = () => {
     return response.data;
   };
 
+  const getEmployeeHierarchy = async ()=>{
+    const response = await api.get<IApiBaseResponse<any>>(
+      url.getEmployeeHierarchy,
+      {
+
+      }
+    )
+
+    return response.data;
+  }
+
   return {
     getEmployee,
     addEmployee,
     validateAddEmployee,
     getEmployeesForReview,
+    getEmployeeHierarchy,
   };
 };
 
