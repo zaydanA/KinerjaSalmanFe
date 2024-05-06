@@ -63,16 +63,6 @@ const EvaluationDetail: React.FC<EvaluationDetailProps> = ({
           </div>
           <div style={{ flex: 1 }}>
             <BaseInputText
-              id={`realization`}
-              label="Realization"
-              placeholder="Realization"
-              value={detail.realization.toString()}
-              setValue={(e) => onChange('realization', e.target.value)}
-              required
-            />
-          </div>
-          <div style={{ flex: 1 }}>
-            <BaseInputText
               id={`weight`}
               label="Weight"
               placeholder="Weight"

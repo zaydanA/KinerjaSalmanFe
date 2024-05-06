@@ -30,7 +30,6 @@ const Evaluation: React.FC<EvaluationProps> = ({ employeeId, onBackToEvaluationE
     const hasEmptyField = kpi.kpiDetails.some(detail => (
       detail.indicator === '' ||
       detail.target === '' ||
-      detail.realization === '' ||
       detail.weight === ''
     ));
   
@@ -50,8 +49,28 @@ const Evaluation: React.FC<EvaluationProps> = ({ employeeId, onBackToEvaluationE
 
   const handleDeleteKpi = (index: number) => {
     const newKpi = { ...kpi };
+    
     newKpi.kpiDetails.splice(index, 1);
+
     setKpi(newKpi);
+  };
+
+  const normalizeWeights = () => {
+    const totalWeight = kpi.kpiDetails.reduce((total, detail) => total + parseFloat(detail.weight), 0);
+
+    if (totalWeight !== 100) {
+      const normalizedKPI = {
+        ...kpi,
+        kpiDetails: kpi.kpiDetails.map(detail => ({
+          ...detail,
+          weight: ((parseFloat(detail.weight) / totalWeight) * 100).toFixed(2)
+        }))
+      };
+
+      setKpi(normalizedKPI);
+    } else {
+      toast.info('Weights are already normalized.');
+    }
   };
 
   const handleChangeKpiDetail = <T extends keyof IKPIDetail>(index: number, field: T, value: IKPIDetail[T]) => {
@@ -82,7 +101,6 @@ const Evaluation: React.FC<EvaluationProps> = ({ employeeId, onBackToEvaluationE
     const hasNonEmptyInputs = kpi.kpiDetails.some(detail => (
       detail.indicator !== '' ||
       detail.target !== '' ||
-      detail.realization !== '' ||
       detail.weight !== ''
     ));
 
@@ -102,6 +120,13 @@ const Evaluation: React.FC<EvaluationProps> = ({ employeeId, onBackToEvaluationE
     <div className="">      
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex justify-end">
+        <button
+            type="button"
+            onClick={normalizeWeights}
+            className="bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600 ml-4"
+          >
+            Normalize
+          </button>
           <button
             type="button"
             onClick={handleAddKpi}

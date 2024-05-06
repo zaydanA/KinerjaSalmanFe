@@ -4,11 +4,16 @@ import { IApiBaseEmployee } from '@/types/employee';
 interface EmployeeContainerProps {
   employee: IApiBaseEmployee;
   onReviewClick: (employeeId: number) => void;
+  onAddKpiClick: (employeeId: number) => void;
 }
 
-const EmployeeContainer: React.FC<EmployeeContainerProps> = ({ employee, onReviewClick }) => {
+const EmployeeContainer: React.FC<EmployeeContainerProps> = ({ employee, onReviewClick, onAddKpiClick }) => {
   const handleReviewClick = () => {
     onReviewClick(employee.user_id);
+  };
+
+  const handleAddKpiClick = () => {
+    onAddKpiClick(employee.user_id);
   };
 
   return (
@@ -18,12 +23,20 @@ const EmployeeContainer: React.FC<EmployeeContainerProps> = ({ employee, onRevie
         <div>position ID:{employee.position_id}</div>
         <div>department ID:{employee.dept_id}</div>
       </div>
-      <button
-        onClick={handleReviewClick}
-        className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
-      >
-        Review
-      </button>
+      <div>
+        <button
+          onClick={handleReviewClick}
+          className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+        >
+          Review
+        </button>
+        <button
+          onClick={handleAddKpiClick}
+          className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 ml-2"
+        >
+          Add KPI
+        </button>
+      </div>
     </div>
   );
 };
