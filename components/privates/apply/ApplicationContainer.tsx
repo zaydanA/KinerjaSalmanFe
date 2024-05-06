@@ -40,10 +40,12 @@ const ApplicationContainer: React.FC<ApplicationContainerProps> = ({
 
   useEffect(()=>{
     async function generateFileUrl(){
-
-      if(showModal && (application.file_url && application.hr_status == ApplicationsStatus.PENDING && application.manager_status != ApplicationsStatus.REJECTED)){
+      console.log(fileUrl);
+      if(showModal===true && (application.file_url && application.hr_status == ApplicationsStatus.PENDING && application.manager_status != ApplicationsStatus.REJECTED)){
         const response = await apiBase().application().generateFileUrlApplication(application.file_url)
         setFileUrl(response.data);
+      }else if(showModal===false){
+        setFileUrl('')
       }
 
     }
@@ -51,6 +53,7 @@ const ApplicationContainer: React.FC<ApplicationContainerProps> = ({
   },[showModal])
 
   return (
+    
     <div className="mb-2 mt-3 rounded-md border-1 border-gray-400 py-2 px-4 hover:shadow-md"  >
       <div className="flex items-center justify-between" >
         <div className="w-full" onClick={() => setShowModal(!showModal)}>
@@ -206,6 +209,7 @@ const ApplicationContainer: React.FC<ApplicationContainerProps> = ({
             Are you sure you want to{" "}
             <strong>{modalOption ? "Accept" : "Reject"}</strong>{" "}
             {application.user.full_name}&apos;s application?
+            Note: PDF file will be removed if there is any.
           </p>
           <div className="flex justify-end gap-5">
             <button onClick={() => toggleModal()}>Cancel</button>

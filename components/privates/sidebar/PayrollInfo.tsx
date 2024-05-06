@@ -10,7 +10,7 @@ import { IApiBaseAllowanceType } from '@/types/allowance';
 import { IApiBaseBank } from '@/types/bank';
 import { IApiBaseError } from '@/types/http';
 import { IUserPayrollData } from '@/types/user';
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Spinner } from '@nextui-org/react';
+import { Button, cn, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Spinner, Switch } from '@nextui-org/react';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { IoClose } from 'react-icons/io5';
@@ -24,6 +24,7 @@ const initialPayrollData = {
   bank_account_number: '',
   bank_account_holder: '',
 
+  use_bpjs: true,
   bpjs_ketenagakerjaan_number: '',
   bpjs_ketenagakerjaan_date: '',
   bpjs_kesehatan_number: '',
@@ -458,88 +459,122 @@ const PayrollInfo = (props:any) => {
               <div className="md:w-4/6 md:px-4 flex flex-col pt-1 gap-4">
                 <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
                   <h3 className="font-semibold text-sm w-2/6 py-1 self-start">
-                    BPJS Ketenagakerjaan Number
+                    Use BPJS
                   </h3>
-                  <div className='w-4/6'>
-                    <BaseInputTextProfile
-                      value={payrollData.bpjs_ketenagakerjaan_number} 
-                      id="bpjs_ketenagakerjaan_number" 
-                      label="" 
-                      fixedLength={16}
-                      format="#### #### #### ####"
-                      placeholder="0000 0000 0000 0000"
-                      disabled={!isEditBPJSData}
-                      setValue={(e) => setPayrollData({
-                        ...payrollData,
-                        bpjs_ketenagakerjaan_number: e.target.value.replace(/\s/g, "")
-                      })}
-                      error={apiBaseError.getErrors('bpjs_ketenagakerjaan_number')?.[0].toString()}
-                    />
+                  <div  className='w-4/6 flex items-center px-1'>
+                    <Switch 
+                      isDisabled={!isEditBPJSData} 
+                      isSelected={payrollData.use_bpjs} 
+                      onValueChange={()=>{
+                        setPayrollData({
+                          ...payrollData,
+                          use_bpjs: !payrollData.use_bpjs
+                        })
+                      }}
+                      classNames={{
+                        wrapper: cn("p-0 h-4 overflow-visible","group-data-[selected=true]:bg-[--kinerja-gold]"),
+                        thumb: cn("w-6 h-6 border-2 shadow-lg",
+                          "group-data-[hover=true]:border-[--kinerja-gold]",
+                          //selected
+                          "group-data-[selected=true]:border-[--kinerja-gold]",
+                          "group-data-[selected=true]:ml-6",
+                          // pressed
+                          "group-data-[pressed=true]:w-7",
+                          "group-data-[selected]:group-data-[pressed]:ml-4",
+                        ),
+                      }}
+                    >
+                    </Switch>
                   </div>
                 </div>
-                <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
-                  <h3 className="font-semibold text-sm w-2/6 py-1 self-start">
-                    BPJS Ketenagakerjaan Date
-                  </h3>
-                  <div className='w-4/6'>
-                    {isEditBPJSData ? 
-                    <BaseInputDate
-                      id="bpjs_ketenagakerjaan_date"
-                      label=""                      
-                      value={customLib.formatDate(payrollData.bpjs_ketenagakerjaan_date)}
-                      error={apiBaseError.getErrors('bpjs_ketenagakerjaan_date')?.[0].toString()}
-                      setValue={(e) => setPayrollData({
-                        ...payrollData,
-                        bpjs_ketenagakerjaan_date: e.target.value
-                      })}
-                    />
-                    : <p className="px-2 text-sm w-4/6 items-center">
-                        {customLib.formatDateInput(payrollData.bpjs_ketenagakerjaan_date)}
-                      </p> }
-                  </div>
-                </div>
-                <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
-                  <h3 className="font-semibold text-sm w-2/6 py-1 self-start">
-                    BPJS Kesehatan Number
-                  </h3>
-                  <div className='w-4/6'>
-                    <BaseInputTextProfile
-                      value={payrollData.bpjs_kesehatan_number} 
-                      id="bpjs_kesehatan_number" 
-                      label="" 
-                      fixedLength={13}
-                      format="#### #### #### #"
-                      placeholder="0000 0000 0000 0"
-                      disabled={!isEditBPJSData}
-                      setValue={(e) => setPayrollData({
-                        ...payrollData,
-                        bpjs_kesehatan_number: e.target.value.replace(/\s/g, "")
-                      })}
-                      error={apiBaseError.getErrors('bpjs_kesehatan_number')?.[0].toString()}
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
-                  <h3 className="font-semibold text-sm w-2/6 py-1 self-start">
-                    BPJS Kesehatan Date
-                  </h3>
-                  <div className='w-4/6'>
-                    {isEditBPJSData ? 
-                    <BaseInputDate
-                      id="bpjs_kesehatan_date"
-                      label=""                      
-                      value={customLib.formatDateInput(payrollData.bpjs_kesehatan_date)}
-                      error={apiBaseError.getErrors('bpjs_kesehatan_date')?.[0].toString()}
-                      setValue={(e) => setPayrollData({
-                        ...payrollData,
-                        bpjs_kesehatan_date: e.target.value
-                      })}
-                    />
-                    : <p className="px-2 text-sm w-4/6 items-center">
-                        {customLib.formatDateInput(payrollData.bpjs_kesehatan_date)}
-                      </p> }
-                  </div>
-                </div>
+                {payrollData.use_bpjs && (
+                  <>
+                    <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
+                      <h3 className="font-semibold text-sm w-2/6 py-1 self-start">
+                        BPJS Ketenagakerjaan Number
+                      </h3>
+                      <div className='w-4/6'>
+                        <BaseInputTextProfile
+                          value={payrollData.bpjs_ketenagakerjaan_number} 
+                          id="bpjs_ketenagakerjaan_number" 
+                          label="" 
+                          fixedLength={16}
+                          format="#### #### #### ####"
+                          placeholder="0000 0000 0000 0000"
+                          disabled={!isEditBPJSData}
+                          setValue={(e) => setPayrollData({
+                            ...payrollData,
+                            bpjs_ketenagakerjaan_number: e.target.value.replace(/\s/g, "")
+                          })}
+                          error={apiBaseError.getErrors('bpjs_ketenagakerjaan_number')?.[0].toString()}
+                        />
+                      </div>
+                    </div>
+                    <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
+                      <h3 className="font-semibold text-sm w-2/6 py-1 self-start">
+                        BPJS Ketenagakerjaan Date
+                      </h3>
+                      <div className='w-4/6'>
+                        {isEditBPJSData ? 
+                        <BaseInputDate
+                          id="bpjs_ketenagakerjaan_date"
+                          label=""                      
+                          value={customLib.formatDate(payrollData.bpjs_ketenagakerjaan_date ?? "")}
+                          error={apiBaseError.getErrors('bpjs_ketenagakerjaan_date')?.[0].toString()}
+                          setValue={(e) => setPayrollData({
+                            ...payrollData,
+                            bpjs_ketenagakerjaan_date: e.target.value
+                          })}
+                        />
+                        : <p className="px-2 text-sm w-4/6 items-center">
+                            {customLib.formatDateInput(payrollData.bpjs_ketenagakerjaan_date ?? "")}
+                          </p> }
+                      </div>
+                    </div>
+                    <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
+                      <h3 className="font-semibold text-sm w-2/6 py-1 self-start">
+                        BPJS Kesehatan Number
+                      </h3>
+                      <div className='w-4/6'>
+                        <BaseInputTextProfile
+                          value={payrollData.bpjs_kesehatan_number} 
+                          id="bpjs_kesehatan_number" 
+                          label="" 
+                          fixedLength={13}
+                          format="#### #### #### #"
+                          placeholder="0000 0000 0000 0"
+                          disabled={!isEditBPJSData}
+                          setValue={(e) => setPayrollData({
+                            ...payrollData,
+                            bpjs_kesehatan_number: e.target.value.replace(/\s/g, "")
+                          })}
+                          error={apiBaseError.getErrors('bpjs_kesehatan_number')?.[0].toString()}
+                        />
+                      </div>
+                    </div>
+                    <div className="flex flex-col md:flex-row gap-2 md:gap-8 md:items-center">
+                      <h3 className="font-semibold text-sm w-2/6 py-1 self-start">
+                        BPJS Kesehatan Date
+                      </h3>
+                      <div className='w-4/6'>
+                        {isEditBPJSData ? 
+                        <BaseInputDate
+                          id="bpjs_kesehatan_date"
+                          label=""                      
+                          value={customLib.formatDateInput(payrollData.bpjs_kesehatan_date ?? "")}
+                          error={apiBaseError.getErrors('bpjs_kesehatan_date')?.[0].toString()}
+                          setValue={(e) => setPayrollData({
+                            ...payrollData,
+                            bpjs_kesehatan_date: e.target.value
+                          })}
+                        />
+                        : <p className="px-2 text-sm w-4/6 items-center">
+                            {customLib.formatDateInput(payrollData.bpjs_kesehatan_date ?? "")}
+                          </p> }
+                      </div>
+                    </div>
+                  </>
+                )}
                 
                 {isEditBPJSData && 
                 <div className='flex gap-1 justify-end'>

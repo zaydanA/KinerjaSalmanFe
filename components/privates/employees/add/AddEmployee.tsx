@@ -39,6 +39,7 @@ const initialFormData: IApiAddEmployee = {
         bank_id: -1,
         bank_account_number: '',
         bank_account_holder: '',
+        use_bpjs: true,
         bpjs_ketenagakerjaan_number: '',
         bpjs_ketenagakerjaan_date: '',
         bpjs_kesehatan_number: '',
@@ -48,7 +49,7 @@ const initialFormData: IApiAddEmployee = {
 }
 
 const AddEmployee = () => {
-    const [step, setStep] = useState(1);
+    const [step, setStep] = useState(3);
     const [formData, setFormData] = useState<IApiAddEmployee>(initialFormData);
 
     const apiBaseError = apiBase().error<IApiBaseError>();
@@ -173,6 +174,10 @@ const AddEmployee = () => {
             "bank_id",
             "bank_account_number",
             "bank_account_holder",
+            "use_bpjs"
+        ];
+
+        const payrollDataOptional = [
             "bpjs_ketenagakerjaan_number",
             "bpjs_ketenagakerjaan_date",
             "bpjs_kesehatan_number",
@@ -184,7 +189,8 @@ const AddEmployee = () => {
             const key = field as keyof IUserPayrollData;
 
             const value = formData.payroll_data[key];
-            return (typeof value === 'string' && value.trim() !== '') || (typeof value === 'number' && isFinite(value));
+            console.log(value);
+            return (typeof value === 'string' && value.trim() !== '') || (typeof value === 'number' && isFinite(value)) || (typeof value === 'boolean');
         });
 
         // Check allowance
@@ -192,7 +198,19 @@ const AddEmployee = () => {
             allowance.allowance_type_id !== -1 && allowance.amount !== undefined && isFinite(allowance.amount)
         );
 
-        return isPayrollDataValid && isValidAllowances;
+        // Check optional
+        let isPayrollDataOptionalValid = true;
+        if (formData.payroll_data["use_bpjs"]) {
+            isPayrollDataOptionalValid = payrollDataOptional.every(field => {
+                // Check if each optional field is not an empty string
+                const key = field as keyof IUserPayrollData;
+
+                const value = formData.payroll_data[key];
+                return (typeof value === 'string' && value.trim() !== '') || (typeof value === 'number' && isFinite(value));
+            });
+        }
+
+        return isPayrollDataValid && isValidAllowances && isPayrollDataOptionalValid;
     }  
 
     type ChangeHandler<T> = (changedData: Partial<T>) => void;
