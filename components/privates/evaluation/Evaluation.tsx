@@ -30,7 +30,6 @@ const Evaluation: React.FC<EvaluationProps> = ({ employeeId, onBackToEvaluationE
     const hasEmptyField = kpi.kpiDetails.some(detail => (
       detail.indicator === '' ||
       detail.target === '' ||
-      detail.realization === '' ||
       detail.weight === ''
     ));
   
@@ -50,8 +49,28 @@ const Evaluation: React.FC<EvaluationProps> = ({ employeeId, onBackToEvaluationE
 
   const handleDeleteKpi = (index: number) => {
     const newKpi = { ...kpi };
+    
     newKpi.kpiDetails.splice(index, 1);
+
     setKpi(newKpi);
+  };
+
+  const normalizeWeights = () => {
+    const totalWeight = kpi.kpiDetails.reduce((total, detail) => total + parseFloat(detail.weight), 0);
+
+    if (totalWeight !== 100) {
+      const normalizedKPI = {
+        ...kpi,
+        kpiDetails: kpi.kpiDetails.map(detail => ({
+          ...detail,
+          weight: ((parseFloat(detail.weight) / totalWeight) * 100).toFixed(2)
+        }))
+      };
+
+      setKpi(normalizedKPI);
+    } else {
+      toast.info('Weights are already normalized.');
+    }
   };
 
   const handleChangeKpiDetail = <T extends keyof IKPIDetail>(index: number, field: T, value: IKPIDetail[T]) => {
@@ -67,11 +86,11 @@ const Evaluation: React.FC<EvaluationProps> = ({ employeeId, onBackToEvaluationE
   };
 
   const handleConfirmSubmit = async () => {
-    setIsModalOpen(false); // Tutup modal setelah submit
+    setIsModalOpen(false); 
     try {
       await apiBase().kpi().createKPI(kpi);
       toast.success('KPI submitted successfully.');
-      console.log("successs");
+      onBackToEvaluationEmployee();
     } catch (error) {
       apiBaseError.set(error);
       toast.error(apiBaseError.getMessage());
@@ -82,7 +101,6 @@ const Evaluation: React.FC<EvaluationProps> = ({ employeeId, onBackToEvaluationE
     const hasNonEmptyInputs = kpi.kpiDetails.some(detail => (
       detail.indicator !== '' ||
       detail.target !== '' ||
-      detail.realization !== '' ||
       detail.weight !== ''
     ));
 
@@ -102,6 +120,13 @@ const Evaluation: React.FC<EvaluationProps> = ({ employeeId, onBackToEvaluationE
     <div className="">      
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex justify-end">
+        <button
+            type="button"
+            onClick={normalizeWeights}
+            className="bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600 ml-4"
+          >
+            Normalize
+          </button>
           <button
             type="button"
             onClick={handleAddKpi}
@@ -144,19 +169,19 @@ const Evaluation: React.FC<EvaluationProps> = ({ employeeId, onBackToEvaluationE
             </button>
           </div>
         </BaseModal>
-      }
-      { isConfirmationModalOpen && <BaseModal open={isConfirmationModalOpen} setOpen={setIsConfirmationModalOpen}>
-          <div className="text-center">
-            <p className="mb-4">Are you sure you want to go back? All unsaved changes will be lost.</p>
-            <button className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600" onClick={handleConfirmBack}>
-              Yes, Go Back
-            </button>
-            <button className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 ml-4" onClick={() => setIsConfirmationModalOpen(false)}>
-              Cancel
-            </button>
-          </div>
-        </BaseModal>
-      }
+        }
+        { isConfirmationModalOpen && <BaseModal open={isConfirmationModalOpen} setOpen={setIsConfirmationModalOpen}>
+            <div className="text-center">
+              <p className="mb-4">Are you sure you want to go back? All unsaved changes will be lost.</p>
+              <button className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600" onClick={handleConfirmBack}>
+                Yes, Go Back
+              </button>
+              <button className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 ml-4" onClick={() => setIsConfirmationModalOpen(false)}>
+                Cancel
+              </button>
+            </div>
+          </BaseModal>
+        }
       </form>
     </div>
   );

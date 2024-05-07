@@ -33,8 +33,7 @@ const NavbarDataForManagerAndAbove = [{
 }, {
     title:"Evaluation",
     path:"/evaluation"
-},
-];
+}];
 
 const NavbarDataForBelowManager = [{
     title:"Dashboard",
