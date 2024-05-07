@@ -57,17 +57,17 @@ const TableData = ({
           className="flex items-center justify-center gap-5"
         >
           {onClickEdit && (
-            <button onClick={onClickEdit} aria-label="Edit">
+            <button data-cy="table-edit-button" onClick={onClickEdit} aria-label="Edit">
               <FiEdit />
             </button>
           )}
           {onClickOpen && (
-            <button onClick={onClickOpen} aria-label="Open">
+            <button data-cy="table-open-button" onClick={onClickOpen} aria-label="Open">
               <MdOpenInNew />
             </button>
           )}
           {onClickDelete && (
-            <button onClick={onClickDelete} aria-label="Delete">
+            <button data-cy="table-delete-button" onClick={onClickDelete} aria-label="Delete">
               <AiFillDelete />
             </button>
           )}

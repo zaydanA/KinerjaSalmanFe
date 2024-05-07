@@ -44,6 +44,7 @@ const BaseInputDate: React.FC<BaseInputDateType> = ({
       </label>
       <div>
         <input
+          data-cy="date-input"
           id={id}
           type={type}
           value={value}

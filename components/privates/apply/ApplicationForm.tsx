@@ -91,6 +91,7 @@ const ApplicationForm = () => {
 
             <div className="flex gap-1">
               <input
+                data-cy='leave-radio-button'
                 type="radio"
                 id="timeOff"
                 name="leaveType"
@@ -103,6 +104,7 @@ const ApplicationForm = () => {
 
             <div className="flex gap-1">
               <input
+               data-cy='duty-radio-button'
                 type="radio"
                 id="dutyLeave"
                 name="leaveType"
