@@ -56,7 +56,7 @@ const ApplicationContainer: React.FC<ApplicationContainerProps> = ({
     
     <div className="mb-2 mt-3 rounded-md border-1 border-gray-400 py-2 px-4 hover:shadow-md"  >
       <div className="flex items-center justify-between" >
-        <div className="w-full" onClick={() => setShowModal(!showModal)}>
+        <div data-cy='application-container' className="w-full" onClick={() => setShowModal(!showModal)}>
           <div className=" w-fit">
             <h3
               className="text-lg font-bold hover:cursor-pointer hover:underline"

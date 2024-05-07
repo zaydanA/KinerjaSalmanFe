@@ -141,7 +141,7 @@ export default function BaseInputText({
         <div className="flex gap-1 justify-between mt-1">
           <div>
             {error && (
-            <div className="flex gap-1 items-center">
+            <div data-cy='input-text-error' className="flex gap-1 items-center">
               <PiWarningCircle className="text-red-500 w-3.5" />
               <p className="text-xs font-normal text-red-500">{error}</p>
             </div>

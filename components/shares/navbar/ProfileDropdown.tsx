@@ -23,7 +23,7 @@ const ProfileDropdown = () => {
     };
 
     return(
-        <div className="flex items-center gap-4 bg-white h-full justify-end">
+        <div data-cy="profile-button" className="flex items-center gap-4 bg-white h-full justify-end">
                  <Dropdown placement="bottom-end">
                     <DropdownTrigger>
                         <div className="flex items-center" onClick={()=>{setIsDropdownActive(!isDropdownActive)}}>
@@ -39,7 +39,7 @@ const ProfileDropdown = () => {
                         </div>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Profile Actions" variant="flat">
-                    <DropdownItem key="profile" className="h-16 border-b-2 rounded-b-none">
+                    <DropdownItem data-cy="profile-detail-button" key="profile" className="h-16 border-b-2 rounded-b-none">
                         <Link className="h-full w-full" href={`/profile`}>
                             <p className="font-semibold">{user?.full_name}</p>
                             <p className="font-light text-[12px] text-gray-500">{user?.email}</p>
@@ -47,13 +47,13 @@ const ProfileDropdown = () => {
                         </Link>
                     </DropdownItem>
                     <DropdownItem key="settings">
-                        <div className="flex h-full items-center align-center gap-2">
+                        <div data-cy="account-setting-button" className="flex h-full items-center align-center gap-2">
                             <IoSettingsOutline/>
                             <Link href="/account">Account Settings</Link>
                         </div>
                     </DropdownItem>
                     <DropdownItem key="logout" color="danger" onClick={handleLogout}>
-                        <div className="flex h-full items-center align-center gap-2">
+                        <div data-cy="logout-button" className="flex h-full items-center align-center gap-2">
                             <GoSignOut />
                             <div>Log out</div>
                         </div>

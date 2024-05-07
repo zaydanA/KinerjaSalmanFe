@@ -13,6 +13,7 @@ export default function BaseInputButton({
 }: BaseButtonType) {
   return (
     <button
+      data-cy={`button-${text.toLowerCase().replace(/\s+/g, '-')}`}
       disabled={disabled}
       className={`
         ${type === "default" && !disabled ? "bg-blue-500 text-white hover:bg-blue-700" : ""}

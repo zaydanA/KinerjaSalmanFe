@@ -97,7 +97,7 @@ const Navbar =  (props: any) => {
                 </Link>
                 <div id="horizontal2" className='flex flex-row h-full w-full items-center md:ml-5 gap-0 text-sm md:pl-0 pt-2 overflow-x-auto'>
                     {navbarData?.map((page,index)=>(
-                        <div key={index} className='flex flex-col h-full hover:bg-gray-100 rounded-t-[25px] cursor-pointer'>
+                        <div data-cy={'navbar-'+page.title.toLowerCase().replace(/\s+/g, '-')} key={index} className='flex flex-col h-full hover:bg-gray-100 rounded-t-[25px] cursor-pointer'>
                             <Link className='flex h-full items-center pt-1 px-5' href={`${page.path}`}>{page.title}</Link>
                             {<div className={pathname.startsWith(page.path) ? "h-[5px] bg-[--kinerja-gold] rounded-t-lg":"h-[5px] bg-transparent rounded-t-lg"}></div>}
                         </div>
