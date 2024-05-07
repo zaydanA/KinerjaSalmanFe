@@ -17,23 +17,30 @@ export enum MaritalStatus {
   WIDOWER = "WIDOWER",
 }
 
+export enum DependentType {
+  SPOUSE = "SPOUSE",
+  CHILD = "CHILD",
+  PARENT = "PARENT",
+  OTHER = "OTHER",
+}
+
 export enum LastEducation {
-  TIDAK_SEKOLAH = 'TIDAK_SEKOLAH',
-  SD = 'SD',
-  SMP = 'SMP',
-  SMA_SMK = 'SMA_SMK',
-  D3 = 'D3',
-  S1 = 'S1',
-  S2 = 'S2',
-  S3 = 'S3',
+  TIDAK_SEKOLAH = "TIDAK_SEKOLAH",
+  SD = "SD",
+  SMP = "SMP",
+  SMA_SMK = "SMA_SMK",
+  D3 = "D3",
+  S1 = "S1",
+  S2 = "S2",
+  S3 = "S3",
 }
 
 export enum AttendanceType {
-  PRESENT = 'PRESENT',
-  ON_LEAVE = 'ON_LEAVE',
-  SICK = 'SICK',
-  ABSENT = 'ABSENT',
-  OTHER = 'OTHER'
+  PRESENT = "PRESENT",
+  ON_LEAVE = "ON_LEAVE",
+  SICK = "SICK",
+  ABSENT = "ABSENT",
+  OTHER = "OTHER",
 }
 
 export enum LeaveType {

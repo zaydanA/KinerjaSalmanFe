@@ -16,11 +16,11 @@ export const support = () => {
 
     positions: "/positions",
     departments: "/departments",
+    dependents: "/dependents",
 
     employees: "/employees",
 
     employeeHierarchy: "/employees/employeeHierarchy",
-
 
     users: {
       self: "/users/self",
@@ -28,7 +28,7 @@ export const support = () => {
       employmentData: "/users/employment-data",
       payrollData: "/users/payroll-data",
       delete: "/users/delete",
-      resetPassword:"/users/reset-password",
+      resetPassword: "/users/reset-password",
     },
 
     analytics: {
@@ -47,7 +47,7 @@ export const support = () => {
     application: {
       apply: "/applications/apply",
       applications: "/applications",
-      generateFileUrl:"/applications/generate-file-url"
+      generateFileUrl: "/applications/generate-file-url",
     },
 
     banks: "/banks",
