@@ -25,10 +25,10 @@ const initialPayrollData = {
   bank_account_holder: '',
 
   use_bpjs: true,
-  bpjs_ketenagakerjaan_number: '',
-  bpjs_ketenagakerjaan_date: '',
-  bpjs_kesehatan_number: '',
-  bpjs_kesehatan_date: '',
+  bpjs_ketenagakerjaan_number: undefined,
+  bpjs_ketenagakerjaan_date: undefined,
+  bpjs_kesehatan_number: undefined,
+  bpjs_kesehatan_date: undefined,
 
   allowances: []
 }
@@ -146,6 +146,20 @@ const PayrollInfo = (props:any) => {
 
     apiBaseError.clear();
   };
+
+  const handleBPJS = () => {
+    if (!payrollData.use_bpjs) {
+      payrollData.bpjs_ketenagakerjaan_number = "";
+      payrollData.bpjs_ketenagakerjaan_date = "";
+      payrollData.bpjs_kesehatan_number = "";
+      payrollData.bpjs_kesehatan_date = "";
+    } else {
+      payrollData.bpjs_ketenagakerjaan_number = undefined;
+      payrollData.bpjs_ketenagakerjaan_date = undefined;
+      payrollData.bpjs_kesehatan_number = undefined;
+      payrollData.bpjs_kesehatan_date = undefined;
+    }
+  }
 
   return (
     <>
@@ -466,6 +480,7 @@ const PayrollInfo = (props:any) => {
                       isDisabled={!isEditBPJSData} 
                       isSelected={payrollData.use_bpjs} 
                       onValueChange={()=>{
+                        handleBPJS();
                         setPayrollData({
                           ...payrollData,
                           use_bpjs: !payrollData.use_bpjs
@@ -519,12 +534,14 @@ const PayrollInfo = (props:any) => {
                         <BaseInputDate
                           id="bpjs_ketenagakerjaan_date"
                           label=""                      
-                          value={customLib.formatDate(payrollData.bpjs_ketenagakerjaan_date ?? "")}
+                          value={customLib.formatDateInput(payrollData.bpjs_ketenagakerjaan_date ?? "")}
                           error={apiBaseError.getErrors('bpjs_ketenagakerjaan_date')?.[0].toString()}
-                          setValue={(e) => setPayrollData({
-                            ...payrollData,
-                            bpjs_ketenagakerjaan_date: e.target.value
-                          })}
+                          setValue={(e) => {
+                            setPayrollData({
+                              ...payrollData,
+                              bpjs_ketenagakerjaan_date: e.target.value
+                            });
+                          }}
                         />
                         : <p className="px-2 text-sm w-4/6 items-center">
                             {customLib.formatDateInput(payrollData.bpjs_ketenagakerjaan_date ?? "")}
@@ -563,10 +580,12 @@ const PayrollInfo = (props:any) => {
                           label=""                      
                           value={customLib.formatDateInput(payrollData.bpjs_kesehatan_date ?? "")}
                           error={apiBaseError.getErrors('bpjs_kesehatan_date')?.[0].toString()}
-                          setValue={(e) => setPayrollData({
-                            ...payrollData,
-                            bpjs_kesehatan_date: e.target.value
-                          })}
+                          setValue={(e) => {
+                            setPayrollData({
+                              ...payrollData,
+                              bpjs_kesehatan_date: e.target.value
+                            });
+                          }}
                         />
                         : <p className="px-2 text-sm w-4/6 items-center">
                             {customLib.formatDateInput(payrollData.bpjs_kesehatan_date ?? "")}

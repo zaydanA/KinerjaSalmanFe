@@ -40,10 +40,10 @@ const initialFormData: IApiAddEmployee = {
         bank_account_number: '',
         bank_account_holder: '',
         use_bpjs: true,
-        bpjs_ketenagakerjaan_number: '',
-        bpjs_ketenagakerjaan_date: '',
-        bpjs_kesehatan_number: '',
-        bpjs_kesehatan_date: '',
+        bpjs_ketenagakerjaan_number: undefined,
+        bpjs_ketenagakerjaan_date: undefined,
+        bpjs_kesehatan_number: undefined,
+        bpjs_kesehatan_date: undefined,
         allowances: []
     }
 }
@@ -189,7 +189,6 @@ const AddEmployee = () => {
             const key = field as keyof IUserPayrollData;
 
             const value = formData.payroll_data[key];
-            console.log(value);
             return (typeof value === 'string' && value.trim() !== '') || (typeof value === 'number' && isFinite(value)) || (typeof value === 'boolean');
         });
 

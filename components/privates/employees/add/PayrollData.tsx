@@ -63,6 +63,20 @@ const PayrollDataForm = ({
             parsedValue = value.replace(/\s/g, "");
         }
 
+        if (name === "use_bpjs") {
+            if (!value) {
+                formData.bpjs_ketenagakerjaan_number = undefined;
+                formData.bpjs_ketenagakerjaan_date = undefined;
+                formData.bpjs_kesehatan_number = undefined;
+                formData.bpjs_kesehatan_date = undefined;
+            } else {
+                formData.bpjs_ketenagakerjaan_number = '';
+                formData.bpjs_ketenagakerjaan_date = '';
+                formData.bpjs_kesehatan_number = '';
+                formData.bpjs_kesehatan_date = '';
+            }
+        }
+
         handleChange({
             [name]: parsedValue
         });
