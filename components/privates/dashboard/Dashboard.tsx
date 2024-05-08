@@ -85,12 +85,12 @@ const Dashboard = () => {
         </BaseCard>
         {canAccess && (
           <>
-            <BaseCard>
+            {/* <BaseCard>
               <div className='flex flex-col gap-4'>
                 <h1 className='font-semibold text-md'>Total Employment</h1>
-                {/* <EmploymentChart/> */}
+                <EmploymentChart/>
               </div>
-            </BaseCard>
+            </BaseCard> */}
             <BaseCard>
               <div className='flex flex-col gap-4'>
                 <h1 className='font-semibold text-md'>Gender Diversity</h1>
