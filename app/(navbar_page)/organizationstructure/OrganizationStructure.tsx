@@ -46,6 +46,7 @@ const OrganizationStructure = () => {
 
 };
 
+
 const renderTreeNode = (data: any[]) => {
     if (!data) {
         return null;
