@@ -1,15 +1,10 @@
-"use client"
-import React from "react";
-import DetailEmployee from "@/components/privates/sidebar/detailEmployee/DetailEmployee";
-import { useAuth } from "@/contexts";
+import Profile from "./Profile";
 
 
 const page = ()=>{
 
-    const {user} = useAuth()
-
     return (
-        <DetailEmployee user={user}></DetailEmployee>
+        <Profile></Profile>
     )
 }
 export default page;

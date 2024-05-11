@@ -6,7 +6,7 @@ import { apiBase } from "@/api";
 import { MdEmail } from "react-icons/md";
 const OrganizationStructure = () => {
 
-    const [data,setData] = useState();
+    const [data,setData] = useState({child:[]});
 
     useEffect(()=>{
         async function getEmployeeHierarchy() {
@@ -37,7 +37,7 @@ const OrganizationStructure = () => {
                 }
             >
                 {
-                    renderTreeNode(data.child)
+                    data.child && renderTreeNode(data.child)
                 }
             </Tree>:<div></div>
         }
@@ -51,8 +51,8 @@ const renderTreeNode = (data: any[]) => {
         return null;
     }
 
-    return data.map((child: { child: any; }) => (
-        <TreeNode label={<Card data={child}></Card>}>
+    return data.map((child: { child: any; },index:any) => (
+        <TreeNode key={index} label={<Card data={child}></Card>}>
             {renderTreeNode(child.child)}
         </TreeNode>
     ));
